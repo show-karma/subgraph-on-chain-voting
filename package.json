@@ -1,0 +1,16 @@
+{
+  "name": "dao-on-chain-voting",
+  "license": "UNLICENSED",
+  "scripts": {
+    "codegen": "graph codegen",
+    "build": "graph build",
+    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ show-karma/dao-on-chain-voting",
+    "create-local": "graph create --node http://localhost:8020/ show-karma/dao-on-chain-voting",
+    "remove-local": "graph remove --node http://localhost:8020/ show-karma/dao-on-chain-voting",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 show-karma/dao-on-chain-voting"
+  },
+  "dependencies": {
+    "@graphprotocol/graph-cli": "0.22.2",
+    "@graphprotocol/graph-ts": "0.22.1"
+  }
+}
