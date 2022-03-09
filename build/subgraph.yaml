@@ -1,6 +1,6 @@
 specVersion: 0.0.2
 schema:
-  file: ./schema.graphql
+  file: schema.graphql
 dataSources:
   - kind: ethereum/contract
     name: ENSGovernor
@@ -19,7 +19,7 @@ dataSources:
         - Vote
       abis:
         - name: ENSGovernor
-          file: ./abis/ENSGovernor.json
+          file: ENSGovernor/abis/ENSGovernor.json
       eventHandlers:
         - event: ProposalCanceled(uint256)
           handler: handleProposalCanceled
@@ -31,7 +31,7 @@ dataSources:
           handler: handleProposalQueued
         - event: VoteCast(indexed address,uint256,uint8,uint256,string)
           handler: handleVoteCast
-      file: ./src/ens_mapping.ts
+      file: ENSGovernor/ENSGovernor.wasm
   - kind: ethereum/contract
     name: GTCGovernorAlpha
     network: mainnet
@@ -49,7 +49,7 @@ dataSources:
         - Vote
       abis:
         - name: GTCGovernorAlpha
-          file: ./abis/GTCGovernorAlpha.json
+          file: GTCGovernorAlpha/abis/GTCGovernorAlpha.json
       eventHandlers:
         - event: ProposalCanceled(uint256)
           handler: handleProposalCanceled
@@ -61,4 +61,4 @@ dataSources:
           handler: handleProposalQueued
         - event: VoteCast(address,uint256,bool,uint256)
           handler: handleVoteCast
-      file: ./src/gtc_mapping.ts
+      file: GTCGovernorAlpha/GTCGovernorAlpha.wasm
