@@ -36,4 +36,5 @@ type Vote @entity {
   weight: BigInt
   reason: String
   organization: Organization!
+  timestamp: BigInt!
 }

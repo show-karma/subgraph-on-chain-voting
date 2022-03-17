@@ -61,6 +61,7 @@ export function handleVoteCast(event: VoteCast): void {
   vote.user = user.id
   vote.support = event.params.support
   vote.weight = event.params.votes
+  vote.timestamp = event.block.timestamp
   vote.organization = org.id
   vote.save()
 }

@@ -190,6 +190,7 @@ export class Vote extends Entity {
     this.set("proposal", Value.fromString(""));
     this.set("support", Value.fromI32(0));
     this.set("organization", Value.fromString(""));
+    this.set("timestamp", Value.fromBigInt(BigInt.zero()));
   }
 
   save(): void {
@@ -286,5 +287,14 @@ export class Vote extends Entity {
 
   set organization(value: string) {
     this.set("organization", Value.fromString(value));
+  }
+
+  get timestamp(): BigInt {
+    let value = this.get("timestamp");
+    return value!.toBigInt();
+  }
+
+  set timestamp(value: BigInt) {
+    this.set("timestamp", Value.fromBigInt(value));
   }
 }
