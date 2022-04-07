@@ -98,7 +98,7 @@ dataSources:
     source:
       address: "0x5e4be8bc9637f0eaa1a755019e06a68ce081d58f"
       abi: UniswapGovernorAlpha
-      startBlock: 3402549
+      startBlock: 10861678
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
