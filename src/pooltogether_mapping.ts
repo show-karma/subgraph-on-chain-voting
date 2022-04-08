@@ -7,10 +7,11 @@ import {
   VoteCast
 } from "../generated/PoolTogetherGovernorAlpha/PoolTogetherGovernorAlpha"
 import { User, Vote, Proposal, Organization } from "../generated/schema"
+import { getProposalId } from "./proposals"
 const daoName="pooltogether.eth"
 
 export function handleProposalCanceled(event: ProposalCanceled): void {
-  let proposal = Proposal.load(event.params.id.toHexString())
+  let proposal = Proposal.load(getProposalId(daoName, event.params.id))
   if (proposal != null) {
     proposal.status = "Canceled"
     proposal.save()
@@ -18,7 +19,7 @@ export function handleProposalCanceled(event: ProposalCanceled): void {
 }
 
 export function handleProposalCreated(event: ProposalCreated): void {
-  let proposal = new Proposal(event.params.id.toHexString())
+  let proposal = new Proposal(getProposalId(daoName, event.params.id))
   proposal.status = "Active"
   proposal.description = event.params.description
   proposal.proposer = event.params.proposer.toHexString()
@@ -29,7 +30,7 @@ export function handleProposalCreated(event: ProposalCreated): void {
 }
 
 export function handleProposalExecuted(event: ProposalExecuted): void {
-  let proposal = Proposal.load(event.params.id.toHexString())
+  let proposal = Proposal.load(getProposalId(daoName, event.params.id))
   if (proposal != null) {
     proposal.status = "Executed"
     proposal.save()
@@ -37,7 +38,7 @@ export function handleProposalExecuted(event: ProposalExecuted): void {
 }
 
 export function handleProposalQueued(event: ProposalQueued): void {
-  let proposal = Proposal.load(event.params.id.toHexString())
+  let proposal = Proposal.load(getProposalId(daoName, event.params.id))
   if (proposal != null) {
     proposal.status = "Queued"
     proposal.save()
@@ -46,7 +47,7 @@ export function handleProposalQueued(event: ProposalQueued): void {
 
 export function handleVoteCast(event: VoteCast): void {
   let vote = new Vote(event.params.voter.toHexString() + event.params.proposalId.toHexString())
-  let proposal = Proposal.load(event.params.proposalId.toHexString())
+  let proposal = Proposal.load(getProposalId(daoName, event.params.proposalId))
   let user = User.load(event.params.voter.toHexString())
   if (user == null) {
     user = new User(event.params.voter.toHexString())
