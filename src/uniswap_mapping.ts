@@ -38,7 +38,7 @@ export function handleProposalExecuted(event: ProposalExecuted): void {
 }
 
 export function handleProposalQueued(event: ProposalQueued): void {
-  let proposal = (getProposalId(daoName, event.params.id))
+  let proposal = Proposal.load(getProposalId(daoName, event.params.id))
   if (proposal != null) {
     proposal.status = "Queued"
     proposal.save()
