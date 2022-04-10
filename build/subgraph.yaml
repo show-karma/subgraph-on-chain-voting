@@ -122,3 +122,27 @@ dataSources:
         - event: VoteCast(address,uint256,bool,uint256)
           handler: handleVoteCast
       file: UniswapGovernorAlpha/UniswapGovernorAlpha.wasm
+  - kind: ethereum/contract
+    name: NexusMutualGovernance
+    network: mainnet
+    source:
+      address: "0x4a5c681ddc32acc6cca51ac17e9d461e6be87900"
+      abi: NexusMutualGovernance
+      startBlock: 7815930
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - User
+        - Proposal
+        - Vote
+      abis:
+        - name: NexusMutualGovernance
+          file: NexusMutualGovernance/abis/NexusMutualGovernance.json
+      eventHandlers:
+        - event: Proposal(indexed address,indexed uint256,uint256,string,string,string)
+          handler: handleProposalCreated
+        - event: Vote(indexed address,indexed uint256,indexed uint256,uint256,uint256)
+          handler: handleVote
+      file: NexusMutualGovernance/NexusMutualGovernance.wasm
