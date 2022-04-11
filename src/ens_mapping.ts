@@ -15,6 +15,7 @@ export function handleProposalCanceled(event: ProposalCanceled): void {
   let proposal = Proposal.load(getProposalId(daoName, event.params.proposalId))
   if (proposal != null) {
     proposal.status = "Canceled"
+    proposal.timestamp = event.block.timestamp
     proposal.save()
   }
 }
@@ -22,6 +23,7 @@ export function handleProposalCanceled(event: ProposalCanceled): void {
 export function handleProposalCreated(event: ProposalCreated): void {
   let proposal = new Proposal(getProposalId(daoName, event.params.proposalId))
   proposal.status = "Active"
+  proposal.timestamp = event.block.timestamp
   proposal.description = event.params.description
   proposal.proposer = event.params.proposer.toHexString()
   let org = new Organization(daoName)
@@ -34,6 +36,7 @@ export function handleProposalExecuted(event: ProposalExecuted): void {
   let proposal = Proposal.load(getProposalId(daoName, event.params.proposalId))
   if (proposal != null) {
     proposal.status = "Executed"
+    proposal.timestamp = event.block.timestamp
     proposal.save()
   }
 }
@@ -42,6 +45,7 @@ export function handleProposalQueued(event: ProposalQueued): void {
   let proposal = Proposal.load(getProposalId(daoName, event.params.proposalId))
   if (proposal != null) {
     proposal.status = "Queued"
+    proposal.timestamp = event.block.timestamp
     proposal.save()
   }
 }

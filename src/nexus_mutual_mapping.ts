@@ -11,6 +11,7 @@ const daoName="community.nexusmutual.eth"
 export function handleProposalCreated(event: Proposal): void {
   const proposal = new KarmaProposal(getProposalId(daoName, event.params.proposalId));
   proposal.status = "Active";
+  proposal.timestamp = event.block.timestamp
   proposal.proposer = event.params.proposalOwner.toHexString();
   const org = new Organization(daoName);
   org.save();
