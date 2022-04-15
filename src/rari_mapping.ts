@@ -1,18 +1,18 @@
 import { BigInt } from "@graphprotocol/graph-ts"
 import {
-  ENSGovernor,
+  RariGovernorBravo,
   ProposalCanceled,
   ProposalCreated,
   ProposalExecuted,
   ProposalQueued,
   VoteCast
-} from "../generated/ENSGovernor/ENSGovernor"
+} from "../generated/RariGovernorBravo/RariGovernorBravo"
 import { User, Vote, Proposal, Organization } from "../generated/schema"
 import { getProposalId } from "./proposals"
-const daoName="ens.eth"
+const daoName="fuse.eth"
 
 export function handleProposalCanceled(event: ProposalCanceled): void {
-  let proposal = Proposal.load(getProposalId(daoName, event.params.proposalId))
+  let proposal = Proposal.load(getProposalId(daoName, event.params.id))
   if (proposal != null) {
     proposal.status = "Canceled"
     proposal.timestamp = event.block.timestamp
@@ -21,7 +21,7 @@ export function handleProposalCanceled(event: ProposalCanceled): void {
 }
 
 export function handleProposalCreated(event: ProposalCreated): void {
-  let proposal = new Proposal(getProposalId(daoName, event.params.proposalId))
+  let proposal = new Proposal(getProposalId(daoName, event.params.id))
   proposal.status = "Active"
   proposal.timestamp = event.block.timestamp
   proposal.description = event.params.description
@@ -33,7 +33,7 @@ export function handleProposalCreated(event: ProposalCreated): void {
 }
 
 export function handleProposalExecuted(event: ProposalExecuted): void {
-  let proposal = Proposal.load(getProposalId(daoName, event.params.proposalId))
+  let proposal = Proposal.load(getProposalId(daoName, event.params.id))
   if (proposal != null) {
     proposal.status = "Executed"
     proposal.timestamp = event.block.timestamp
@@ -42,7 +42,7 @@ export function handleProposalExecuted(event: ProposalExecuted): void {
 }
 
 export function handleProposalQueued(event: ProposalQueued): void {
-  let proposal = Proposal.load(getProposalId(daoName, event.params.proposalId))
+  let proposal = Proposal.load(getProposalId(daoName, event.params.id))
   if (proposal != null) {
     proposal.status = "Queued"
     proposal.timestamp = event.block.timestamp
@@ -64,7 +64,7 @@ export function handleVoteCast(event: VoteCast): void {
   }
   vote.user = user.id
   vote.support = event.params.support
-  vote.weight = event.params.weight
+  vote.weight = event.params.votes
   vote.reason = event.params.reason
   vote.timestamp = event.block.timestamp
   vote.organization = org.id
