@@ -148,7 +148,7 @@ export class VoteCast__Params {
   }
 }
 
-export class GTCGovernorAlpha__getActionsResult {
+export class YemFinanceGovernor__getActionsResult {
   value0: Array<Address>;
   value1: Array<BigInt>;
   value2: Array<string>;
@@ -176,7 +176,7 @@ export class GTCGovernorAlpha__getActionsResult {
   }
 }
 
-export class GTCGovernorAlpha__getReceiptResultValue0Struct extends ethereum.Tuple {
+export class YemFinanceGovernor__getReceiptResultValue0Struct extends ethereum.Tuple {
   get hasVoted(): boolean {
     return this[0].toBoolean();
   }
@@ -190,7 +190,7 @@ export class GTCGovernorAlpha__getReceiptResultValue0Struct extends ethereum.Tup
   }
 }
 
-export class GTCGovernorAlpha__proposalsResult {
+export class YemFinanceGovernor__proposalsResult {
   value0: BigInt;
   value1: Address;
   value2: BigInt;
@@ -238,9 +238,9 @@ export class GTCGovernorAlpha__proposalsResult {
   }
 }
 
-export class GTCGovernorAlpha extends ethereum.SmartContract {
-  static bind(address: Address): GTCGovernorAlpha {
-    return new GTCGovernorAlpha("GTCGovernorAlpha", address);
+export class YemFinanceGovernor extends ethereum.SmartContract {
+  static bind(address: Address): YemFinanceGovernor {
+    return new YemFinanceGovernor("YemFinanceGovernor", address);
   }
 
   BALLOT_TYPEHASH(): Bytes {
@@ -289,14 +289,14 @@ export class GTCGovernorAlpha extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBytes());
   }
 
-  getActions(proposalId: BigInt): GTCGovernorAlpha__getActionsResult {
+  getActions(proposalId: BigInt): YemFinanceGovernor__getActionsResult {
     let result = super.call(
       "getActions",
       "getActions(uint256):(address[],uint256[],string[],bytes[])",
       [ethereum.Value.fromUnsignedBigInt(proposalId)]
     );
 
-    return new GTCGovernorAlpha__getActionsResult(
+    return new YemFinanceGovernor__getActionsResult(
       result[0].toAddressArray(),
       result[1].toBigIntArray(),
       result[2].toStringArray(),
@@ -306,7 +306,7 @@ export class GTCGovernorAlpha extends ethereum.SmartContract {
 
   try_getActions(
     proposalId: BigInt
-  ): ethereum.CallResult<GTCGovernorAlpha__getActionsResult> {
+  ): ethereum.CallResult<YemFinanceGovernor__getActionsResult> {
     let result = super.tryCall(
       "getActions",
       "getActions(uint256):(address[],uint256[],string[],bytes[])",
@@ -317,7 +317,7 @@ export class GTCGovernorAlpha extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      new GTCGovernorAlpha__getActionsResult(
+      new YemFinanceGovernor__getActionsResult(
         value[0].toAddressArray(),
         value[1].toBigIntArray(),
         value[2].toStringArray(),
@@ -329,17 +329,17 @@ export class GTCGovernorAlpha extends ethereum.SmartContract {
   getReceipt(
     proposalId: BigInt,
     voter: Address
-  ): GTCGovernorAlpha__getReceiptResultValue0Struct {
+  ): YemFinanceGovernor__getReceiptResultValue0Struct {
     let result = super.call(
       "getReceipt",
-      "getReceipt(uint256,address):((bool,bool,uint96))",
+      "getReceipt(uint256,address):((bool,bool,uint256))",
       [
         ethereum.Value.fromUnsignedBigInt(proposalId),
         ethereum.Value.fromAddress(voter)
       ]
     );
 
-    return changetype<GTCGovernorAlpha__getReceiptResultValue0Struct>(
+    return changetype<YemFinanceGovernor__getReceiptResultValue0Struct>(
       result[0].toTuple()
     );
   }
@@ -347,10 +347,10 @@ export class GTCGovernorAlpha extends ethereum.SmartContract {
   try_getReceipt(
     proposalId: BigInt,
     voter: Address
-  ): ethereum.CallResult<GTCGovernorAlpha__getReceiptResultValue0Struct> {
+  ): ethereum.CallResult<YemFinanceGovernor__getReceiptResultValue0Struct> {
     let result = super.tryCall(
       "getReceipt",
-      "getReceipt(uint256,address):((bool,bool,uint96))",
+      "getReceipt(uint256,address):((bool,bool,uint256))",
       [
         ethereum.Value.fromUnsignedBigInt(proposalId),
         ethereum.Value.fromAddress(voter)
@@ -361,20 +361,20 @@ export class GTCGovernorAlpha extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      changetype<GTCGovernorAlpha__getReceiptResultValue0Struct>(
+      changetype<YemFinanceGovernor__getReceiptResultValue0Struct>(
         value[0].toTuple()
       )
     );
   }
 
-  gtc(): Address {
-    let result = super.call("gtc", "gtc():(address)", []);
+  guardian(): Address {
+    let result = super.call("guardian", "guardian():(address)", []);
 
     return result[0].toAddress();
   }
 
-  try_gtc(): ethereum.CallResult<Address> {
-    let result = super.tryCall("gtc", "gtc():(address)", []);
+  try_guardian(): ethereum.CallResult<Address> {
+    let result = super.tryCall("guardian", "guardian():(address)", []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -485,14 +485,14 @@ export class GTCGovernorAlpha extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  proposals(param0: BigInt): GTCGovernorAlpha__proposalsResult {
+  proposals(param0: BigInt): YemFinanceGovernor__proposalsResult {
     let result = super.call(
       "proposals",
       "proposals(uint256):(uint256,address,uint256,uint256,uint256,uint256,uint256,bool,bool)",
       [ethereum.Value.fromUnsignedBigInt(param0)]
     );
 
-    return new GTCGovernorAlpha__proposalsResult(
+    return new YemFinanceGovernor__proposalsResult(
       result[0].toBigInt(),
       result[1].toAddress(),
       result[2].toBigInt(),
@@ -507,7 +507,7 @@ export class GTCGovernorAlpha extends ethereum.SmartContract {
 
   try_proposals(
     param0: BigInt
-  ): ethereum.CallResult<GTCGovernorAlpha__proposalsResult> {
+  ): ethereum.CallResult<YemFinanceGovernor__proposalsResult> {
     let result = super.tryCall(
       "proposals",
       "proposals(uint256):(uint256,address,uint256,uint256,uint256,uint256,uint256,bool,bool)",
@@ -518,7 +518,7 @@ export class GTCGovernorAlpha extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      new GTCGovernorAlpha__proposalsResult(
+      new YemFinanceGovernor__proposalsResult(
         value[0].toBigInt(),
         value[1].toAddress(),
         value[2].toBigInt(),
@@ -657,6 +657,21 @@ export class GTCGovernorAlpha extends ethereum.SmartContract {
     let value = result.value;
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
+
+  yam(): Address {
+    let result = super.call("yam", "yam():(address)", []);
+
+    return result[0].toAddress();
+  }
+
+  try_yam(): ethereum.CallResult<Address> {
+    let result = super.tryCall("yam", "yam():(address)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
 }
 
 export class ConstructorCall extends ethereum.Call {
@@ -680,7 +695,7 @@ export class ConstructorCall__Inputs {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get gtc_(): Address {
+  get yam_(): Address {
     return this._call.inputValues[1].value.toAddress();
   }
 }
@@ -689,6 +704,58 @@ export class ConstructorCall__Outputs {
   _call: ConstructorCall;
 
   constructor(call: ConstructorCall) {
+    this._call = call;
+  }
+}
+
+export class __abdicateCall extends ethereum.Call {
+  get inputs(): __abdicateCall__Inputs {
+    return new __abdicateCall__Inputs(this);
+  }
+
+  get outputs(): __abdicateCall__Outputs {
+    return new __abdicateCall__Outputs(this);
+  }
+}
+
+export class __abdicateCall__Inputs {
+  _call: __abdicateCall;
+
+  constructor(call: __abdicateCall) {
+    this._call = call;
+  }
+}
+
+export class __abdicateCall__Outputs {
+  _call: __abdicateCall;
+
+  constructor(call: __abdicateCall) {
+    this._call = call;
+  }
+}
+
+export class __acceptAdminCall extends ethereum.Call {
+  get inputs(): __acceptAdminCall__Inputs {
+    return new __acceptAdminCall__Inputs(this);
+  }
+
+  get outputs(): __acceptAdminCall__Outputs {
+    return new __acceptAdminCall__Outputs(this);
+  }
+}
+
+export class __acceptAdminCall__Inputs {
+  _call: __acceptAdminCall;
+
+  constructor(call: __acceptAdminCall) {
+    this._call = call;
+  }
+}
+
+export class __acceptAdminCall__Outputs {
+  _call: __acceptAdminCall;
+
+  constructor(call: __acceptAdminCall) {
     this._call = call;
   }
 }
