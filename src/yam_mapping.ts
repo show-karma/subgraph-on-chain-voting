@@ -5,7 +5,7 @@ import {
   ProposalExecuted,
   ProposalQueued,
   VoteCast,
-} from "../generated/YemFinanceGovernor/YemFinanceGovernor";
+} from "../generated/YamFinanceGovernor/YamFinanceGovernor";
 import { User, Vote, Proposal, Organization } from "../generated/schema";
 import { getProposalId } from "./proposals";
 const daoName = "yam.eth";

@@ -177,11 +177,11 @@ dataSources:
           handler: handleVoteCast
       file: ./src/rari_mapping.ts
   - kind: ethereum/contract
-    name: YemFinanceGovernor
+    name: YamFinanceGovernor
     network: mainnet
     source:
       address: "0x78BdD33e95ECbcAC16745FB28DB0FFb703344026"
-      abi: YemFinanceGovernor
+      abi: YamFinanceGovernor
       startBlock: 10910236
     mapping:
       kind: ethereum/events
@@ -192,8 +192,8 @@ dataSources:
         - Proposal
         - Vote
       abis:
-        - name: YemFinanceGovernor
-          file: ./abis/YemFinanceGovernor.json
+        - name: YamFinanceGovernor
+          file: ./abis/YamFinanceGovernor.json
       eventHandlers:
         - event: ProposalCanceled(uint256)
           handler: handleProposalCanceled

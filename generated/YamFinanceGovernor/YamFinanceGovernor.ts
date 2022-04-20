@@ -148,7 +148,7 @@ export class VoteCast__Params {
   }
 }
 
-export class YemFinanceGovernor__getActionsResult {
+export class YamFinanceGovernor__getActionsResult {
   value0: Array<Address>;
   value1: Array<BigInt>;
   value2: Array<string>;
@@ -176,7 +176,7 @@ export class YemFinanceGovernor__getActionsResult {
   }
 }
 
-export class YemFinanceGovernor__getReceiptResultValue0Struct extends ethereum.Tuple {
+export class YamFinanceGovernor__getReceiptResultValue0Struct extends ethereum.Tuple {
   get hasVoted(): boolean {
     return this[0].toBoolean();
   }
@@ -190,7 +190,7 @@ export class YemFinanceGovernor__getReceiptResultValue0Struct extends ethereum.T
   }
 }
 
-export class YemFinanceGovernor__proposalsResult {
+export class YamFinanceGovernor__proposalsResult {
   value0: BigInt;
   value1: Address;
   value2: BigInt;
@@ -238,9 +238,9 @@ export class YemFinanceGovernor__proposalsResult {
   }
 }
 
-export class YemFinanceGovernor extends ethereum.SmartContract {
-  static bind(address: Address): YemFinanceGovernor {
-    return new YemFinanceGovernor("YemFinanceGovernor", address);
+export class YamFinanceGovernor extends ethereum.SmartContract {
+  static bind(address: Address): YamFinanceGovernor {
+    return new YamFinanceGovernor("YamFinanceGovernor", address);
   }
 
   BALLOT_TYPEHASH(): Bytes {
@@ -289,14 +289,14 @@ export class YemFinanceGovernor extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBytes());
   }
 
-  getActions(proposalId: BigInt): YemFinanceGovernor__getActionsResult {
+  getActions(proposalId: BigInt): YamFinanceGovernor__getActionsResult {
     let result = super.call(
       "getActions",
       "getActions(uint256):(address[],uint256[],string[],bytes[])",
       [ethereum.Value.fromUnsignedBigInt(proposalId)]
     );
 
-    return new YemFinanceGovernor__getActionsResult(
+    return new YamFinanceGovernor__getActionsResult(
       result[0].toAddressArray(),
       result[1].toBigIntArray(),
       result[2].toStringArray(),
@@ -306,7 +306,7 @@ export class YemFinanceGovernor extends ethereum.SmartContract {
 
   try_getActions(
     proposalId: BigInt
-  ): ethereum.CallResult<YemFinanceGovernor__getActionsResult> {
+  ): ethereum.CallResult<YamFinanceGovernor__getActionsResult> {
     let result = super.tryCall(
       "getActions",
       "getActions(uint256):(address[],uint256[],string[],bytes[])",
@@ -317,7 +317,7 @@ export class YemFinanceGovernor extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      new YemFinanceGovernor__getActionsResult(
+      new YamFinanceGovernor__getActionsResult(
         value[0].toAddressArray(),
         value[1].toBigIntArray(),
         value[2].toStringArray(),
@@ -329,7 +329,7 @@ export class YemFinanceGovernor extends ethereum.SmartContract {
   getReceipt(
     proposalId: BigInt,
     voter: Address
-  ): YemFinanceGovernor__getReceiptResultValue0Struct {
+  ): YamFinanceGovernor__getReceiptResultValue0Struct {
     let result = super.call(
       "getReceipt",
       "getReceipt(uint256,address):((bool,bool,uint256))",
@@ -339,7 +339,7 @@ export class YemFinanceGovernor extends ethereum.SmartContract {
       ]
     );
 
-    return changetype<YemFinanceGovernor__getReceiptResultValue0Struct>(
+    return changetype<YamFinanceGovernor__getReceiptResultValue0Struct>(
       result[0].toTuple()
     );
   }
@@ -347,7 +347,7 @@ export class YemFinanceGovernor extends ethereum.SmartContract {
   try_getReceipt(
     proposalId: BigInt,
     voter: Address
-  ): ethereum.CallResult<YemFinanceGovernor__getReceiptResultValue0Struct> {
+  ): ethereum.CallResult<YamFinanceGovernor__getReceiptResultValue0Struct> {
     let result = super.tryCall(
       "getReceipt",
       "getReceipt(uint256,address):((bool,bool,uint256))",
@@ -361,7 +361,7 @@ export class YemFinanceGovernor extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      changetype<YemFinanceGovernor__getReceiptResultValue0Struct>(
+      changetype<YamFinanceGovernor__getReceiptResultValue0Struct>(
         value[0].toTuple()
       )
     );
@@ -485,14 +485,14 @@ export class YemFinanceGovernor extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  proposals(param0: BigInt): YemFinanceGovernor__proposalsResult {
+  proposals(param0: BigInt): YamFinanceGovernor__proposalsResult {
     let result = super.call(
       "proposals",
       "proposals(uint256):(uint256,address,uint256,uint256,uint256,uint256,uint256,bool,bool)",
       [ethereum.Value.fromUnsignedBigInt(param0)]
     );
 
-    return new YemFinanceGovernor__proposalsResult(
+    return new YamFinanceGovernor__proposalsResult(
       result[0].toBigInt(),
       result[1].toAddress(),
       result[2].toBigInt(),
@@ -507,7 +507,7 @@ export class YemFinanceGovernor extends ethereum.SmartContract {
 
   try_proposals(
     param0: BigInt
-  ): ethereum.CallResult<YemFinanceGovernor__proposalsResult> {
+  ): ethereum.CallResult<YamFinanceGovernor__proposalsResult> {
     let result = super.tryCall(
       "proposals",
       "proposals(uint256):(uint256,address,uint256,uint256,uint256,uint256,uint256,bool,bool)",
@@ -518,7 +518,7 @@ export class YemFinanceGovernor extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      new YemFinanceGovernor__proposalsResult(
+      new YamFinanceGovernor__proposalsResult(
         value[0].toBigInt(),
         value[1].toAddress(),
         value[2].toBigInt(),
