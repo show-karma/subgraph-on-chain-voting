@@ -1,15 +1,14 @@
-import { BigInt } from "@graphprotocol/graph-ts";
 import {
-  RariGovernorBravo,
+  CompoundGovernor,
   ProposalCanceled,
   ProposalCreated,
   ProposalExecuted,
   ProposalQueued,
   VoteCast,
-} from "../generated/RariGovernorBravo/RariGovernorBravo";
+} from "../generated/CompoundGovernor/CompoundGovernor";
 import { User, Vote, Proposal, Organization } from "../generated/schema";
 import { getProposalId } from "./proposals";
-const daoName = "fuse.eth";
+const daoName = "comp-vote.eth";
 
 export function handleProposalCanceled(event: ProposalCanceled): void {
   let proposal = Proposal.load(getProposalId(daoName, event.params.id));
