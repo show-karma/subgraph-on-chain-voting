@@ -1,5 +1,5 @@
 import {
-  YemFinanceGovernor,
+  YamFinanceGovernor,
   ProposalCanceled,
   ProposalCreated,
   ProposalExecuted,
