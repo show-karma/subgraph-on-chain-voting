@@ -296,3 +296,33 @@ dataSources:
         - event: VoteCast(indexed address,uint256,uint8,uint256,string)
           handler: handleVoteCast
       file: ./src/fei_mapping.ts
+  - kind: ethereum/contract
+    name: YamFinanceGovernor
+    network: mainnet
+    source:
+      address: "0x78BdD33e95ECbcAC16745FB28DB0FFb703344026"
+      abi: YamFinanceGovernor
+      startBlock: 10910236
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - User
+        - Proposal
+        - Vote
+      abis:
+        - name: YamFinanceGovernor
+          file: ./abis/YamFinanceGovernor.json
+      eventHandlers:
+        - event: ProposalCanceled(uint256)
+          handler: handleProposalCanceled
+        - event: ProposalCreated(uint256,address,address[],uint256[],string[],bytes[],uint256,uint256,string)
+          handler: handleProposalCreated
+        - event: ProposalExecuted(uint256)
+          handler: handleProposalExecuted
+        - event: ProposalQueued(uint256,uint256)
+          handler: handleProposalQueued
+        - event: VoteCast(address,uint256,bool,uint256)
+          handler: handleVoteCast
+      file: ./src/yam_mapping.ts
