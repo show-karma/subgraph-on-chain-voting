@@ -176,3 +176,33 @@ dataSources:
         - event: VoteCast(indexed address,uint256,uint8,uint256,string)
           handler: handleVoteCast
       file: ./src/rari_mapping.ts
+  - kind: ethereum/contract
+    name: InverseFinanceGovernor
+    network: mainnet
+    source:
+      address: "0xBeCCB6bb0aa4ab551966A7E4B97cec74bb359Bf6"
+      abi: InverseFinanceGovernor
+      startBlock: 13549618
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - User
+        - Proposal
+        - Vote
+      abis:
+        - name: InverseFinanceGovernor
+          file: ./abis/InverseFinanceGovernor.json
+      eventHandlers:
+        - event: ProposalCanceled(uint256)
+          handler: handleProposalCanceled
+        - event: ProposalCreated(uint256,address,address[],uint256[],string[],bytes[],uint256,uint256,string)
+          handler: handleProposalCreated
+        - event: ProposalExecuted(uint256)
+          handler: handleProposalExecuted
+        - event: ProposalQueued(uint256,uint256)
+          handler: handleProposalQueued
+        - event: VoteCast(address,uint256,bool,uint256)
+          handler: handleVoteCast
+      file: ./src/inversefinance_mapping.ts
