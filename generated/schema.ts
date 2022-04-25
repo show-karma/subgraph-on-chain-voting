@@ -6,6 +6,7 @@ import {
   Value,
   ValueKind,
   store,
+  Address,
   Bytes,
   BigInt,
   BigDecimal
@@ -197,6 +198,7 @@ export class Vote extends Entity {
 
     this.set("user", Value.fromString(""));
     this.set("proposal", Value.fromString(""));
+    this.set("support", Value.fromI32(0));
     this.set("organization", Value.fromString(""));
     this.set("timestamp", Value.fromBigInt(BigInt.zero()));
   }
