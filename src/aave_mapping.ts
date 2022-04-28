@@ -8,7 +8,7 @@ import {
 } from "../generated/AaveGovernor/AaveGovernor";
 import { User, Vote, Proposal, Organization } from "../generated/schema";
 import { getProposalId } from "./proposals";
-const daoName = "fuse.eth";
+const daoName = "aave.eth";
 
 export function handleProposalCreated(event: ProposalCreated): void {
   let proposal = new Proposal(getProposalId(daoName, event.params.proposalId));
