@@ -357,12 +357,12 @@ dataSources:
           handler: handleVoteCast
       file: ./src/compound_mapping.ts
   - kind: ethereum/contract
-    name: AaveGovernor
+    name: NounsToken
     network: mainnet
     source:
-      address: "0x8a2efd9a790199f4c94c6effe210fce0b4724f52"
-      abi: AaveGovernor
-      startBlock: 13549618
+      address: "0x6f3E6272A167e8AcCb32072d08E0957F9c79223d"
+      abi: NounsToken
+      startBlock: 12985453
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
@@ -372,15 +372,40 @@ dataSources:
         - Proposal
         - Vote
       abis:
-        - name: AaveGovernor
-          file: ./abis/AaveGovernor.json
+        - name: NounsToken
+          file: ./abis/NounsToken.json
       eventHandlers:
-        - event: ProposalCreated(indexed uint256,indexed bytes32,indexed bytes32,uint256,uint256,uint256,uint256,uint256,address)
+        - event: ProposalCanceled(uint256)
+          handler: handleProposalCanceled
+        - event: ProposalCreated(uint256,address,address[],uint256[],string[],bytes[],uint256,uint256,string)
           handler: handleProposalCreated
-        - event: StatusChangeToExecuted(indexed uint256)
+        - event: ProposalExecuted(uint256)
           handler: handleProposalExecuted
-        - event: StatusChangeToVoting(indexed uint256,uint256)
+        - event: ProposalQueued(uint256,uint256)
           handler: handleProposalQueued
-        - event: VoteEmitted(indexed uint256,indexed address,indexed uint256,address,uint256,uint256)
+        - event: VoteCast(indexed address,uint256,uint8,uint256,string)
           handler: handleVoteCast
+      file: ./src/nouns_mapping.ts
+  - kind: ethereum/contract
+    name: AaveToken
+    network: mainnet
+    source:
+      address: "0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9"
+      abi: AaveToken
+      startBlock: 10926829
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - Delegate
+        - Delegator
+      abis:
+        - name: AaveToken
+          file: ./abis/AaveToken.json
+      eventHandlers:
+        - event: DelegateChanged(indexed address,indexed address,uint8)
+          handler: delegateChanged
+        - event: DelegatedPowerChanged(indexed address,uint256,uint8)
+          handler: delegateVotesChanged
       file: ./src/aave_mapping.ts
