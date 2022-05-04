@@ -387,25 +387,30 @@ dataSources:
           handler: handleVoteCast
       file: ./src/nouns_mapping.ts
   - kind: ethereum/contract
-    name: AaveToken
+    name: AaveGovernor
     network: mainnet
     source:
-      address: "0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9"
-      abi: AaveToken
-      startBlock: 10926829
+      address: "0x8a2efd9a790199f4c94c6effe210fce0b4724f52"
+      abi: AaveGovernor
+      startBlock: 13549618
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
-        - Delegate
-        - Delegator
+        - User
+        - Proposal
+        - Vote
       abis:
-        - name: AaveToken
-          file: ./abis/AaveToken.json
+        - name: AaveGovernor
+          file: ./abis/AaveGovernor.json
       eventHandlers:
-        - event: DelegateChanged(indexed address,indexed address,uint8)
-          handler: delegateChanged
-        - event: DelegatedPowerChanged(indexed address,uint256,uint8)
-          handler: delegateVotesChanged
+        - event: ProposalCreated(indexed uint256,indexed bytes32,indexed bytes32,uint256,uint256,uint256,uint256,uint256,address)
+          handler: handleProposalCreated
+        - event: StatusChangeToExecuted(indexed uint256)
+          handler: handleProposalExecuted
+        - event: StatusChangeToVoting(indexed uint256,uint256)
+          handler: handleProposalQueued
+        - event: VoteEmitted(indexed uint256,indexed address,indexed uint256,address,uint256,uint256)
+          handler: handleVoteCast
       file: ./src/aave_mapping.ts
