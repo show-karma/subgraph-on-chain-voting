@@ -339,9 +339,7 @@ export class YamFinanceGovernor extends ethereum.SmartContract {
       ]
     );
 
-    return changetype<YamFinanceGovernor__getReceiptResultValue0Struct>(
-      result[0].toTuple()
-    );
+    return result[0].toTuple() as YamFinanceGovernor__getReceiptResultValue0Struct;
   }
 
   try_getReceipt(
@@ -361,9 +359,7 @@ export class YamFinanceGovernor extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      changetype<YamFinanceGovernor__getReceiptResultValue0Struct>(
-        value[0].toTuple()
-      )
+      value[0].toTuple() as YamFinanceGovernor__getReceiptResultValue0Struct
     );
   }
 

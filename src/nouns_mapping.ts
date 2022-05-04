@@ -1,6 +1,6 @@
 import { BigInt } from "@graphprotocol/graph-ts";
 import {
-  NounsTokne,
+  NounsToken,
   ProposalCanceled,
   ProposalCreated,
   ProposalExecuted,
