@@ -6,7 +6,7 @@ import {
   ProposalExecuted,
   ProposalQueued,
   VoteCast,
-} from "../generated/NounsTokne/NounsTokne";
+} from "../generated/NounsToken/NounsToken";
 import { User, Vote, Proposal, Organization } from "../generated/schema";
 import { getProposalId } from "./proposals";
 const daoName = "nouns.eth";
