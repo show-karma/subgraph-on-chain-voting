@@ -256,6 +256,23 @@ export class Vote extends Entity {
     this.set("support", Value.fromI32(value));
   }
 
+  get solution(): BigInt | null {
+    let value = this.get("solution");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set solution(value: BigInt | null) {
+    if (!value) {
+      this.unset("solution");
+    } else {
+      this.set("solution", Value.fromBigInt(<BigInt>value));
+    }
+  }
+
   get weight(): BigInt | null {
     let value = this.get("weight");
     if (!value || value.kind == ValueKind.NULL) {

@@ -34,6 +34,7 @@ type Vote @entity {
   user: User!
   proposal: Proposal!
   support: Int
+  solution: BigInt
   weight: BigInt
   reason: String
   organization: Organization!
