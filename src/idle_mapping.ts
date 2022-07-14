@@ -68,8 +68,10 @@ export function handleVoteCast(event: VoteCastAlpha | VoteCast): void {
 
   if (event instanceof VoteCast) {
     vote.reason = event.params.reason;
+    vote.support = event.params.support;
+  } else {
     vote.support = event.params.support ? 1 : 0;
-  } else vote.support = event.params.support;
+  }
 
   vote.timestamp = event.block.timestamp;
   vote.organization = org.id;
