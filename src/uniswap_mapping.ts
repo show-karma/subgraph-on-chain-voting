@@ -49,7 +49,7 @@ export function handleProposalQueued(event: ProposalQueued): void {
   }
 }
 
-export function handleVoteCast(event: VoteCast | VoteCastBravo): void {
+export function handleVoteCast(event: VoteCast): void {
   let vote = new Vote(
     event.params.voter.toHexString() + event.params.proposalId.toHexString()
   );
@@ -68,6 +68,30 @@ export function handleVoteCast(event: VoteCast | VoteCastBravo): void {
   vote.support = event.params.support;
   vote.weight = event.params.votes;
   vote.timestamp = event.block.timestamp;
+  vote.organization = org.id;
+  vote.save();
+}
+
+export function handleVoteCastBravo(event: VoteCastBravo): void {
+  let vote = new Vote(
+    event.params.voter.toHexString() + event.params.proposalId.toHexString()
+  );
+  let proposal = Proposal.load(getProposalId(daoName, event.params.proposalId));
+  let user = User.load(event.params.voter.toHexString());
+  if (user == null) {
+    user = new User(event.params.voter.toHexString());
+  }
+  let org = new Organization(daoName);
+  user.organization = org.id;
+  user.save();
+  if (proposal != null) {
+    vote.proposal = proposal.id;
+  }
+  vote.user = user.id;
+  vote.support = event.params.support;
+  vote.weight = event.params.votes;
+  vote.timestamp = event.block.timestamp;
+  vote.reason = event.params.reason;
   vote.organization = org.id;
   vote.save();
 }
