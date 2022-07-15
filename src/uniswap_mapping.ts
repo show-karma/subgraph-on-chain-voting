@@ -1,70 +1,99 @@
-import { BigInt } from "@graphprotocol/graph-ts"
+import { BigInt } from "@graphprotocol/graph-ts";
 import {
   ProposalCanceled,
   ProposalCreated,
   ProposalExecuted,
   ProposalQueued,
-  VoteCast
-} from "../generated/UniswapGovernorAlpha/UniswapGovernorAlpha"
-import { User, Vote, Proposal, Organization } from "../generated/schema"
-import { getProposalId } from "./proposals"
-const daoName="uniswap"
+  VoteCast,
+} from "../generated/UniswapGovernorAlpha/UniswapGovernorAlpha";
+import { VoteCast as VoteCastBravo } from "../generated/UniswapGovernorBravo/UniswapGovernorBravo";
+import { User, Vote, Proposal, Organization } from "../generated/schema";
+import { getProposalId } from "./proposals";
+const daoName = "uniswap";
 
 export function handleProposalCanceled(event: ProposalCanceled): void {
-  let proposal = Proposal.load(getProposalId(daoName, event.params.id))
+  let proposal = Proposal.load(getProposalId(daoName, event.params.id));
   if (proposal != null) {
-    proposal.status = "Canceled"
-    proposal.save()
+    proposal.status = "Canceled";
+    proposal.save();
   }
 }
 
 export function handleProposalCreated(event: ProposalCreated): void {
-  let proposal = new Proposal(getProposalId(daoName, event.params.id))
-  proposal.status = "Active"
-  proposal.timestamp = event.block.timestamp
-  proposal.description = event.params.description
-  proposal.proposer = event.params.proposer.toHexString()
-  let org = new Organization(daoName)
-  org.save()
-  proposal.organization = org.id
-  proposal.save()
+  let proposal = new Proposal(getProposalId(daoName, event.params.id));
+  proposal.status = "Active";
+  proposal.timestamp = event.block.timestamp;
+  proposal.description = event.params.description;
+  proposal.proposer = event.params.proposer.toHexString();
+  let org = new Organization(daoName);
+  org.save();
+  proposal.organization = org.id;
+  proposal.save();
 }
 
 export function handleProposalExecuted(event: ProposalExecuted): void {
-  let proposal = Proposal.load(getProposalId(daoName, event.params.id))
+  let proposal = Proposal.load(getProposalId(daoName, event.params.id));
   if (proposal != null) {
-    proposal.status = "Executed"
-    proposal.timestamp = event.block.timestamp
-    proposal.save()
+    proposal.status = "Executed";
+    proposal.timestamp = event.block.timestamp;
+    proposal.save();
   }
 }
 
 export function handleProposalQueued(event: ProposalQueued): void {
-  let proposal = Proposal.load(getProposalId(daoName, event.params.id))
+  let proposal = Proposal.load(getProposalId(daoName, event.params.id));
   if (proposal != null) {
-    proposal.status = "Queued"
-    proposal.timestamp = event.block.timestamp
-    proposal.save()
+    proposal.status = "Queued";
+    proposal.timestamp = event.block.timestamp;
+    proposal.save();
   }
 }
 
-export function handleVoteCast(event: VoteCast): void {
-  let vote = new Vote(event.params.voter.toHexString() + event.params.proposalId.toHexString())
-  let proposal = Proposal.load(getProposalId(daoName, event.params.proposalId))
-  let user = User.load(event.params.voter.toHexString())
+function voteCast(
+  voter: string,
+  proposalId: BigInt,
+  votes: BigInt,
+  timestamp: BigInt
+): Vote {
+  let vote = new Vote(voter + proposalId.toHexString());
+  let proposal = Proposal.load(getProposalId(daoName, proposalId));
+  let user = User.load(voter);
   if (user == null) {
-    user = new User(event.params.voter.toHexString())
+    user = new User(voter);
   }
-  let org = new Organization(daoName)
-  user.organization = org.id
-  user.save()
+  let org = new Organization(daoName);
+  user.save();
   if (proposal != null) {
-    vote.proposal = proposal.id
+    vote.proposal = proposal.id;
   }
-  vote.user = user.id
-  vote.support = event.params.support
-  vote.weight = event.params.votes
-  vote.timestamp = event.block.timestamp
-  vote.organization = org.id
-  vote.save()
+  vote.user = user.id;
+  vote.weight = votes;
+  vote.timestamp = timestamp;
+  vote.organization = org.id;
+  return vote;
+}
+
+export function handleVoteCast(event: VoteCast): void {
+  const params = event.params;
+  const vote = voteCast(
+    params.voter.toHexString(),
+    params.proposalId,
+    params.votes,
+    event.block.timestamp
+  );
+  vote.support = params.support ? 1 : 0;
+  vote.save();
+}
+
+export function handleVoteCastBravo(event: VoteCastBravo): void {
+  const params = event.params;
+  let vote = voteCast(
+    params.voter.toHexString(),
+    params.proposalId,
+    params.votes,
+    event.block.timestamp
+  );
+  vote.support = params.support;
+  vote.reason = params.reason;
+  vote.save();
 }
