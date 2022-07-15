@@ -54,8 +54,8 @@ function voteCast(
   proposalId: BigInt,
   votes: BigInt,
   timestamp: BigInt
-) {
-  let vote = new Vote(voter + proposalId);
+): Vote {
+  let vote = new Vote(voter + proposalId.toHexString());
   let proposal = Proposal.load(getProposalId(daoName, proposalId));
   let user = User.load(voter);
   if (user == null) {
@@ -76,23 +76,24 @@ function voteCast(
 export function handleVoteCast(event: VoteCast): void {
   const params = event.params;
   const vote = voteCast(
-    params.voter.toString(),
+    params.voter.toHexString(),
     params.proposalId,
     params.votes,
     event.block.timestamp
   );
-  vote.support = params.support;
+  vote.support = params.support ? 1 : 0;
+  vote.save();
 }
 
 export function handleVoteCastBravo(event: VoteCastBravo): void {
   const params = event.params;
   let vote = voteCast(
-    params.voter.toString(),
+    params.voter.toHexString(),
     params.proposalId,
     params.votes,
     event.block.timestamp
   );
-  vote.support = event.params.support;
-  vote.reason = event.params.reason;
+  vote.support = params.support;
+  vote.reason = params.reason;
   vote.save();
 }
