@@ -1,3 +1,4 @@
+import { BigInt } from "@graphprotocol/graph-ts";
 import {
   ProposalCanceled,
   ProposalCreated,
@@ -49,14 +50,17 @@ export function handleProposalQueued(event: ProposalQueued): void {
   }
 }
 
-export function handleVoteCast(event: VoteCast): void {
-  let vote = new Vote(
-    event.params.voter.toHexString() + event.params.proposalId.toHexString()
-  );
-  let proposal = Proposal.load(getProposalId(daoName, event.params.proposalId));
-  let user = User.load(event.params.voter.toHexString());
+function voteCast(
+  voter: string,
+  proposalId: BigInt,
+  votes: BigInt,
+  timestamp: BigInt
+): Vote {
+  let vote = new Vote(voter + proposalId.toHexString());
+  let proposal = Proposal.load(getProposalId(daoName, proposalId));
+  let user = User.load(voter);
   if (user == null) {
-    user = new User(event.params.voter.toHexString());
+    user = new User(voter);
   }
   let org = new Organization(daoName);
   user.save();
@@ -64,32 +68,33 @@ export function handleVoteCast(event: VoteCast): void {
     vote.proposal = proposal.id;
   }
   vote.user = user.id;
-  vote.support = event.params.support;
-  vote.weight = event.params.votes;
-  vote.reason = event.params.reason;
-  vote.timestamp = event.block.timestamp;
+  vote.weight = votes;
+  vote.timestamp = timestamp;
   vote.organization = org.id;
+  return vote;
+}
+
+export function handleVoteCast(event: VoteCast): void {
+  const params = event.params;
+  let vote = voteCast(
+    params.voter.toHexString(),
+    params.proposalId,
+    params.votes,
+    event.block.timestamp
+  );
+  vote.support = params.support;
+  vote.reason = params.reason;
   vote.save();
 }
 
 export function handleVoteCastAlpha(event: VoteCastAlpha): void {
-  let vote = new Vote(
-    event.params.voter.toHexString() + event.params.proposalId.toHexString()
+  const params = event.params;
+  let vote = voteCast(
+    params.voter.toHexString(),
+    params.proposalId,
+    params.votes,
+    event.block.timestamp
   );
-  let proposal = Proposal.load(getProposalId(daoName, event.params.proposalId));
-  let user = User.load(event.params.voter.toHexString());
-  if (user == null) {
-    user = new User(event.params.voter.toHexString());
-  }
-  let org = new Organization(daoName);
-  user.save();
-  if (proposal != null) {
-    vote.proposal = proposal.id;
-  }
-  vote.user = user.id;
   vote.support = event.params.support ? 1 : 0;
-  vote.weight = event.params.votes;
-  vote.timestamp = event.block.timestamp;
-  vote.organization = org.id;
   vote.save();
 }
