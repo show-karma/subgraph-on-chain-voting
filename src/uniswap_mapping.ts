@@ -49,49 +49,50 @@ export function handleProposalQueued(event: ProposalQueued): void {
   }
 }
 
-export function handleVoteCast(event: VoteCast): void {
-  let vote = new Vote(
-    event.params.voter.toHexString() + event.params.proposalId.toHexString()
-  );
-  let proposal = Proposal.load(getProposalId(daoName, event.params.proposalId));
-  let user = User.load(event.params.voter.toHexString());
+function voteCast(
+  voter: string,
+  proposalId: BigInt,
+  votes: BigInt,
+  timestamp: BigInt
+) {
+  let vote = new Vote(voter + proposalId);
+  let proposal = Proposal.load(getProposalId(daoName, proposalId));
+  let user = User.load(voter);
   if (user == null) {
-    user = new User(event.params.voter.toHexString());
+    user = new User(voter);
   }
   let org = new Organization(daoName);
-  user.organization = org.id;
   user.save();
   if (proposal != null) {
     vote.proposal = proposal.id;
   }
   vote.user = user.id;
-  vote.support = event.params.support;
-  vote.weight = event.params.votes;
-  vote.timestamp = event.block.timestamp;
+  vote.weight = votes;
+  vote.timestamp = timestamp;
   vote.organization = org.id;
-  vote.save();
+  return vote;
+}
+
+export function handleVoteCast(event: VoteCast): void {
+  const { params } = event;
+  const vote = voteCast(
+    params.voter.toString(),
+    params.proposalId,
+    params.votes,
+    event.block.timestamp
+  );
+  vote.support = params.support;
 }
 
 export function handleVoteCastBravo(event: VoteCastBravo): void {
-  let vote = new Vote(
-    event.params.voter.toHexString() + event.params.proposalId.toHexString()
+  const { params } = event;
+  let vote = voteCast(
+    params.voter.toString(),
+    params.proposalId,
+    params.votes,
+    event.block.timestamp
   );
-  let proposal = Proposal.load(getProposalId(daoName, event.params.proposalId));
-  let user = User.load(event.params.voter.toHexString());
-  if (user == null) {
-    user = new User(event.params.voter.toHexString());
-  }
-  let org = new Organization(daoName);
-  user.organization = org.id;
-  user.save();
-  if (proposal != null) {
-    vote.proposal = proposal.id;
-  }
-  vote.user = user.id;
   vote.support = event.params.support;
-  vote.weight = event.params.votes;
-  vote.timestamp = event.block.timestamp;
   vote.reason = event.params.reason;
-  vote.organization = org.id;
   vote.save();
 }
