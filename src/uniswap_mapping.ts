@@ -74,7 +74,7 @@ function voteCast(
 }
 
 export function handleVoteCast(event: VoteCast): void {
-  const { params } = event;
+  const params = event.params;
   const vote = voteCast(
     params.voter.toString(),
     params.proposalId,
@@ -85,7 +85,7 @@ export function handleVoteCast(event: VoteCast): void {
 }
 
 export function handleVoteCastBravo(event: VoteCastBravo): void {
-  const { params } = event;
+  const params = event.params;
   let vote = voteCast(
     params.voter.toString(),
     params.proposalId,
