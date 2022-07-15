@@ -16,7 +16,7 @@ type Organization @entity {
 type User @entity {
   id: ID!
   votes: [Vote!]! @derivedFrom(field: "user")
-  organization: Organization!
+  organization: Organization
 }
 
 type Proposal @entity {

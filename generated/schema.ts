@@ -49,8 +49,6 @@ export class User extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
-
-    this.set("organization", Value.fromString(""));
   }
 
   save(): void {
@@ -88,13 +86,21 @@ export class User extends Entity {
     this.set("votes", Value.fromStringArray(value));
   }
 
-  get organization(): string {
+  get organization(): string | null {
     let value = this.get("organization");
-    return value!.toString();
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
   }
 
-  set organization(value: string) {
-    this.set("organization", Value.fromString(value));
+  set organization(value: string | null) {
+    if (!value) {
+      this.unset("organization");
+    } else {
+      this.set("organization", Value.fromString(<string>value));
+    }
   }
 }
 
