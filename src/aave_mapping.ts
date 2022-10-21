@@ -14,6 +14,7 @@ export function handleProposalCreated(event: ProposalCreated): void {
   let proposal = new Proposal(getProposalId(daoName, event.params.proposalId));
   proposal.status = "Active";
   proposal.timestamp = event.block.timestamp;
+  proposal.startDate = event.block.timestamp;
   proposal.description = event.params.proposalType.toHexString();
   proposal.proposer = event.params.proposalExecutor.toHexString();
   let org = new Organization(daoName);
@@ -27,6 +28,7 @@ export function handleProposalExecuted(event: StatusChangeToExecuted): void {
   if (proposal != null) {
     proposal.status = "Executed";
     proposal.timestamp = event.block.timestamp;
+    proposal.endDate = event.block.timestamp;
     proposal.save();
   }
 }

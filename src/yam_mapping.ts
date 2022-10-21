@@ -8,6 +8,7 @@ import {
 } from "../generated/YamFinanceGovernor/YamFinanceGovernor";
 import { User, Vote, Proposal, Organization } from "../generated/schema";
 import { getProposalId } from "./proposals";
+import { BigInt } from "@graphprotocol/graph-ts";
 const daoName = "yam.eth";
 
 export function handleProposalCanceled(event: ProposalCanceled): void {
@@ -15,6 +16,7 @@ export function handleProposalCanceled(event: ProposalCanceled): void {
   if (proposal != null) {
     proposal.status = "Canceled";
     proposal.timestamp = event.block.timestamp;
+    proposal.endDate = event.block.timestamp;
     proposal.save();
   }
 }
@@ -23,6 +25,7 @@ export function handleProposalCreated(event: ProposalCreated): void {
   let proposal = new Proposal(getProposalId(daoName, event.params.id));
   proposal.status = "Active";
   proposal.timestamp = event.block.timestamp;
+  proposal.startDate = event.block.timestamp;
   proposal.description = event.params.description;
   proposal.proposer = event.params.proposer.toHexString();
   let org = new Organization(daoName);
@@ -36,6 +39,7 @@ export function handleProposalExecuted(event: ProposalExecuted): void {
   if (proposal != null) {
     proposal.status = "Executed";
     proposal.timestamp = event.block.timestamp;
+    proposal.endDate = event.block.timestamp;
     proposal.save();
   }
 }
@@ -60,14 +64,17 @@ export function handleVoteCast(event: VoteCast): void {
   }
   let org = new Organization(daoName);
   user.save();
-  if (proposal != null) {
-    vote.proposal = proposal.id;
+  const voteWeight = vote.weight;
+  if (voteWeight && voteWeight.gt(new BigInt(0))) {
+    if (proposal != null) {
+      vote.proposal = proposal.id;
+    }
+    vote.user = user.id;
+    vote.support = event.params.support ? 1 : 0;
+    vote.weight = event.params.votes;
+    vote.reason = event.params.support.toString();
+    vote.timestamp = event.block.timestamp;
+    vote.organization = org.id;
+    vote.save();
   }
-  vote.user = user.id;
-  vote.support = event.params.support ? 1 : 0;
-  vote.weight = event.params.votes;
-  vote.reason = event.params.support.toString();
-  vote.timestamp = event.block.timestamp;
-  vote.organization = org.id;
-  vote.save();
 }
