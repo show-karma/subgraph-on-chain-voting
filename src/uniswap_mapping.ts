@@ -84,8 +84,11 @@ export function handleVoteCast(event: VoteCast): void {
     params.votes,
     event.block.timestamp
   );
-  vote.support = params.support ? 1 : 0;
-  vote.save();
+  const voteWeight = vote.weight;
+  if (voteWeight && voteWeight.gt(new BigInt(0))) {
+    vote.support = params.support ? 1 : 0;
+    vote.save();
+  }
 }
 
 export function handleVoteCastBravo(event: VoteCastBravo): void {
@@ -96,7 +99,10 @@ export function handleVoteCastBravo(event: VoteCastBravo): void {
     params.votes,
     event.block.timestamp
   );
-  vote.support = params.support;
-  vote.reason = params.reason;
-  vote.save();
+  const voteWeight = vote.weight;
+  if (voteWeight && voteWeight.gt(new BigInt(0))) {
+    vote.support = params.support;
+    vote.reason = params.reason;
+    vote.save();
+  }
 }

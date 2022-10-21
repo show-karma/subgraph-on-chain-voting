@@ -71,7 +71,9 @@ function voteCast(
     vote.proposal = proposal.id;
   }
   vote.user = user.id;
+
   vote.weight = votes;
+
   vote.timestamp = timestamp;
   vote.organization = org.id;
   return vote;
@@ -85,9 +87,12 @@ export function handleVoteCast(event: VoteCast): void {
     params.votes,
     event.block.timestamp
   );
-  vote.support = params.support;
-  vote.reason = params.reason;
-  vote.save();
+  const voteWeight = vote.weight;
+  if (voteWeight && voteWeight.gt(new BigInt(0))) {
+    vote.support = params.support;
+    vote.reason = params.reason;
+    vote.save();
+  }
 }
 
 export function handleVoteCastAlpha(event: VoteCastAlpha): void {
@@ -98,6 +103,9 @@ export function handleVoteCastAlpha(event: VoteCastAlpha): void {
     params.votes,
     event.block.timestamp
   );
-  vote.support = event.params.support ? 1 : 0;
-  vote.save();
+  const voteWeight = vote.weight;
+  if (voteWeight && voteWeight.gt(new BigInt(0))) {
+    vote.support = event.params.support ? 1 : 0;
+    vote.save();
+  }
 }
