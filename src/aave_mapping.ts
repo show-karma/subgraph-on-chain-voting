@@ -28,7 +28,6 @@ export function handleProposalExecuted(event: StatusChangeToExecuted): void {
   if (proposal != null) {
     proposal.status = "Executed";
     proposal.timestamp = event.block.timestamp;
-    proposal.endDate = event.block.timestamp;
     proposal.save();
   }
 }
@@ -38,6 +37,7 @@ export function handleProposalQueued(event: StatusChangeToVoting): void {
   if (proposal != null) {
     proposal.status = "Queued";
     proposal.timestamp = event.block.timestamp;
+    proposal.endDate = event.block.timestamp;
     proposal.save();
   }
 }
