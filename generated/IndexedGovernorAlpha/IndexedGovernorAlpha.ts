@@ -339,9 +339,7 @@ export class IndexedGovernorAlpha extends ethereum.SmartContract {
       ]
     );
 
-    return changetype<IndexedGovernorAlpha__getReceiptResultValue0Struct>(
-      result[0].toTuple()
-    );
+    return result[0].toTuple() as IndexedGovernorAlpha__getReceiptResultValue0Struct;
   }
 
   try_getReceipt(
@@ -361,9 +359,7 @@ export class IndexedGovernorAlpha extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      changetype<IndexedGovernorAlpha__getReceiptResultValue0Struct>(
-        value[0].toTuple()
-      )
+      value[0].toTuple() as IndexedGovernorAlpha__getReceiptResultValue0Struct
     );
   }
 

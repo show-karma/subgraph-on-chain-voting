@@ -27,6 +27,8 @@ type Proposal @entity {
   votes: [Vote!]! @derivedFrom(field: "proposal")
   organization: Organization!
   timestamp: BigInt!
+  startDate: BigInt!
+  endDate: BigInt
 }
 
 type Vote @entity {
