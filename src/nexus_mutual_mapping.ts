@@ -19,6 +19,7 @@ export function handleProposalCreated(event: Proposal): void {
   );
   proposal.status = "Active";
   proposal.timestamp = event.block.timestamp;
+  proposal.startDate = event.block.timestamp;
   proposal.proposer = event.params.proposalOwner.toHexString();
   proposal.description = event.params.proposalTitle;
   const org = new Organization(daoName);
