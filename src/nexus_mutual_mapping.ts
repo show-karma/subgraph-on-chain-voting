@@ -41,16 +41,14 @@ export function handleVoteCast(event: Vote): void {
   }
   let org = new Organization(daoName);
   user.save();
-  const voteWeight = vote.weight;
-  if (voteWeight && voteWeight.gt(new BigInt(0))) {
-    if (proposal != null) {
-      vote.proposal = proposal.id;
-    }
-    vote.user = user.id;
-    vote.solution = event.params.solutionChosen;
-    vote.timestamp = event.block.timestamp;
-    vote.support = -1;
-    vote.organization = org.id;
-    vote.save();
+
+  if (proposal != null) {
+    vote.proposal = proposal.id;
   }
+  vote.user = user.id;
+  vote.solution = event.params.solutionChosen;
+  vote.timestamp = event.block.timestamp;
+  vote.support = -1;
+  vote.organization = org.id;
+  vote.save();
 }
