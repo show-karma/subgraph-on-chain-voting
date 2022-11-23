@@ -65,7 +65,7 @@ export function handleVoteCast(event: VoteCast): void {
   let org = new Organization(daoName);
   user.save();
 
-  const voteWeight = vote.weight;
+  const voteWeight = event.params.weight;
   if (voteWeight && voteWeight.gt(new BigInt(0))) {
     if (proposal != null) {
       vote.proposal = proposal.id;

@@ -65,7 +65,7 @@ export function handleVoteCast(event: VoteCast): void {
   user.organization = org.id;
   user.save();
 
-  const voteWeight = vote.weight;
+  const voteWeight = event.params.votes;
   if (voteWeight && voteWeight.gt(new BigInt(0))) {
     if (proposal != null) {
       vote.proposal = proposal.id;
