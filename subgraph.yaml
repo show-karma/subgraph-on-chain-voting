@@ -33,11 +33,11 @@ dataSources:
           handler: handleVoteCast
       file: ./src/ens_mapping.ts
   - kind: ethereum/contract
-    name: GTCGovernorAlpha
+    name: GitcoinGovernorAlpha
     network: mainnet
     source:
       address: "0xDbD27635A534A3d3169Ef0498beB56Fb9c937489"
-      abi: GTCGovernorAlpha
+      abi: GitcoinGovernorAlpha
       startBlock: 12497481
     mapping:
       kind: ethereum/events
@@ -48,8 +48,8 @@ dataSources:
         - Proposal
         - Vote
       abis:
-        - name: GTCGovernorAlpha
-          file: ./abis/GTCGovernorAlpha.json
+        - name: GitcoinGovernorAlpha
+          file: ./abis/GitcoinGovernorAlpha.json
       eventHandlers:
         - event: ProposalCanceled(uint256)
           handler: handleProposalCanceled
