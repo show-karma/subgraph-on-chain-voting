@@ -423,7 +423,9 @@ export class InverseFinanceGovernor extends ethereum.SmartContract {
       ]
     );
 
-    return result[0].toTuple() as InverseFinanceGovernor__getReceiptResultValue0Struct;
+    return changetype<InverseFinanceGovernor__getReceiptResultValue0Struct>(
+      result[0].toTuple()
+    );
   }
 
   try_getReceipt(
@@ -443,7 +445,9 @@ export class InverseFinanceGovernor extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      value[0].toTuple() as InverseFinanceGovernor__getReceiptResultValue0Struct
+      changetype<InverseFinanceGovernor__getReceiptResultValue0Struct>(
+        value[0].toTuple()
+      )
     );
   }
 

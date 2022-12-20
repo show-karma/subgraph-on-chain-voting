@@ -339,7 +339,9 @@ export class IdleFinanceTokenAlpha extends ethereum.SmartContract {
       ]
     );
 
-    return result[0].toTuple() as IdleFinanceTokenAlpha__getReceiptResultValue0Struct;
+    return changetype<IdleFinanceTokenAlpha__getReceiptResultValue0Struct>(
+      result[0].toTuple()
+    );
   }
 
   try_getReceipt(
@@ -359,7 +361,9 @@ export class IdleFinanceTokenAlpha extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      value[0].toTuple() as IdleFinanceTokenAlpha__getReceiptResultValue0Struct
+      changetype<IdleFinanceTokenAlpha__getReceiptResultValue0Struct>(
+        value[0].toTuple()
+      )
     );
   }
 
