@@ -339,7 +339,9 @@ export class PoolTogetherGovernorAlpha extends ethereum.SmartContract {
       ]
     );
 
-    return result[0].toTuple() as PoolTogetherGovernorAlpha__getReceiptResultValue0Struct;
+    return changetype<PoolTogetherGovernorAlpha__getReceiptResultValue0Struct>(
+      result[0].toTuple()
+    );
   }
 
   try_getReceipt(
@@ -361,7 +363,9 @@ export class PoolTogetherGovernorAlpha extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      value[0].toTuple() as PoolTogetherGovernorAlpha__getReceiptResultValue0Struct
+      changetype<PoolTogetherGovernorAlpha__getReceiptResultValue0Struct>(
+        value[0].toTuple()
+      )
     );
   }
 
