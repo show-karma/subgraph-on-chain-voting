@@ -298,6 +298,18 @@ export class NexusMutualGovernance__voteTallyDataResult {
     map.set("value2", ethereum.Value.fromUnsignedBigInt(this.value2));
     return map;
   }
+
+  getValue0(): BigInt {
+    return this.value0;
+  }
+
+  getValue1(): BigInt {
+    return this.value1;
+  }
+
+  getValue2(): BigInt {
+    return this.value2;
+  }
 }
 
 export class NexusMutualGovernance__proposalDetailsResult {
@@ -318,6 +330,18 @@ export class NexusMutualGovernance__proposalDetailsResult {
     map.set("value2", ethereum.Value.fromUnsignedBigInt(this.value2));
     return map;
   }
+
+  getValue0(): BigInt {
+    return this.value0;
+  }
+
+  getValue1(): BigInt {
+    return this.value1;
+  }
+
+  getValue2(): BigInt {
+    return this.value2;
+  }
 }
 
 export class NexusMutualGovernance__getSolutionActionResult {
@@ -334,6 +358,14 @@ export class NexusMutualGovernance__getSolutionActionResult {
     map.set("value0", ethereum.Value.fromUnsignedBigInt(this.value0));
     map.set("value1", ethereum.Value.fromBytes(this.value1));
     return map;
+  }
+
+  getValue0(): BigInt {
+    return this.value0;
+  }
+
+  getValue1(): Bytes {
+    return this.value1;
   }
 }
 
@@ -367,6 +399,26 @@ export class NexusMutualGovernance__proposalResult {
     map.set("value4", ethereum.Value.fromUnsignedBigInt(this.value4));
     return map;
   }
+
+  getProposalId(): BigInt {
+    return this.value0;
+  }
+
+  getCategory(): BigInt {
+    return this.value1;
+  }
+
+  getStatus(): BigInt {
+    return this.value2;
+  }
+
+  getFinalVerdict(): BigInt {
+    return this.value3;
+  }
+
+  getTotalRewar(): BigInt {
+    return this.value4;
+  }
 }
 
 export class NexusMutualGovernance__getUintParametersResult {
@@ -383,6 +435,14 @@ export class NexusMutualGovernance__getUintParametersResult {
     map.set("value0", ethereum.Value.fromFixedBytes(this.value0));
     map.set("value1", ethereum.Value.fromUnsignedBigInt(this.value1));
     return map;
+  }
+
+  getCodeVal(): Bytes {
+    return this.value0;
+  }
+
+  getVal(): BigInt {
+    return this.value1;
   }
 }
 
@@ -403,6 +463,18 @@ export class NexusMutualGovernance__allDelegationResult {
     map.set("value1", ethereum.Value.fromAddress(this.value1));
     map.set("value2", ethereum.Value.fromUnsignedBigInt(this.value2));
     return map;
+  }
+
+  getFollower(): Address {
+    return this.value0;
+  }
+
+  getLeader(): Address {
+    return this.value1;
+  }
+
+  getLastUpd(): BigInt {
+    return this.value2;
   }
 }
 
