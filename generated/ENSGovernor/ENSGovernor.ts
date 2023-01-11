@@ -214,6 +214,18 @@ export class ENSGovernor__proposalVotesResult {
     map.set("value2", ethereum.Value.fromUnsignedBigInt(this.value2));
     return map;
   }
+
+  getAgainstVotes(): BigInt {
+    return this.value0;
+  }
+
+  getForVotes(): BigInt {
+    return this.value1;
+  }
+
+  getAbstainVotes(): BigInt {
+    return this.value2;
+  }
 }
 
 export class ENSGovernor extends ethereum.SmartContract {

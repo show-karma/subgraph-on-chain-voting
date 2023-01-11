@@ -310,6 +310,22 @@ export class RariGovernorBravo__getActionsResult {
     map.set("value3", ethereum.Value.fromBytesArray(this.value3));
     return map;
   }
+
+  getTargets(): Array<Address> {
+    return this.value0;
+  }
+
+  getValues(): Array<BigInt> {
+    return this.value1;
+  }
+
+  getSignatures(): Array<string> {
+    return this.value2;
+  }
+
+  getCalldatas(): Array<Bytes> {
+    return this.value3;
+  }
 }
 
 export class RariGovernorBravo__getReceiptResultValue0Struct extends ethereum.Tuple {
@@ -375,6 +391,46 @@ export class RariGovernorBravo__proposalsResult {
     map.set("value8", ethereum.Value.fromBoolean(this.value8));
     map.set("value9", ethereum.Value.fromBoolean(this.value9));
     return map;
+  }
+
+  getId(): BigInt {
+    return this.value0;
+  }
+
+  getProposer(): Address {
+    return this.value1;
+  }
+
+  getEta(): BigInt {
+    return this.value2;
+  }
+
+  getStartBlock(): BigInt {
+    return this.value3;
+  }
+
+  getEndBlock(): BigInt {
+    return this.value4;
+  }
+
+  getForVotes(): BigInt {
+    return this.value5;
+  }
+
+  getAgainstVotes(): BigInt {
+    return this.value6;
+  }
+
+  getAbstainVotes(): BigInt {
+    return this.value7;
+  }
+
+  getCanceled(): boolean {
+    return this.value8;
+  }
+
+  getExecuted(): boolean {
+    return this.value9;
   }
 }
 
@@ -632,7 +688,9 @@ export class RariGovernorBravo extends ethereum.SmartContract {
       ]
     );
 
-    return result[0].toTuple() as RariGovernorBravo__getReceiptResultValue0Struct;
+    return changetype<RariGovernorBravo__getReceiptResultValue0Struct>(
+      result[0].toTuple()
+    );
   }
 
   try_getReceipt(
@@ -652,7 +710,9 @@ export class RariGovernorBravo extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      value[0].toTuple() as RariGovernorBravo__getReceiptResultValue0Struct
+      changetype<RariGovernorBravo__getReceiptResultValue0Struct>(
+        value[0].toTuple()
+      )
     );
   }
 

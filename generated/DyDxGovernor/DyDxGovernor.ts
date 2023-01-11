@@ -628,7 +628,9 @@ export class DyDxGovernor extends ethereum.SmartContract {
       [ethereum.Value.fromUnsignedBigInt(proposalId)]
     );
 
-    return result[0].toTuple() as DyDxGovernor__getProposalByIdResultValue0Struct;
+    return changetype<DyDxGovernor__getProposalByIdResultValue0Struct>(
+      result[0].toTuple()
+    );
   }
 
   try_getProposalById(
@@ -644,7 +646,9 @@ export class DyDxGovernor extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      value[0].toTuple() as DyDxGovernor__getProposalByIdResultValue0Struct
+      changetype<DyDxGovernor__getProposalByIdResultValue0Struct>(
+        value[0].toTuple()
+      )
     );
   }
 
@@ -728,7 +732,9 @@ export class DyDxGovernor extends ethereum.SmartContract {
       ]
     );
 
-    return result[0].toTuple() as DyDxGovernor__getVoteOnProposalResultValue0Struct;
+    return changetype<DyDxGovernor__getVoteOnProposalResultValue0Struct>(
+      result[0].toTuple()
+    );
   }
 
   try_getVoteOnProposal(
@@ -748,7 +754,9 @@ export class DyDxGovernor extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      value[0].toTuple() as DyDxGovernor__getVoteOnProposalResultValue0Struct
+      changetype<DyDxGovernor__getVoteOnProposalResultValue0Struct>(
+        value[0].toTuple()
+      )
     );
   }
 

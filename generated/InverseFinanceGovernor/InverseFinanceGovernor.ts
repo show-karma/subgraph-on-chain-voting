@@ -258,6 +258,22 @@ export class InverseFinanceGovernor__getActionsResult {
     map.set("value3", ethereum.Value.fromBytesArray(this.value3));
     return map;
   }
+
+  getTargets(): Array<Address> {
+    return this.value0;
+  }
+
+  getValues(): Array<BigInt> {
+    return this.value1;
+  }
+
+  getSignatures(): Array<string> {
+    return this.value2;
+  }
+
+  getCalldatas(): Array<Bytes> {
+    return this.value3;
+  }
 }
 
 export class InverseFinanceGovernor__getReceiptResultValue0Struct extends ethereum.Tuple {
@@ -319,6 +335,42 @@ export class InverseFinanceGovernor__proposalsResult {
     map.set("value7", ethereum.Value.fromBoolean(this.value7));
     map.set("value8", ethereum.Value.fromBoolean(this.value8));
     return map;
+  }
+
+  getId(): BigInt {
+    return this.value0;
+  }
+
+  getProposer(): Address {
+    return this.value1;
+  }
+
+  getEta(): BigInt {
+    return this.value2;
+  }
+
+  getStartBlock(): BigInt {
+    return this.value3;
+  }
+
+  getEndBlock(): BigInt {
+    return this.value4;
+  }
+
+  getForVotes(): BigInt {
+    return this.value5;
+  }
+
+  getAgainstVotes(): BigInt {
+    return this.value6;
+  }
+
+  getCanceled(): boolean {
+    return this.value7;
+  }
+
+  getExecuted(): boolean {
+    return this.value8;
   }
 }
 
@@ -423,7 +475,9 @@ export class InverseFinanceGovernor extends ethereum.SmartContract {
       ]
     );
 
-    return result[0].toTuple() as InverseFinanceGovernor__getReceiptResultValue0Struct;
+    return changetype<InverseFinanceGovernor__getReceiptResultValue0Struct>(
+      result[0].toTuple()
+    );
   }
 
   try_getReceipt(
@@ -443,7 +497,9 @@ export class InverseFinanceGovernor extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      value[0].toTuple() as InverseFinanceGovernor__getReceiptResultValue0Struct
+      changetype<InverseFinanceGovernor__getReceiptResultValue0Struct>(
+        value[0].toTuple()
+      )
     );
   }
 

@@ -1,4 +1,4 @@
-specVersion: 0.0.2
+specVersion: 0.0.4
 schema:
   file: schema.graphql
 dataSources:
@@ -11,7 +11,7 @@ dataSources:
       startBlock: 13533750
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - User
@@ -41,7 +41,7 @@ dataSources:
       startBlock: 12497481
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - User
@@ -71,7 +71,7 @@ dataSources:
       startBlock: 11870114
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - User
@@ -101,7 +101,7 @@ dataSources:
       startBlock: 10861678
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - User
@@ -131,7 +131,7 @@ dataSources:
       startBlock: 10861678
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - User
@@ -161,7 +161,7 @@ dataSources:
       startBlock: 7815930
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - User
@@ -185,7 +185,7 @@ dataSources:
       startBlock: 12904056
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - User
@@ -215,7 +215,7 @@ dataSources:
       startBlock: 11457782
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - User
@@ -245,7 +245,7 @@ dataSources:
       startBlock: 12685241
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - User
@@ -275,7 +275,7 @@ dataSources:
       startBlock: 13549618
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - User
@@ -305,7 +305,7 @@ dataSources:
       startBlock: 13349454
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - User
@@ -335,7 +335,7 @@ dataSources:
       startBlock: 10910236
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - User
@@ -365,7 +365,7 @@ dataSources:
       startBlock: 11778137
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - User
@@ -395,7 +395,7 @@ dataSources:
       startBlock: 12006099
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - User
@@ -425,7 +425,7 @@ dataSources:
       startBlock: 12985453
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - User
@@ -455,7 +455,7 @@ dataSources:
       startBlock: 13549618
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - User
@@ -485,7 +485,7 @@ dataSources:
       startBlock: 13753067
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - User
@@ -515,7 +515,7 @@ dataSources:
       startBlock: 11333755
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - User
@@ -545,7 +545,7 @@ dataSources:
       startBlock: 12816310
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.5
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - User
@@ -567,3 +567,29 @@ dataSources:
         - event: VoteEmitted(uint256,indexed address,bool,uint256)
           handler: handleVoteCast
       file: DyDxGovernor/DyDxGovernor.wasm
+  - kind: ethereum/contract
+    name: ElementFinanceGovernor
+    network: mainnet
+    source:
+      address: "0xEaCD577C3F6c44C3ffA398baaD97aE12CDCFed4a"
+      abi: ElementFinanceGovernor
+      startBlock: 14032387
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - User
+        - Proposal
+        - Vote
+      abis:
+        - name: ElementFinanceGovernor
+          file: ElementFinanceGovernor/abis/ElementFinance.json
+      eventHandlers:
+        - event: ProposalCreated(uint256,uint256,uint256,uint256)
+          handler: handleProposalCreated
+        - event: ProposalExecuted(uint256)
+          handler: handleProposalExecuted
+        - event: Voted(indexed address,indexed uint256,(uint128,uint8))
+          handler: handleVoteCast
+      file: ElementFinanceGovernor/ElementFinanceGovernor.wasm

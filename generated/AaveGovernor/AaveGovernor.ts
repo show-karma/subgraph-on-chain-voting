@@ -342,6 +342,50 @@ export class AaveGovernor__getProposalBasicDataResult {
     map.set("value10", ethereum.Value.fromFixedBytes(this.value10));
     return map;
   }
+
+  get_totalVotes(): BigInt {
+    return this.value0;
+  }
+
+  get_threshold(): BigInt {
+    return this.value1;
+  }
+
+  get_maxMovesToVotingAllowed(): BigInt {
+    return this.value2;
+  }
+
+  get_movesToVoting(): BigInt {
+    return this.value3;
+  }
+
+  get_votingBlocksDuration(): BigInt {
+    return this.value4;
+  }
+
+  get_validatingBlocksDuration(): BigInt {
+    return this.value5;
+  }
+
+  get_currentStatusInitBlock(): BigInt {
+    return this.value6;
+  }
+
+  get_initProposalBlock(): BigInt {
+    return this.value7;
+  }
+
+  get_proposalStatus(): BigInt {
+    return this.value8;
+  }
+
+  get_proposalExecutor(): Address {
+    return this.value9;
+  }
+
+  get_proposalType(): Bytes {
+    return this.value10;
+  }
 }
 
 export class AaveGovernor__getVoterDataResult {
@@ -373,6 +417,26 @@ export class AaveGovernor__getVoterDataResult {
     map.set("value3", ethereum.Value.fromUnsignedBigInt(this.value3));
     map.set("value4", ethereum.Value.fromAddress(this.value4));
     return map;
+  }
+
+  get_vote(): BigInt {
+    return this.value0;
+  }
+
+  get_weight(): BigInt {
+    return this.value1;
+  }
+
+  get_balance(): BigInt {
+    return this.value2;
+  }
+
+  get_nonce(): BigInt {
+    return this.value3;
+  }
+
+  get_asset(): Address {
+    return this.value4;
   }
 }
 
