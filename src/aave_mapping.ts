@@ -1,9 +1,10 @@
+
 import { BigInt } from "@graphprotocol/graph-ts";
 import {
   AaveGovernor,
   ProposalCreated,
-  StatusChangeToExecuted,
-  StatusChangeToVoting,
+  ProposalExecuted,
+  ProposalQueued,
   VoteEmitted,
 } from "../generated/AaveGovernor/AaveGovernor";
 import { User, Vote, Proposal, Organization } from "../generated/schema";
@@ -11,20 +12,20 @@ import { getProposalId } from "./proposals";
 const daoName = "aave.eth";
 
 export function handleProposalCreated(event: ProposalCreated): void {
-  let proposal = new Proposal(getProposalId(daoName, event.params.proposalId));
+  let proposal = new Proposal(getProposalId(daoName, event.params.id));
   proposal.status = "Active";
   proposal.timestamp = event.block.timestamp;
   proposal.startDate = event.block.timestamp;
-  proposal.description = event.params.proposalType.toHexString();
-  proposal.proposer = event.params.proposalExecutor.toHexString();
+  proposal.description = event.params.ipfsHash.toHexString();
+  proposal.proposer = event.params.creator.toHexString();
   let org = new Organization(daoName);
   org.save();
   proposal.organization = org.id;
   proposal.save();
 }
 
-export function handleProposalExecuted(event: StatusChangeToExecuted): void {
-  let proposal = Proposal.load(getProposalId(daoName, event.params.proposalId));
+export function handleProposalExecuted(event: ProposalExecuted): void {
+  let proposal = Proposal.load(getProposalId(daoName, event.params.id));
   if (proposal != null) {
     proposal.status = "Executed";
     proposal.timestamp = event.block.timestamp;
@@ -32,8 +33,8 @@ export function handleProposalExecuted(event: StatusChangeToExecuted): void {
   }
 }
 
-export function handleProposalQueued(event: StatusChangeToVoting): void {
-  let proposal = Proposal.load(getProposalId(daoName, event.params.proposalId));
+export function handleProposalQueued(event: ProposalQueued): void {
+  let proposal = Proposal.load(getProposalId(daoName, event.params.id));
   if (proposal != null) {
     proposal.status = "Queued";
     proposal.timestamp = event.block.timestamp;
@@ -44,9 +45,9 @@ export function handleProposalQueued(event: StatusChangeToVoting): void {
 
 export function handleVoteCast(event: VoteEmitted): void {
   let vote = new Vote(
-    event.params.voter.toHexString() + event.params.proposalId.toHexString()
+    event.params.voter.toHexString() + event.params.id.toHexString()
   );
-  let proposal = Proposal.load(getProposalId(daoName, event.params.proposalId));
+  let proposal = Proposal.load(getProposalId(daoName, event.params.id));
   let user = User.load(event.params.voter.toHexString());
   if (user == null) {
     user = new User(event.params.voter.toHexString());
@@ -54,14 +55,14 @@ export function handleVoteCast(event: VoteEmitted): void {
   let org = new Organization(daoName);
   user.save();
 
-  const voteWeight = event.params.vote;
+  const voteWeight = event.params.votingPower;
   if (voteWeight && voteWeight.gt(new BigInt(0))) {
     if (proposal != null) {
       vote.proposal = proposal.id;
     }
     vote.user = user.id;
-    vote.support = event.params.vote == new BigInt(1) ? 1 : 0;
-    vote.weight = event.params.vote;
+    vote.support = event.params.support == true ? 1 : 0;
+    vote.weight = event.params.votingPower;
     vote.timestamp = event.block.timestamp;
     vote.organization = org.id;
     vote.save();

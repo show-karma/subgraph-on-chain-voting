@@ -35,7 +35,11 @@ export class Organization extends Entity {
 
   get id(): string {
     let value = this.get("id");
-    return value!.toString();
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toString();
+    }
   }
 
   set id(value: string) {
@@ -67,7 +71,11 @@ export class User extends Entity {
 
   get id(): string {
     let value = this.get("id");
-    return value!.toString();
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toString();
+    }
   }
 
   set id(value: string) {
@@ -76,11 +84,11 @@ export class User extends Entity {
 
   get votes(): Array<string> {
     let value = this.get("votes");
-    return value!.toStringArray();
-  }
-
-  set votes(value: Array<string>) {
-    this.set("votes", Value.fromStringArray(value));
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toStringArray();
+    }
   }
 
   get organization(): string | null {
@@ -125,7 +133,11 @@ export class Proposal extends Entity {
 
   get id(): string {
     let value = this.get("id");
-    return value!.toString();
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toString();
+    }
   }
 
   set id(value: string) {
@@ -134,7 +146,11 @@ export class Proposal extends Entity {
 
   get status(): string {
     let value = this.get("status");
-    return value!.toString();
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toString();
+    }
   }
 
   set status(value: string) {
@@ -143,7 +159,11 @@ export class Proposal extends Entity {
 
   get description(): string {
     let value = this.get("description");
-    return value!.toString();
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toString();
+    }
   }
 
   set description(value: string) {
@@ -152,7 +172,11 @@ export class Proposal extends Entity {
 
   get proposer(): string {
     let value = this.get("proposer");
-    return value!.toString();
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toString();
+    }
   }
 
   set proposer(value: string) {
@@ -161,16 +185,20 @@ export class Proposal extends Entity {
 
   get votes(): Array<string> {
     let value = this.get("votes");
-    return value!.toStringArray();
-  }
-
-  set votes(value: Array<string>) {
-    this.set("votes", Value.fromStringArray(value));
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toStringArray();
+    }
   }
 
   get organization(): string {
     let value = this.get("organization");
-    return value!.toString();
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toString();
+    }
   }
 
   set organization(value: string) {
@@ -179,7 +207,11 @@ export class Proposal extends Entity {
 
   get timestamp(): BigInt {
     let value = this.get("timestamp");
-    return value!.toBigInt();
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBigInt();
+    }
   }
 
   set timestamp(value: BigInt) {
@@ -188,7 +220,11 @@ export class Proposal extends Entity {
 
   get startDate(): BigInt {
     let value = this.get("startDate");
-    return value!.toBigInt();
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBigInt();
+    }
   }
 
   set startDate(value: BigInt) {
@@ -237,7 +273,11 @@ export class Vote extends Entity {
 
   get id(): string {
     let value = this.get("id");
-    return value!.toString();
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toString();
+    }
   }
 
   set id(value: string) {
@@ -246,7 +286,11 @@ export class Vote extends Entity {
 
   get user(): string {
     let value = this.get("user");
-    return value!.toString();
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toString();
+    }
   }
 
   set user(value: string) {
@@ -255,7 +299,11 @@ export class Vote extends Entity {
 
   get proposal(): string {
     let value = this.get("proposal");
-    return value!.toString();
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toString();
+    }
   }
 
   set proposal(value: string) {
@@ -264,7 +312,11 @@ export class Vote extends Entity {
 
   get support(): i32 {
     let value = this.get("support");
-    return value!.toI32();
+    if (!value || value.kind == ValueKind.NULL) {
+      return 0;
+    } else {
+      return value.toI32();
+    }
   }
 
   set support(value: i32) {
@@ -324,7 +376,11 @@ export class Vote extends Entity {
 
   get organization(): string {
     let value = this.get("organization");
-    return value!.toString();
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toString();
+    }
   }
 
   set organization(value: string) {
@@ -333,7 +389,11 @@ export class Vote extends Entity {
 
   get timestamp(): BigInt {
     let value = this.get("timestamp");
-    return value!.toBigInt();
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBigInt();
+    }
   }
 
   set timestamp(value: BigInt) {

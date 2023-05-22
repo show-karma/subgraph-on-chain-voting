@@ -10,63 +10,101 @@ import {
   BigInt
 } from "@graphprotocol/graph-ts";
 
-export class AbstainWins extends ethereum.Event {
-  get params(): AbstainWins__Params {
-    return new AbstainWins__Params(this);
+export class ExecutorAuthorized extends ethereum.Event {
+  get params(): ExecutorAuthorized__Params {
+    return new ExecutorAuthorized__Params(this);
   }
 }
 
-export class AbstainWins__Params {
-  _event: AbstainWins;
+export class ExecutorAuthorized__Params {
+  _event: ExecutorAuthorized;
 
-  constructor(event: AbstainWins) {
+  constructor(event: ExecutorAuthorized) {
     this._event = event;
   }
 
-  get proposalId(): BigInt {
-    return this._event.parameters[0].value.toBigInt();
-  }
-
-  get abstainVotingPower(): BigInt {
-    return this._event.parameters[1].value.toBigInt();
-  }
-
-  get yesVotingPower(): BigInt {
-    return this._event.parameters[2].value.toBigInt();
-  }
-
-  get noVotingPower(): BigInt {
-    return this._event.parameters[3].value.toBigInt();
+  get executor(): Address {
+    return this._event.parameters[0].value.toAddress();
   }
 }
 
-export class NoWins extends ethereum.Event {
-  get params(): NoWins__Params {
-    return new NoWins__Params(this);
+export class ExecutorUnauthorized extends ethereum.Event {
+  get params(): ExecutorUnauthorized__Params {
+    return new ExecutorUnauthorized__Params(this);
   }
 }
 
-export class NoWins__Params {
-  _event: NoWins;
+export class ExecutorUnauthorized__Params {
+  _event: ExecutorUnauthorized;
 
-  constructor(event: NoWins) {
+  constructor(event: ExecutorUnauthorized) {
     this._event = event;
   }
 
-  get proposalId(): BigInt {
+  get executor(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+}
+
+export class GovernanceStrategyChanged extends ethereum.Event {
+  get params(): GovernanceStrategyChanged__Params {
+    return new GovernanceStrategyChanged__Params(this);
+  }
+}
+
+export class GovernanceStrategyChanged__Params {
+  _event: GovernanceStrategyChanged;
+
+  constructor(event: GovernanceStrategyChanged) {
+    this._event = event;
+  }
+
+  get newStrategy(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get initiatorChange(): Address {
+    return this._event.parameters[1].value.toAddress();
+  }
+}
+
+export class OwnershipTransferred extends ethereum.Event {
+  get params(): OwnershipTransferred__Params {
+    return new OwnershipTransferred__Params(this);
+  }
+}
+
+export class OwnershipTransferred__Params {
+  _event: OwnershipTransferred;
+
+  constructor(event: OwnershipTransferred) {
+    this._event = event;
+  }
+
+  get previousOwner(): Address {
+    return this._event.parameters[0].value.toAddress();
+  }
+
+  get newOwner(): Address {
+    return this._event.parameters[1].value.toAddress();
+  }
+}
+
+export class ProposalCanceled extends ethereum.Event {
+  get params(): ProposalCanceled__Params {
+    return new ProposalCanceled__Params(this);
+  }
+}
+
+export class ProposalCanceled__Params {
+  _event: ProposalCanceled;
+
+  constructor(event: ProposalCanceled) {
+    this._event = event;
+  }
+
+  get id(): BigInt {
     return this._event.parameters[0].value.toBigInt();
-  }
-
-  get abstainVotingPower(): BigInt {
-    return this._event.parameters[1].value.toBigInt();
-  }
-
-  get yesVotingPower(): BigInt {
-    return this._event.parameters[2].value.toBigInt();
-  }
-
-  get noVotingPower(): BigInt {
-    return this._event.parameters[3].value.toBigInt();
   }
 }
 
@@ -83,140 +121,100 @@ export class ProposalCreated__Params {
     this._event = event;
   }
 
-  get proposalId(): BigInt {
+  get id(): BigInt {
     return this._event.parameters[0].value.toBigInt();
   }
 
-  get ipfsHash(): Bytes {
-    return this._event.parameters[1].value.toBytes();
-  }
-
-  get proposalType(): Bytes {
-    return this._event.parameters[2].value.toBytes();
-  }
-
-  get propositionPowerOfCreator(): BigInt {
-    return this._event.parameters[3].value.toBigInt();
-  }
-
-  get threshold(): BigInt {
-    return this._event.parameters[4].value.toBigInt();
-  }
-
-  get maxMovesToVotingAllowed(): BigInt {
-    return this._event.parameters[5].value.toBigInt();
-  }
-
-  get votingBlocksDuration(): BigInt {
-    return this._event.parameters[6].value.toBigInt();
-  }
-
-  get validatingBlocksDuration(): BigInt {
-    return this._event.parameters[7].value.toBigInt();
-  }
-
-  get proposalExecutor(): Address {
-    return this._event.parameters[8].value.toAddress();
-  }
-}
-
-export class StatusChangeToExecuted extends ethereum.Event {
-  get params(): StatusChangeToExecuted__Params {
-    return new StatusChangeToExecuted__Params(this);
-  }
-}
-
-export class StatusChangeToExecuted__Params {
-  _event: StatusChangeToExecuted;
-
-  constructor(event: StatusChangeToExecuted) {
-    this._event = event;
-  }
-
-  get proposalId(): BigInt {
-    return this._event.parameters[0].value.toBigInt();
-  }
-}
-
-export class StatusChangeToValidating extends ethereum.Event {
-  get params(): StatusChangeToValidating__Params {
-    return new StatusChangeToValidating__Params(this);
-  }
-}
-
-export class StatusChangeToValidating__Params {
-  _event: StatusChangeToValidating;
-
-  constructor(event: StatusChangeToValidating) {
-    this._event = event;
-  }
-
-  get proposalId(): BigInt {
-    return this._event.parameters[0].value.toBigInt();
-  }
-}
-
-export class StatusChangeToVoting extends ethereum.Event {
-  get params(): StatusChangeToVoting__Params {
-    return new StatusChangeToVoting__Params(this);
-  }
-}
-
-export class StatusChangeToVoting__Params {
-  _event: StatusChangeToVoting;
-
-  constructor(event: StatusChangeToVoting) {
-    this._event = event;
-  }
-
-  get proposalId(): BigInt {
-    return this._event.parameters[0].value.toBigInt();
-  }
-
-  get movesToVoting(): BigInt {
-    return this._event.parameters[1].value.toBigInt();
-  }
-}
-
-export class VoteCancelled extends ethereum.Event {
-  get params(): VoteCancelled__Params {
-    return new VoteCancelled__Params(this);
-  }
-}
-
-export class VoteCancelled__Params {
-  _event: VoteCancelled;
-
-  constructor(event: VoteCancelled) {
-    this._event = event;
-  }
-
-  get proposalId(): BigInt {
-    return this._event.parameters[0].value.toBigInt();
-  }
-
-  get voter(): Address {
+  get creator(): Address {
     return this._event.parameters[1].value.toAddress();
   }
 
-  get vote(): BigInt {
-    return this._event.parameters[2].value.toBigInt();
+  get executor(): Address {
+    return this._event.parameters[2].value.toAddress();
   }
 
-  get asset(): Address {
-    return this._event.parameters[3].value.toAddress();
+  get targets(): Array<Address> {
+    return this._event.parameters[3].value.toAddressArray();
   }
 
-  get weight(): BigInt {
-    return this._event.parameters[4].value.toBigInt();
+  get values(): Array<BigInt> {
+    return this._event.parameters[4].value.toBigIntArray();
   }
 
-  get balance(): BigInt {
-    return this._event.parameters[5].value.toBigInt();
+  get signatures(): Array<string> {
+    return this._event.parameters[5].value.toStringArray();
   }
 
-  get proposalStatusBefore(): BigInt {
-    return this._event.parameters[6].value.toBigInt();
+  get calldatas(): Array<Bytes> {
+    return this._event.parameters[6].value.toBytesArray();
+  }
+
+  get withDelegatecalls(): Array<boolean> {
+    return this._event.parameters[7].value.toBooleanArray();
+  }
+
+  get startBlock(): BigInt {
+    return this._event.parameters[8].value.toBigInt();
+  }
+
+  get endBlock(): BigInt {
+    return this._event.parameters[9].value.toBigInt();
+  }
+
+  get strategy(): Address {
+    return this._event.parameters[10].value.toAddress();
+  }
+
+  get ipfsHash(): Bytes {
+    return this._event.parameters[11].value.toBytes();
+  }
+}
+
+export class ProposalExecuted extends ethereum.Event {
+  get params(): ProposalExecuted__Params {
+    return new ProposalExecuted__Params(this);
+  }
+}
+
+export class ProposalExecuted__Params {
+  _event: ProposalExecuted;
+
+  constructor(event: ProposalExecuted) {
+    this._event = event;
+  }
+
+  get id(): BigInt {
+    return this._event.parameters[0].value.toBigInt();
+  }
+
+  get initiatorExecution(): Address {
+    return this._event.parameters[1].value.toAddress();
+  }
+}
+
+export class ProposalQueued extends ethereum.Event {
+  get params(): ProposalQueued__Params {
+    return new ProposalQueued__Params(this);
+  }
+}
+
+export class ProposalQueued__Params {
+  _event: ProposalQueued;
+
+  constructor(event: ProposalQueued) {
+    this._event = event;
+  }
+
+  get id(): BigInt {
+    return this._event.parameters[0].value.toBigInt();
+  }
+
+  get executionTime(): BigInt {
+    return this._event.parameters[1].value.toBigInt();
+  }
+
+  get initiatorQueueing(): Address {
+    return this._event.parameters[2].value.toAddress();
   }
 }
 
@@ -233,7 +231,7 @@ export class VoteEmitted__Params {
     this._event = event;
   }
 
-  get proposalId(): BigInt {
+  get id(): BigInt {
     return this._event.parameters[0].value.toBigInt();
   }
 
@@ -241,202 +239,114 @@ export class VoteEmitted__Params {
     return this._event.parameters[1].value.toAddress();
   }
 
-  get vote(): BigInt {
-    return this._event.parameters[2].value.toBigInt();
+  get support(): boolean {
+    return this._event.parameters[2].value.toBoolean();
   }
 
-  get asset(): Address {
-    return this._event.parameters[3].value.toAddress();
-  }
-
-  get weight(): BigInt {
-    return this._event.parameters[4].value.toBigInt();
-  }
-
-  get balance(): BigInt {
-    return this._event.parameters[5].value.toBigInt();
-  }
-}
-
-export class YesWins extends ethereum.Event {
-  get params(): YesWins__Params {
-    return new YesWins__Params(this);
-  }
-}
-
-export class YesWins__Params {
-  _event: YesWins;
-
-  constructor(event: YesWins) {
-    this._event = event;
-  }
-
-  get proposalId(): BigInt {
-    return this._event.parameters[0].value.toBigInt();
-  }
-
-  get abstainVotingPower(): BigInt {
-    return this._event.parameters[1].value.toBigInt();
-  }
-
-  get yesVotingPower(): BigInt {
-    return this._event.parameters[2].value.toBigInt();
-  }
-
-  get noVotingPower(): BigInt {
+  get votingPower(): BigInt {
     return this._event.parameters[3].value.toBigInt();
   }
 }
 
-export class AaveGovernor__getProposalBasicDataResult {
-  value0: BigInt;
-  value1: BigInt;
-  value2: BigInt;
-  value3: BigInt;
-  value4: BigInt;
-  value5: BigInt;
-  value6: BigInt;
-  value7: BigInt;
-  value8: BigInt;
-  value9: Address;
-  value10: Bytes;
-
-  constructor(
-    value0: BigInt,
-    value1: BigInt,
-    value2: BigInt,
-    value3: BigInt,
-    value4: BigInt,
-    value5: BigInt,
-    value6: BigInt,
-    value7: BigInt,
-    value8: BigInt,
-    value9: Address,
-    value10: Bytes
-  ) {
-    this.value0 = value0;
-    this.value1 = value1;
-    this.value2 = value2;
-    this.value3 = value3;
-    this.value4 = value4;
-    this.value5 = value5;
-    this.value6 = value6;
-    this.value7 = value7;
-    this.value8 = value8;
-    this.value9 = value9;
-    this.value10 = value10;
-  }
-
-  toMap(): TypedMap<string, ethereum.Value> {
-    let map = new TypedMap<string, ethereum.Value>();
-    map.set("value0", ethereum.Value.fromUnsignedBigInt(this.value0));
-    map.set("value1", ethereum.Value.fromUnsignedBigInt(this.value1));
-    map.set("value2", ethereum.Value.fromUnsignedBigInt(this.value2));
-    map.set("value3", ethereum.Value.fromUnsignedBigInt(this.value3));
-    map.set("value4", ethereum.Value.fromUnsignedBigInt(this.value4));
-    map.set("value5", ethereum.Value.fromUnsignedBigInt(this.value5));
-    map.set("value6", ethereum.Value.fromUnsignedBigInt(this.value6));
-    map.set("value7", ethereum.Value.fromUnsignedBigInt(this.value7));
-    map.set("value8", ethereum.Value.fromUnsignedBigInt(this.value8));
-    map.set("value9", ethereum.Value.fromAddress(this.value9));
-    map.set("value10", ethereum.Value.fromFixedBytes(this.value10));
-    return map;
-  }
-
-  get_totalVotes(): BigInt {
-    return this.value0;
-  }
-
-  get_threshold(): BigInt {
-    return this.value1;
-  }
-
-  get_maxMovesToVotingAllowed(): BigInt {
-    return this.value2;
-  }
-
-  get_movesToVoting(): BigInt {
-    return this.value3;
-  }
-
-  get_votingBlocksDuration(): BigInt {
-    return this.value4;
-  }
-
-  get_validatingBlocksDuration(): BigInt {
-    return this.value5;
-  }
-
-  get_currentStatusInitBlock(): BigInt {
-    return this.value6;
-  }
-
-  get_initProposalBlock(): BigInt {
-    return this.value7;
-  }
-
-  get_proposalStatus(): BigInt {
-    return this.value8;
-  }
-
-  get_proposalExecutor(): Address {
-    return this.value9;
-  }
-
-  get_proposalType(): Bytes {
-    return this.value10;
+export class VotingDelayChanged extends ethereum.Event {
+  get params(): VotingDelayChanged__Params {
+    return new VotingDelayChanged__Params(this);
   }
 }
 
-export class AaveGovernor__getVoterDataResult {
-  value0: BigInt;
-  value1: BigInt;
-  value2: BigInt;
-  value3: BigInt;
-  value4: Address;
+export class VotingDelayChanged__Params {
+  _event: VotingDelayChanged;
 
-  constructor(
-    value0: BigInt,
-    value1: BigInt,
-    value2: BigInt,
-    value3: BigInt,
-    value4: Address
-  ) {
-    this.value0 = value0;
-    this.value1 = value1;
-    this.value2 = value2;
-    this.value3 = value3;
-    this.value4 = value4;
+  constructor(event: VotingDelayChanged) {
+    this._event = event;
   }
 
-  toMap(): TypedMap<string, ethereum.Value> {
-    let map = new TypedMap<string, ethereum.Value>();
-    map.set("value0", ethereum.Value.fromUnsignedBigInt(this.value0));
-    map.set("value1", ethereum.Value.fromUnsignedBigInt(this.value1));
-    map.set("value2", ethereum.Value.fromUnsignedBigInt(this.value2));
-    map.set("value3", ethereum.Value.fromUnsignedBigInt(this.value3));
-    map.set("value4", ethereum.Value.fromAddress(this.value4));
-    return map;
+  get newVotingDelay(): BigInt {
+    return this._event.parameters[0].value.toBigInt();
   }
 
-  get_vote(): BigInt {
-    return this.value0;
+  get initiatorChange(): Address {
+    return this._event.parameters[1].value.toAddress();
+  }
+}
+
+export class AaveGovernor__getProposalByIdResultValue0Struct extends ethereum.Tuple {
+  get id(): BigInt {
+    return this[0].toBigInt();
   }
 
-  get_weight(): BigInt {
-    return this.value1;
+  get creator(): Address {
+    return this[1].toAddress();
   }
 
-  get_balance(): BigInt {
-    return this.value2;
+  get executor(): Address {
+    return this[2].toAddress();
   }
 
-  get_nonce(): BigInt {
-    return this.value3;
+  get targets(): Array<Address> {
+    return this[3].toAddressArray();
   }
 
-  get_asset(): Address {
-    return this.value4;
+  get values(): Array<BigInt> {
+    return this[4].toBigIntArray();
+  }
+
+  get signatures(): Array<string> {
+    return this[5].toStringArray();
+  }
+
+  get calldatas(): Array<Bytes> {
+    return this[6].toBytesArray();
+  }
+
+  get withDelegatecalls(): Array<boolean> {
+    return this[7].toBooleanArray();
+  }
+
+  get startBlock(): BigInt {
+    return this[8].toBigInt();
+  }
+
+  get endBlock(): BigInt {
+    return this[9].toBigInt();
+  }
+
+  get executionTime(): BigInt {
+    return this[10].toBigInt();
+  }
+
+  get forVotes(): BigInt {
+    return this[11].toBigInt();
+  }
+
+  get againstVotes(): BigInt {
+    return this[12].toBigInt();
+  }
+
+  get executed(): boolean {
+    return this[13].toBoolean();
+  }
+
+  get canceled(): boolean {
+    return this[14].toBoolean();
+  }
+
+  get strategy(): Address {
+    return this[15].toAddress();
+  }
+
+  get ipfsHash(): Bytes {
+    return this[16].toBytes();
+  }
+}
+
+export class AaveGovernor__getVoteOnProposalResultValue0Struct extends ethereum.Tuple {
+  get support(): boolean {
+    return this[0].toBoolean();
+  }
+
+  get votingPower(): BigInt {
+    return this[1].toBigInt();
   }
 }
 
@@ -445,86 +355,114 @@ export class AaveGovernor extends ethereum.SmartContract {
     return new AaveGovernor("AaveGovernor", address);
   }
 
-  COUNT_CHOICES(): BigInt {
-    let result = super.call("COUNT_CHOICES", "COUNT_CHOICES():(uint256)", []);
-
-    return result[0].toBigInt();
-  }
-
-  try_COUNT_CHOICES(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall(
-      "COUNT_CHOICES",
-      "COUNT_CHOICES():(uint256)",
-      []
-    );
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigInt());
-  }
-
-  MAX_MAXMOVESTOVOTINGALLOWED(): BigInt {
+  DOMAIN_TYPEHASH(): Bytes {
     let result = super.call(
-      "MAX_MAXMOVESTOVOTINGALLOWED",
-      "MAX_MAXMOVESTOVOTINGALLOWED():(uint256)",
+      "DOMAIN_TYPEHASH",
+      "DOMAIN_TYPEHASH():(bytes32)",
       []
     );
 
-    return result[0].toBigInt();
+    return result[0].toBytes();
   }
 
-  try_MAX_MAXMOVESTOVOTINGALLOWED(): ethereum.CallResult<BigInt> {
+  try_DOMAIN_TYPEHASH(): ethereum.CallResult<Bytes> {
     let result = super.tryCall(
-      "MAX_MAXMOVESTOVOTINGALLOWED",
-      "MAX_MAXMOVESTOVOTINGALLOWED():(uint256)",
+      "DOMAIN_TYPEHASH",
+      "DOMAIN_TYPEHASH():(bytes32)",
       []
     );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigInt());
+    return ethereum.CallResult.fromValue(value[0].toBytes());
   }
 
-  MIN_MAXMOVESTOVOTINGALLOWED(): BigInt {
+  NAME(): string {
+    let result = super.call("NAME", "NAME():(string)", []);
+
+    return result[0].toString();
+  }
+
+  try_NAME(): ethereum.CallResult<string> {
+    let result = super.tryCall("NAME", "NAME():(string)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toString());
+  }
+
+  VOTE_EMITTED_TYPEHASH(): Bytes {
     let result = super.call(
-      "MIN_MAXMOVESTOVOTINGALLOWED",
-      "MIN_MAXMOVESTOVOTINGALLOWED():(uint256)",
+      "VOTE_EMITTED_TYPEHASH",
+      "VOTE_EMITTED_TYPEHASH():(bytes32)",
       []
     );
 
-    return result[0].toBigInt();
+    return result[0].toBytes();
   }
 
-  try_MIN_MAXMOVESTOVOTINGALLOWED(): ethereum.CallResult<BigInt> {
+  try_VOTE_EMITTED_TYPEHASH(): ethereum.CallResult<Bytes> {
     let result = super.tryCall(
-      "MIN_MAXMOVESTOVOTINGALLOWED",
-      "MIN_MAXMOVESTOVOTINGALLOWED():(uint256)",
+      "VOTE_EMITTED_TYPEHASH",
+      "VOTE_EMITTED_TYPEHASH():(bytes32)",
       []
     );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigInt());
+    return ethereum.CallResult.fromValue(value[0].toBytes());
   }
 
-  MIN_STATUS_DURATION(): BigInt {
+  create(
+    executor: Address,
+    targets: Array<Address>,
+    values: Array<BigInt>,
+    signatures: Array<string>,
+    calldatas: Array<Bytes>,
+    withDelegatecalls: Array<boolean>,
+    ipfsHash: Bytes
+  ): BigInt {
     let result = super.call(
-      "MIN_STATUS_DURATION",
-      "MIN_STATUS_DURATION():(uint256)",
-      []
+      "create",
+      "create(address,address[],uint256[],string[],bytes[],bool[],bytes32):(uint256)",
+      [
+        ethereum.Value.fromAddress(executor),
+        ethereum.Value.fromAddressArray(targets),
+        ethereum.Value.fromUnsignedBigIntArray(values),
+        ethereum.Value.fromStringArray(signatures),
+        ethereum.Value.fromBytesArray(calldatas),
+        ethereum.Value.fromBooleanArray(withDelegatecalls),
+        ethereum.Value.fromFixedBytes(ipfsHash)
+      ]
     );
 
     return result[0].toBigInt();
   }
 
-  try_MIN_STATUS_DURATION(): ethereum.CallResult<BigInt> {
+  try_create(
+    executor: Address,
+    targets: Array<Address>,
+    values: Array<BigInt>,
+    signatures: Array<string>,
+    calldatas: Array<Bytes>,
+    withDelegatecalls: Array<boolean>,
+    ipfsHash: Bytes
+  ): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
-      "MIN_STATUS_DURATION",
-      "MIN_STATUS_DURATION():(uint256)",
-      []
+      "create",
+      "create(address,address[],uint256[],string[],bytes[],bool[],bytes32):(uint256)",
+      [
+        ethereum.Value.fromAddress(executor),
+        ethereum.Value.fromAddressArray(targets),
+        ethereum.Value.fromUnsignedBigIntArray(values),
+        ethereum.Value.fromStringArray(signatures),
+        ethereum.Value.fromBytesArray(calldatas),
+        ethereum.Value.fromBooleanArray(withDelegatecalls),
+        ethereum.Value.fromFixedBytes(ipfsHash)
+      ]
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -533,39 +471,20 @@ export class AaveGovernor extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  MIN_THRESHOLD(): BigInt {
-    let result = super.call("MIN_THRESHOLD", "MIN_THRESHOLD():(uint256)", []);
-
-    return result[0].toBigInt();
-  }
-
-  try_MIN_THRESHOLD(): ethereum.CallResult<BigInt> {
-    let result = super.tryCall(
-      "MIN_THRESHOLD",
-      "MIN_THRESHOLD():(uint256)",
-      []
-    );
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigInt());
-  }
-
-  getGovParamsProvider(): Address {
+  getGovernanceStrategy(): Address {
     let result = super.call(
-      "getGovParamsProvider",
-      "getGovParamsProvider():(address)",
+      "getGovernanceStrategy",
+      "getGovernanceStrategy():(address)",
       []
     );
 
     return result[0].toAddress();
   }
 
-  try_getGovParamsProvider(): ethereum.CallResult<Address> {
+  try_getGovernanceStrategy(): ethereum.CallResult<Address> {
     let result = super.tryCall(
-      "getGovParamsProvider",
-      "getGovParamsProvider():(address)",
+      "getGovernanceStrategy",
+      "getGovernanceStrategy():(address)",
       []
     );
     if (result.reverted) {
@@ -575,21 +494,92 @@ export class AaveGovernor extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 
-  getLeadingChoice(_proposalId: BigInt): BigInt {
+  getGuardian(): Address {
+    let result = super.call("getGuardian", "getGuardian():(address)", []);
+
+    return result[0].toAddress();
+  }
+
+  try_getGuardian(): ethereum.CallResult<Address> {
+    let result = super.tryCall("getGuardian", "getGuardian():(address)", []);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toAddress());
+  }
+
+  getProposalById(
+    proposalId: BigInt
+  ): AaveGovernor__getProposalByIdResultValue0Struct {
     let result = super.call(
-      "getLeadingChoice",
-      "getLeadingChoice(uint256):(uint256)",
-      [ethereum.Value.fromUnsignedBigInt(_proposalId)]
+      "getProposalById",
+      "getProposalById(uint256):((uint256,address,address,address[],uint256[],string[],bytes[],bool[],uint256,uint256,uint256,uint256,uint256,bool,bool,address,bytes32))",
+      [ethereum.Value.fromUnsignedBigInt(proposalId)]
+    );
+
+    return changetype<AaveGovernor__getProposalByIdResultValue0Struct>(
+      result[0].toTuple()
+    );
+  }
+
+  try_getProposalById(
+    proposalId: BigInt
+  ): ethereum.CallResult<AaveGovernor__getProposalByIdResultValue0Struct> {
+    let result = super.tryCall(
+      "getProposalById",
+      "getProposalById(uint256):((uint256,address,address,address[],uint256[],string[],bytes[],bool[],uint256,uint256,uint256,uint256,uint256,bool,bool,address,bytes32))",
+      [ethereum.Value.fromUnsignedBigInt(proposalId)]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(
+      changetype<AaveGovernor__getProposalByIdResultValue0Struct>(
+        value[0].toTuple()
+      )
+    );
+  }
+
+  getProposalState(proposalId: BigInt): i32 {
+    let result = super.call(
+      "getProposalState",
+      "getProposalState(uint256):(uint8)",
+      [ethereum.Value.fromUnsignedBigInt(proposalId)]
+    );
+
+    return result[0].toI32();
+  }
+
+  try_getProposalState(proposalId: BigInt): ethereum.CallResult<i32> {
+    let result = super.tryCall(
+      "getProposalState",
+      "getProposalState(uint256):(uint8)",
+      [ethereum.Value.fromUnsignedBigInt(proposalId)]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toI32());
+  }
+
+  getProposalsCount(): BigInt {
+    let result = super.call(
+      "getProposalsCount",
+      "getProposalsCount():(uint256)",
+      []
     );
 
     return result[0].toBigInt();
   }
 
-  try_getLeadingChoice(_proposalId: BigInt): ethereum.CallResult<BigInt> {
+  try_getProposalsCount(): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
-      "getLeadingChoice",
-      "getLeadingChoice(uint256):(uint256)",
-      [ethereum.Value.fromUnsignedBigInt(_proposalId)]
+      "getProposalsCount",
+      "getProposalsCount():(uint256)",
+      []
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -598,23 +588,58 @@ export class AaveGovernor extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  getLimitBlockOfProposal(_proposalId: BigInt): BigInt {
+  getVoteOnProposal(
+    proposalId: BigInt,
+    voter: Address
+  ): AaveGovernor__getVoteOnProposalResultValue0Struct {
     let result = super.call(
-      "getLimitBlockOfProposal",
-      "getLimitBlockOfProposal(uint256):(uint256)",
-      [ethereum.Value.fromUnsignedBigInt(_proposalId)]
+      "getVoteOnProposal",
+      "getVoteOnProposal(uint256,address):((bool,uint248))",
+      [
+        ethereum.Value.fromUnsignedBigInt(proposalId),
+        ethereum.Value.fromAddress(voter)
+      ]
     );
+
+    return changetype<AaveGovernor__getVoteOnProposalResultValue0Struct>(
+      result[0].toTuple()
+    );
+  }
+
+  try_getVoteOnProposal(
+    proposalId: BigInt,
+    voter: Address
+  ): ethereum.CallResult<AaveGovernor__getVoteOnProposalResultValue0Struct> {
+    let result = super.tryCall(
+      "getVoteOnProposal",
+      "getVoteOnProposal(uint256,address):((bool,uint248))",
+      [
+        ethereum.Value.fromUnsignedBigInt(proposalId),
+        ethereum.Value.fromAddress(voter)
+      ]
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(
+      changetype<AaveGovernor__getVoteOnProposalResultValue0Struct>(
+        value[0].toTuple()
+      )
+    );
+  }
+
+  getVotingDelay(): BigInt {
+    let result = super.call("getVotingDelay", "getVotingDelay():(uint256)", []);
 
     return result[0].toBigInt();
   }
 
-  try_getLimitBlockOfProposal(
-    _proposalId: BigInt
-  ): ethereum.CallResult<BigInt> {
+  try_getVotingDelay(): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
-      "getLimitBlockOfProposal",
-      "getLimitBlockOfProposal(uint256):(uint256)",
-      [ethereum.Value.fromUnsignedBigInt(_proposalId)]
+      "getVotingDelay",
+      "getVotingDelay():(uint256)",
+      []
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -623,129 +648,42 @@ export class AaveGovernor extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  getProposalBasicData(
-    _proposalId: BigInt
-  ): AaveGovernor__getProposalBasicDataResult {
+  isExecutorAuthorized(executor: Address): boolean {
     let result = super.call(
-      "getProposalBasicData",
-      "getProposalBasicData(uint256):(uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,address,bytes32)",
-      [ethereum.Value.fromUnsignedBigInt(_proposalId)]
+      "isExecutorAuthorized",
+      "isExecutorAuthorized(address):(bool)",
+      [ethereum.Value.fromAddress(executor)]
     );
 
-    return new AaveGovernor__getProposalBasicDataResult(
-      result[0].toBigInt(),
-      result[1].toBigInt(),
-      result[2].toBigInt(),
-      result[3].toBigInt(),
-      result[4].toBigInt(),
-      result[5].toBigInt(),
-      result[6].toBigInt(),
-      result[7].toBigInt(),
-      result[8].toBigInt(),
-      result[9].toAddress(),
-      result[10].toBytes()
-    );
+    return result[0].toBoolean();
   }
 
-  try_getProposalBasicData(
-    _proposalId: BigInt
-  ): ethereum.CallResult<AaveGovernor__getProposalBasicDataResult> {
+  try_isExecutorAuthorized(executor: Address): ethereum.CallResult<boolean> {
     let result = super.tryCall(
-      "getProposalBasicData",
-      "getProposalBasicData(uint256):(uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,address,bytes32)",
-      [ethereum.Value.fromUnsignedBigInt(_proposalId)]
+      "isExecutorAuthorized",
+      "isExecutorAuthorized(address):(bool)",
+      [ethereum.Value.fromAddress(executor)]
     );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
-    return ethereum.CallResult.fromValue(
-      new AaveGovernor__getProposalBasicDataResult(
-        value[0].toBigInt(),
-        value[1].toBigInt(),
-        value[2].toBigInt(),
-        value[3].toBigInt(),
-        value[4].toBigInt(),
-        value[5].toBigInt(),
-        value[6].toBigInt(),
-        value[7].toBigInt(),
-        value[8].toBigInt(),
-        value[9].toAddress(),
-        value[10].toBytes()
-      )
-    );
+    return ethereum.CallResult.fromValue(value[0].toBoolean());
   }
 
-  getVoterData(
-    _proposalId: BigInt,
-    _voterAddress: Address
-  ): AaveGovernor__getVoterDataResult {
-    let result = super.call(
-      "getVoterData",
-      "getVoterData(uint256,address):(uint256,uint256,uint256,uint256,address)",
-      [
-        ethereum.Value.fromUnsignedBigInt(_proposalId),
-        ethereum.Value.fromAddress(_voterAddress)
-      ]
-    );
+  owner(): Address {
+    let result = super.call("owner", "owner():(address)", []);
 
-    return new AaveGovernor__getVoterDataResult(
-      result[0].toBigInt(),
-      result[1].toBigInt(),
-      result[2].toBigInt(),
-      result[3].toBigInt(),
-      result[4].toAddress()
-    );
+    return result[0].toAddress();
   }
 
-  try_getVoterData(
-    _proposalId: BigInt,
-    _voterAddress: Address
-  ): ethereum.CallResult<AaveGovernor__getVoterDataResult> {
-    let result = super.tryCall(
-      "getVoterData",
-      "getVoterData(uint256,address):(uint256,uint256,uint256,uint256,address)",
-      [
-        ethereum.Value.fromUnsignedBigInt(_proposalId),
-        ethereum.Value.fromAddress(_voterAddress)
-      ]
-    );
+  try_owner(): ethereum.CallResult<Address> {
+    let result = super.tryCall("owner", "owner():(address)", []);
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
-    return ethereum.CallResult.fromValue(
-      new AaveGovernor__getVoterDataResult(
-        value[0].toBigInt(),
-        value[1].toBigInt(),
-        value[2].toBigInt(),
-        value[3].toBigInt(),
-        value[4].toAddress()
-      )
-    );
-  }
-
-  getVotesData(_proposalId: BigInt): Array<BigInt> {
-    let result = super.call(
-      "getVotesData",
-      "getVotesData(uint256):(uint256[3])",
-      [ethereum.Value.fromUnsignedBigInt(_proposalId)]
-    );
-
-    return result[0].toBigIntArray();
-  }
-
-  try_getVotesData(_proposalId: BigInt): ethereum.CallResult<Array<BigInt>> {
-    let result = super.tryCall(
-      "getVotesData",
-      "getVotesData(uint256):(uint256[3])",
-      [ethereum.Value.fromUnsignedBigInt(_proposalId)]
-    );
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigIntArray());
+    return ethereum.CallResult.fromValue(value[0].toAddress());
   }
 }
 
@@ -766,8 +704,20 @@ export class ConstructorCall__Inputs {
     this._call = call;
   }
 
-  get _govParamsProvider(): Address {
+  get governanceStrategy(): Address {
     return this._call.inputValues[0].value.toAddress();
+  }
+
+  get votingDelay(): BigInt {
+    return this._call.inputValues[1].value.toBigInt();
+  }
+
+  get guardian(): Address {
+    return this._call.inputValues[2].value.toAddress();
+  }
+
+  get executors(): Array<Address> {
+    return this._call.inputValues[3].value.toAddressArray();
   }
 }
 
@@ -779,344 +729,432 @@ export class ConstructorCall__Outputs {
   }
 }
 
-export class DefaultCall extends ethereum.Call {
-  get inputs(): DefaultCall__Inputs {
-    return new DefaultCall__Inputs(this);
+export class __abdicateCall extends ethereum.Call {
+  get inputs(): __abdicateCall__Inputs {
+    return new __abdicateCall__Inputs(this);
   }
 
-  get outputs(): DefaultCall__Outputs {
-    return new DefaultCall__Outputs(this);
+  get outputs(): __abdicateCall__Outputs {
+    return new __abdicateCall__Outputs(this);
   }
 }
 
-export class DefaultCall__Inputs {
-  _call: DefaultCall;
+export class __abdicateCall__Inputs {
+  _call: __abdicateCall;
 
-  constructor(call: DefaultCall) {
+  constructor(call: __abdicateCall) {
     this._call = call;
   }
 }
 
-export class DefaultCall__Outputs {
-  _call: DefaultCall;
+export class __abdicateCall__Outputs {
+  _call: __abdicateCall;
 
-  constructor(call: DefaultCall) {
+  constructor(call: __abdicateCall) {
     this._call = call;
   }
 }
 
-export class CancelVoteByRelayerCall extends ethereum.Call {
-  get inputs(): CancelVoteByRelayerCall__Inputs {
-    return new CancelVoteByRelayerCall__Inputs(this);
+export class AuthorizeExecutorsCall extends ethereum.Call {
+  get inputs(): AuthorizeExecutorsCall__Inputs {
+    return new AuthorizeExecutorsCall__Inputs(this);
   }
 
-  get outputs(): CancelVoteByRelayerCall__Outputs {
-    return new CancelVoteByRelayerCall__Outputs(this);
+  get outputs(): AuthorizeExecutorsCall__Outputs {
+    return new AuthorizeExecutorsCall__Outputs(this);
   }
 }
 
-export class CancelVoteByRelayerCall__Inputs {
-  _call: CancelVoteByRelayerCall;
+export class AuthorizeExecutorsCall__Inputs {
+  _call: AuthorizeExecutorsCall;
 
-  constructor(call: CancelVoteByRelayerCall) {
+  constructor(call: AuthorizeExecutorsCall) {
     this._call = call;
   }
 
-  get _proposalId(): BigInt {
-    return this._call.inputValues[0].value.toBigInt();
-  }
-
-  get _voter(): Address {
-    return this._call.inputValues[1].value.toAddress();
-  }
-
-  get _nonce(): BigInt {
-    return this._call.inputValues[2].value.toBigInt();
-  }
-
-  get _signature(): Bytes {
-    return this._call.inputValues[3].value.toBytes();
-  }
-
-  get _paramsHashByVoter(): Bytes {
-    return this._call.inputValues[4].value.toBytes();
+  get executors(): Array<Address> {
+    return this._call.inputValues[0].value.toAddressArray();
   }
 }
 
-export class CancelVoteByRelayerCall__Outputs {
-  _call: CancelVoteByRelayerCall;
+export class AuthorizeExecutorsCall__Outputs {
+  _call: AuthorizeExecutorsCall;
 
-  constructor(call: CancelVoteByRelayerCall) {
+  constructor(call: AuthorizeExecutorsCall) {
     this._call = call;
   }
 }
 
-export class CancelVoteByVoterCall extends ethereum.Call {
-  get inputs(): CancelVoteByVoterCall__Inputs {
-    return new CancelVoteByVoterCall__Inputs(this);
+export class CancelCall extends ethereum.Call {
+  get inputs(): CancelCall__Inputs {
+    return new CancelCall__Inputs(this);
   }
 
-  get outputs(): CancelVoteByVoterCall__Outputs {
-    return new CancelVoteByVoterCall__Outputs(this);
+  get outputs(): CancelCall__Outputs {
+    return new CancelCall__Outputs(this);
   }
 }
 
-export class CancelVoteByVoterCall__Inputs {
-  _call: CancelVoteByVoterCall;
+export class CancelCall__Inputs {
+  _call: CancelCall;
 
-  constructor(call: CancelVoteByVoterCall) {
+  constructor(call: CancelCall) {
     this._call = call;
   }
 
-  get _proposalId(): BigInt {
+  get proposalId(): BigInt {
     return this._call.inputValues[0].value.toBigInt();
   }
 }
 
-export class CancelVoteByVoterCall__Outputs {
-  _call: CancelVoteByVoterCall;
+export class CancelCall__Outputs {
+  _call: CancelCall;
 
-  constructor(call: CancelVoteByVoterCall) {
+  constructor(call: CancelCall) {
     this._call = call;
   }
 }
 
-export class ChallengeVotersCall extends ethereum.Call {
-  get inputs(): ChallengeVotersCall__Inputs {
-    return new ChallengeVotersCall__Inputs(this);
+export class CreateCall extends ethereum.Call {
+  get inputs(): CreateCall__Inputs {
+    return new CreateCall__Inputs(this);
   }
 
-  get outputs(): ChallengeVotersCall__Outputs {
-    return new ChallengeVotersCall__Outputs(this);
+  get outputs(): CreateCall__Outputs {
+    return new CreateCall__Outputs(this);
   }
 }
 
-export class ChallengeVotersCall__Inputs {
-  _call: ChallengeVotersCall;
+export class CreateCall__Inputs {
+  _call: CreateCall;
 
-  constructor(call: ChallengeVotersCall) {
+  constructor(call: CreateCall) {
     this._call = call;
   }
 
-  get _proposalId(): BigInt {
-    return this._call.inputValues[0].value.toBigInt();
+  get executor(): Address {
+    return this._call.inputValues[0].value.toAddress();
   }
 
-  get _voters(): Array<Address> {
+  get targets(): Array<Address> {
     return this._call.inputValues[1].value.toAddressArray();
   }
-}
 
-export class ChallengeVotersCall__Outputs {
-  _call: ChallengeVotersCall;
-
-  constructor(call: ChallengeVotersCall) {
-    this._call = call;
-  }
-}
-
-export class NewProposalCall extends ethereum.Call {
-  get inputs(): NewProposalCall__Inputs {
-    return new NewProposalCall__Inputs(this);
+  get values(): Array<BigInt> {
+    return this._call.inputValues[2].value.toBigIntArray();
   }
 
-  get outputs(): NewProposalCall__Outputs {
-    return new NewProposalCall__Outputs(this);
-  }
-}
-
-export class NewProposalCall__Inputs {
-  _call: NewProposalCall;
-
-  constructor(call: NewProposalCall) {
-    this._call = call;
+  get signatures(): Array<string> {
+    return this._call.inputValues[3].value.toStringArray();
   }
 
-  get _proposalType(): Bytes {
-    return this._call.inputValues[0].value.toBytes();
+  get calldatas(): Array<Bytes> {
+    return this._call.inputValues[4].value.toBytesArray();
   }
 
-  get _ipfsHash(): Bytes {
-    return this._call.inputValues[1].value.toBytes();
+  get withDelegatecalls(): Array<boolean> {
+    return this._call.inputValues[5].value.toBooleanArray();
   }
 
-  get _threshold(): BigInt {
-    return this._call.inputValues[2].value.toBigInt();
-  }
-
-  get _proposalExecutor(): Address {
-    return this._call.inputValues[3].value.toAddress();
-  }
-
-  get _votingBlocksDuration(): BigInt {
-    return this._call.inputValues[4].value.toBigInt();
-  }
-
-  get _validatingBlocksDuration(): BigInt {
-    return this._call.inputValues[5].value.toBigInt();
-  }
-
-  get _maxMovesToVotingAllowed(): BigInt {
-    return this._call.inputValues[6].value.toBigInt();
-  }
-}
-
-export class NewProposalCall__Outputs {
-  _call: NewProposalCall;
-
-  constructor(call: NewProposalCall) {
-    this._call = call;
-  }
-}
-
-export class ResolveProposalCall extends ethereum.Call {
-  get inputs(): ResolveProposalCall__Inputs {
-    return new ResolveProposalCall__Inputs(this);
-  }
-
-  get outputs(): ResolveProposalCall__Outputs {
-    return new ResolveProposalCall__Outputs(this);
-  }
-}
-
-export class ResolveProposalCall__Inputs {
-  _call: ResolveProposalCall;
-
-  constructor(call: ResolveProposalCall) {
-    this._call = call;
-  }
-
-  get _proposalId(): BigInt {
-    return this._call.inputValues[0].value.toBigInt();
-  }
-}
-
-export class ResolveProposalCall__Outputs {
-  _call: ResolveProposalCall;
-
-  constructor(call: ResolveProposalCall) {
-    this._call = call;
-  }
-}
-
-export class SubmitVoteByRelayerCall extends ethereum.Call {
-  get inputs(): SubmitVoteByRelayerCall__Inputs {
-    return new SubmitVoteByRelayerCall__Inputs(this);
-  }
-
-  get outputs(): SubmitVoteByRelayerCall__Outputs {
-    return new SubmitVoteByRelayerCall__Outputs(this);
-  }
-}
-
-export class SubmitVoteByRelayerCall__Inputs {
-  _call: SubmitVoteByRelayerCall;
-
-  constructor(call: SubmitVoteByRelayerCall) {
-    this._call = call;
-  }
-
-  get _proposalId(): BigInt {
-    return this._call.inputValues[0].value.toBigInt();
-  }
-
-  get _vote(): BigInt {
-    return this._call.inputValues[1].value.toBigInt();
-  }
-
-  get _voter(): Address {
-    return this._call.inputValues[2].value.toAddress();
-  }
-
-  get _asset(): Address {
-    return this._call.inputValues[3].value.toAddress();
-  }
-
-  get _nonce(): BigInt {
-    return this._call.inputValues[4].value.toBigInt();
-  }
-
-  get _signature(): Bytes {
-    return this._call.inputValues[5].value.toBytes();
-  }
-
-  get _paramsHashByVoter(): Bytes {
+  get ipfsHash(): Bytes {
     return this._call.inputValues[6].value.toBytes();
   }
 }
 
-export class SubmitVoteByRelayerCall__Outputs {
-  _call: SubmitVoteByRelayerCall;
+export class CreateCall__Outputs {
+  _call: CreateCall;
 
-  constructor(call: SubmitVoteByRelayerCall) {
-    this._call = call;
-  }
-}
-
-export class SubmitVoteByVoterCall extends ethereum.Call {
-  get inputs(): SubmitVoteByVoterCall__Inputs {
-    return new SubmitVoteByVoterCall__Inputs(this);
-  }
-
-  get outputs(): SubmitVoteByVoterCall__Outputs {
-    return new SubmitVoteByVoterCall__Outputs(this);
-  }
-}
-
-export class SubmitVoteByVoterCall__Inputs {
-  _call: SubmitVoteByVoterCall;
-
-  constructor(call: SubmitVoteByVoterCall) {
+  constructor(call: CreateCall) {
     this._call = call;
   }
 
-  get _proposalId(): BigInt {
-    return this._call.inputValues[0].value.toBigInt();
-  }
-
-  get _vote(): BigInt {
-    return this._call.inputValues[1].value.toBigInt();
-  }
-
-  get _asset(): Address {
-    return this._call.inputValues[2].value.toAddress();
+  get value0(): BigInt {
+    return this._call.outputValues[0].value.toBigInt();
   }
 }
 
-export class SubmitVoteByVoterCall__Outputs {
-  _call: SubmitVoteByVoterCall;
+export class ExecuteCall extends ethereum.Call {
+  get inputs(): ExecuteCall__Inputs {
+    return new ExecuteCall__Inputs(this);
+  }
 
-  constructor(call: SubmitVoteByVoterCall) {
-    this._call = call;
+  get outputs(): ExecuteCall__Outputs {
+    return new ExecuteCall__Outputs(this);
   }
 }
 
-export class TryToMoveToValidatingCall extends ethereum.Call {
-  get inputs(): TryToMoveToValidatingCall__Inputs {
-    return new TryToMoveToValidatingCall__Inputs(this);
-  }
+export class ExecuteCall__Inputs {
+  _call: ExecuteCall;
 
-  get outputs(): TryToMoveToValidatingCall__Outputs {
-    return new TryToMoveToValidatingCall__Outputs(this);
-  }
-}
-
-export class TryToMoveToValidatingCall__Inputs {
-  _call: TryToMoveToValidatingCall;
-
-  constructor(call: TryToMoveToValidatingCall) {
+  constructor(call: ExecuteCall) {
     this._call = call;
   }
 
-  get _proposalId(): BigInt {
+  get proposalId(): BigInt {
     return this._call.inputValues[0].value.toBigInt();
   }
 }
 
-export class TryToMoveToValidatingCall__Outputs {
-  _call: TryToMoveToValidatingCall;
+export class ExecuteCall__Outputs {
+  _call: ExecuteCall;
 
-  constructor(call: TryToMoveToValidatingCall) {
+  constructor(call: ExecuteCall) {
+    this._call = call;
+  }
+}
+
+export class QueueCall extends ethereum.Call {
+  get inputs(): QueueCall__Inputs {
+    return new QueueCall__Inputs(this);
+  }
+
+  get outputs(): QueueCall__Outputs {
+    return new QueueCall__Outputs(this);
+  }
+}
+
+export class QueueCall__Inputs {
+  _call: QueueCall;
+
+  constructor(call: QueueCall) {
+    this._call = call;
+  }
+
+  get proposalId(): BigInt {
+    return this._call.inputValues[0].value.toBigInt();
+  }
+}
+
+export class QueueCall__Outputs {
+  _call: QueueCall;
+
+  constructor(call: QueueCall) {
+    this._call = call;
+  }
+}
+
+export class RenounceOwnershipCall extends ethereum.Call {
+  get inputs(): RenounceOwnershipCall__Inputs {
+    return new RenounceOwnershipCall__Inputs(this);
+  }
+
+  get outputs(): RenounceOwnershipCall__Outputs {
+    return new RenounceOwnershipCall__Outputs(this);
+  }
+}
+
+export class RenounceOwnershipCall__Inputs {
+  _call: RenounceOwnershipCall;
+
+  constructor(call: RenounceOwnershipCall) {
+    this._call = call;
+  }
+}
+
+export class RenounceOwnershipCall__Outputs {
+  _call: RenounceOwnershipCall;
+
+  constructor(call: RenounceOwnershipCall) {
+    this._call = call;
+  }
+}
+
+export class SetGovernanceStrategyCall extends ethereum.Call {
+  get inputs(): SetGovernanceStrategyCall__Inputs {
+    return new SetGovernanceStrategyCall__Inputs(this);
+  }
+
+  get outputs(): SetGovernanceStrategyCall__Outputs {
+    return new SetGovernanceStrategyCall__Outputs(this);
+  }
+}
+
+export class SetGovernanceStrategyCall__Inputs {
+  _call: SetGovernanceStrategyCall;
+
+  constructor(call: SetGovernanceStrategyCall) {
+    this._call = call;
+  }
+
+  get governanceStrategy(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+}
+
+export class SetGovernanceStrategyCall__Outputs {
+  _call: SetGovernanceStrategyCall;
+
+  constructor(call: SetGovernanceStrategyCall) {
+    this._call = call;
+  }
+}
+
+export class SetVotingDelayCall extends ethereum.Call {
+  get inputs(): SetVotingDelayCall__Inputs {
+    return new SetVotingDelayCall__Inputs(this);
+  }
+
+  get outputs(): SetVotingDelayCall__Outputs {
+    return new SetVotingDelayCall__Outputs(this);
+  }
+}
+
+export class SetVotingDelayCall__Inputs {
+  _call: SetVotingDelayCall;
+
+  constructor(call: SetVotingDelayCall) {
+    this._call = call;
+  }
+
+  get votingDelay(): BigInt {
+    return this._call.inputValues[0].value.toBigInt();
+  }
+}
+
+export class SetVotingDelayCall__Outputs {
+  _call: SetVotingDelayCall;
+
+  constructor(call: SetVotingDelayCall) {
+    this._call = call;
+  }
+}
+
+export class SubmitVoteCall extends ethereum.Call {
+  get inputs(): SubmitVoteCall__Inputs {
+    return new SubmitVoteCall__Inputs(this);
+  }
+
+  get outputs(): SubmitVoteCall__Outputs {
+    return new SubmitVoteCall__Outputs(this);
+  }
+}
+
+export class SubmitVoteCall__Inputs {
+  _call: SubmitVoteCall;
+
+  constructor(call: SubmitVoteCall) {
+    this._call = call;
+  }
+
+  get proposalId(): BigInt {
+    return this._call.inputValues[0].value.toBigInt();
+  }
+
+  get support(): boolean {
+    return this._call.inputValues[1].value.toBoolean();
+  }
+}
+
+export class SubmitVoteCall__Outputs {
+  _call: SubmitVoteCall;
+
+  constructor(call: SubmitVoteCall) {
+    this._call = call;
+  }
+}
+
+export class SubmitVoteBySignatureCall extends ethereum.Call {
+  get inputs(): SubmitVoteBySignatureCall__Inputs {
+    return new SubmitVoteBySignatureCall__Inputs(this);
+  }
+
+  get outputs(): SubmitVoteBySignatureCall__Outputs {
+    return new SubmitVoteBySignatureCall__Outputs(this);
+  }
+}
+
+export class SubmitVoteBySignatureCall__Inputs {
+  _call: SubmitVoteBySignatureCall;
+
+  constructor(call: SubmitVoteBySignatureCall) {
+    this._call = call;
+  }
+
+  get proposalId(): BigInt {
+    return this._call.inputValues[0].value.toBigInt();
+  }
+
+  get support(): boolean {
+    return this._call.inputValues[1].value.toBoolean();
+  }
+
+  get v(): i32 {
+    return this._call.inputValues[2].value.toI32();
+  }
+
+  get r(): Bytes {
+    return this._call.inputValues[3].value.toBytes();
+  }
+
+  get s(): Bytes {
+    return this._call.inputValues[4].value.toBytes();
+  }
+}
+
+export class SubmitVoteBySignatureCall__Outputs {
+  _call: SubmitVoteBySignatureCall;
+
+  constructor(call: SubmitVoteBySignatureCall) {
+    this._call = call;
+  }
+}
+
+export class TransferOwnershipCall extends ethereum.Call {
+  get inputs(): TransferOwnershipCall__Inputs {
+    return new TransferOwnershipCall__Inputs(this);
+  }
+
+  get outputs(): TransferOwnershipCall__Outputs {
+    return new TransferOwnershipCall__Outputs(this);
+  }
+}
+
+export class TransferOwnershipCall__Inputs {
+  _call: TransferOwnershipCall;
+
+  constructor(call: TransferOwnershipCall) {
+    this._call = call;
+  }
+
+  get newOwner(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+}
+
+export class TransferOwnershipCall__Outputs {
+  _call: TransferOwnershipCall;
+
+  constructor(call: TransferOwnershipCall) {
+    this._call = call;
+  }
+}
+
+export class UnauthorizeExecutorsCall extends ethereum.Call {
+  get inputs(): UnauthorizeExecutorsCall__Inputs {
+    return new UnauthorizeExecutorsCall__Inputs(this);
+  }
+
+  get outputs(): UnauthorizeExecutorsCall__Outputs {
+    return new UnauthorizeExecutorsCall__Outputs(this);
+  }
+}
+
+export class UnauthorizeExecutorsCall__Inputs {
+  _call: UnauthorizeExecutorsCall;
+
+  constructor(call: UnauthorizeExecutorsCall) {
+    this._call = call;
+  }
+
+  get executors(): Array<Address> {
+    return this._call.inputValues[0].value.toAddressArray();
+  }
+}
+
+export class UnauthorizeExecutorsCall__Outputs {
+  _call: UnauthorizeExecutorsCall;
+
+  constructor(call: UnauthorizeExecutorsCall) {
     this._call = call;
   }
 }
