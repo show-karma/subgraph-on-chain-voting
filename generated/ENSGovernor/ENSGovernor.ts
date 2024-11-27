@@ -7,7 +7,7 @@ import {
   Entity,
   Bytes,
   Address,
-  BigInt
+  BigInt,
 } from "@graphprotocol/graph-ts";
 
 export class ProposalCanceled extends ethereum.Event {
@@ -237,7 +237,7 @@ export class ENSGovernor extends ethereum.SmartContract {
     let result = super.call(
       "BALLOT_TYPEHASH",
       "BALLOT_TYPEHASH():(bytes32)",
-      []
+      [],
     );
 
     return result[0].toBytes();
@@ -247,7 +247,7 @@ export class ENSGovernor extends ethereum.SmartContract {
     let result = super.tryCall(
       "BALLOT_TYPEHASH",
       "BALLOT_TYPEHASH():(bytes32)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -274,7 +274,7 @@ export class ENSGovernor extends ethereum.SmartContract {
   castVote(proposalId: BigInt, support: i32): BigInt {
     let result = super.call("castVote", "castVote(uint256,uint8):(uint256)", [
       ethereum.Value.fromUnsignedBigInt(proposalId),
-      ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(support))
+      ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(support)),
     ]);
 
     return result[0].toBigInt();
@@ -286,8 +286,8 @@ export class ENSGovernor extends ethereum.SmartContract {
       "castVote(uint256,uint8):(uint256)",
       [
         ethereum.Value.fromUnsignedBigInt(proposalId),
-        ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(support))
-      ]
+        ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(support)),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -301,7 +301,7 @@ export class ENSGovernor extends ethereum.SmartContract {
     support: i32,
     v: i32,
     r: Bytes,
-    s: Bytes
+    s: Bytes,
   ): BigInt {
     let result = super.call(
       "castVoteBySig",
@@ -311,8 +311,8 @@ export class ENSGovernor extends ethereum.SmartContract {
         ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(support)),
         ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(v)),
         ethereum.Value.fromFixedBytes(r),
-        ethereum.Value.fromFixedBytes(s)
-      ]
+        ethereum.Value.fromFixedBytes(s),
+      ],
     );
 
     return result[0].toBigInt();
@@ -323,7 +323,7 @@ export class ENSGovernor extends ethereum.SmartContract {
     support: i32,
     v: i32,
     r: Bytes,
-    s: Bytes
+    s: Bytes,
   ): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "castVoteBySig",
@@ -333,8 +333,8 @@ export class ENSGovernor extends ethereum.SmartContract {
         ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(support)),
         ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(v)),
         ethereum.Value.fromFixedBytes(r),
-        ethereum.Value.fromFixedBytes(s)
-      ]
+        ethereum.Value.fromFixedBytes(s),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -350,8 +350,8 @@ export class ENSGovernor extends ethereum.SmartContract {
       [
         ethereum.Value.fromUnsignedBigInt(proposalId),
         ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(support)),
-        ethereum.Value.fromString(reason)
-      ]
+        ethereum.Value.fromString(reason),
+      ],
     );
 
     return result[0].toBigInt();
@@ -360,7 +360,7 @@ export class ENSGovernor extends ethereum.SmartContract {
   try_castVoteWithReason(
     proposalId: BigInt,
     support: i32,
-    reason: string
+    reason: string,
   ): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "castVoteWithReason",
@@ -368,8 +368,8 @@ export class ENSGovernor extends ethereum.SmartContract {
       [
         ethereum.Value.fromUnsignedBigInt(proposalId),
         ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(support)),
-        ethereum.Value.fromString(reason)
-      ]
+        ethereum.Value.fromString(reason),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -381,7 +381,7 @@ export class ENSGovernor extends ethereum.SmartContract {
   getVotes(account: Address, blockNumber: BigInt): BigInt {
     let result = super.call("getVotes", "getVotes(address,uint256):(uint256)", [
       ethereum.Value.fromAddress(account),
-      ethereum.Value.fromUnsignedBigInt(blockNumber)
+      ethereum.Value.fromUnsignedBigInt(blockNumber),
     ]);
 
     return result[0].toBigInt();
@@ -389,15 +389,15 @@ export class ENSGovernor extends ethereum.SmartContract {
 
   try_getVotes(
     account: Address,
-    blockNumber: BigInt
+    blockNumber: BigInt,
   ): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "getVotes",
       "getVotes(address,uint256):(uint256)",
       [
         ethereum.Value.fromAddress(account),
-        ethereum.Value.fromUnsignedBigInt(blockNumber)
-      ]
+        ethereum.Value.fromUnsignedBigInt(blockNumber),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -409,7 +409,7 @@ export class ENSGovernor extends ethereum.SmartContract {
   hasVoted(proposalId: BigInt, account: Address): boolean {
     let result = super.call("hasVoted", "hasVoted(uint256,address):(bool)", [
       ethereum.Value.fromUnsignedBigInt(proposalId),
-      ethereum.Value.fromAddress(account)
+      ethereum.Value.fromAddress(account),
     ]);
 
     return result[0].toBoolean();
@@ -417,11 +417,11 @@ export class ENSGovernor extends ethereum.SmartContract {
 
   try_hasVoted(
     proposalId: BigInt,
-    account: Address
+    account: Address,
   ): ethereum.CallResult<boolean> {
     let result = super.tryCall("hasVoted", "hasVoted(uint256,address):(bool)", [
       ethereum.Value.fromUnsignedBigInt(proposalId),
-      ethereum.Value.fromAddress(account)
+      ethereum.Value.fromAddress(account),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -434,7 +434,7 @@ export class ENSGovernor extends ethereum.SmartContract {
     targets: Array<Address>,
     values: Array<BigInt>,
     calldatas: Array<Bytes>,
-    descriptionHash: Bytes
+    descriptionHash: Bytes,
   ): BigInt {
     let result = super.call(
       "hashProposal",
@@ -443,8 +443,8 @@ export class ENSGovernor extends ethereum.SmartContract {
         ethereum.Value.fromAddressArray(targets),
         ethereum.Value.fromUnsignedBigIntArray(values),
         ethereum.Value.fromBytesArray(calldatas),
-        ethereum.Value.fromFixedBytes(descriptionHash)
-      ]
+        ethereum.Value.fromFixedBytes(descriptionHash),
+      ],
     );
 
     return result[0].toBigInt();
@@ -454,7 +454,7 @@ export class ENSGovernor extends ethereum.SmartContract {
     targets: Array<Address>,
     values: Array<BigInt>,
     calldatas: Array<Bytes>,
-    descriptionHash: Bytes
+    descriptionHash: Bytes,
   ): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "hashProposal",
@@ -463,8 +463,8 @@ export class ENSGovernor extends ethereum.SmartContract {
         ethereum.Value.fromAddressArray(targets),
         ethereum.Value.fromUnsignedBigIntArray(values),
         ethereum.Value.fromBytesArray(calldatas),
-        ethereum.Value.fromFixedBytes(descriptionHash)
-      ]
+        ethereum.Value.fromFixedBytes(descriptionHash),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -492,7 +492,7 @@ export class ENSGovernor extends ethereum.SmartContract {
     let result = super.call(
       "proposalDeadline",
       "proposalDeadline(uint256):(uint256)",
-      [ethereum.Value.fromUnsignedBigInt(proposalId)]
+      [ethereum.Value.fromUnsignedBigInt(proposalId)],
     );
 
     return result[0].toBigInt();
@@ -502,7 +502,7 @@ export class ENSGovernor extends ethereum.SmartContract {
     let result = super.tryCall(
       "proposalDeadline",
       "proposalDeadline(uint256):(uint256)",
-      [ethereum.Value.fromUnsignedBigInt(proposalId)]
+      [ethereum.Value.fromUnsignedBigInt(proposalId)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -513,7 +513,7 @@ export class ENSGovernor extends ethereum.SmartContract {
 
   proposalEta(proposalId: BigInt): BigInt {
     let result = super.call("proposalEta", "proposalEta(uint256):(uint256)", [
-      ethereum.Value.fromUnsignedBigInt(proposalId)
+      ethereum.Value.fromUnsignedBigInt(proposalId),
     ]);
 
     return result[0].toBigInt();
@@ -523,7 +523,7 @@ export class ENSGovernor extends ethereum.SmartContract {
     let result = super.tryCall(
       "proposalEta",
       "proposalEta(uint256):(uint256)",
-      [ethereum.Value.fromUnsignedBigInt(proposalId)]
+      [ethereum.Value.fromUnsignedBigInt(proposalId)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -536,7 +536,7 @@ export class ENSGovernor extends ethereum.SmartContract {
     let result = super.call(
       "proposalSnapshot",
       "proposalSnapshot(uint256):(uint256)",
-      [ethereum.Value.fromUnsignedBigInt(proposalId)]
+      [ethereum.Value.fromUnsignedBigInt(proposalId)],
     );
 
     return result[0].toBigInt();
@@ -546,7 +546,7 @@ export class ENSGovernor extends ethereum.SmartContract {
     let result = super.tryCall(
       "proposalSnapshot",
       "proposalSnapshot(uint256):(uint256)",
-      [ethereum.Value.fromUnsignedBigInt(proposalId)]
+      [ethereum.Value.fromUnsignedBigInt(proposalId)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -559,7 +559,7 @@ export class ENSGovernor extends ethereum.SmartContract {
     let result = super.call(
       "proposalThreshold",
       "proposalThreshold():(uint256)",
-      []
+      [],
     );
 
     return result[0].toBigInt();
@@ -569,7 +569,7 @@ export class ENSGovernor extends ethereum.SmartContract {
     let result = super.tryCall(
       "proposalThreshold",
       "proposalThreshold():(uint256)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -582,23 +582,23 @@ export class ENSGovernor extends ethereum.SmartContract {
     let result = super.call(
       "proposalVotes",
       "proposalVotes(uint256):(uint256,uint256,uint256)",
-      [ethereum.Value.fromUnsignedBigInt(proposalId)]
+      [ethereum.Value.fromUnsignedBigInt(proposalId)],
     );
 
     return new ENSGovernor__proposalVotesResult(
       result[0].toBigInt(),
       result[1].toBigInt(),
-      result[2].toBigInt()
+      result[2].toBigInt(),
     );
   }
 
   try_proposalVotes(
-    proposalId: BigInt
+    proposalId: BigInt,
   ): ethereum.CallResult<ENSGovernor__proposalVotesResult> {
     let result = super.tryCall(
       "proposalVotes",
       "proposalVotes(uint256):(uint256,uint256,uint256)",
-      [ethereum.Value.fromUnsignedBigInt(proposalId)]
+      [ethereum.Value.fromUnsignedBigInt(proposalId)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -608,8 +608,8 @@ export class ENSGovernor extends ethereum.SmartContract {
       new ENSGovernor__proposalVotesResult(
         value[0].toBigInt(),
         value[1].toBigInt(),
-        value[2].toBigInt()
-      )
+        value[2].toBigInt(),
+      ),
     );
   }
 
@@ -617,7 +617,7 @@ export class ENSGovernor extends ethereum.SmartContract {
     targets: Array<Address>,
     values: Array<BigInt>,
     calldatas: Array<Bytes>,
-    description: string
+    description: string,
   ): BigInt {
     let result = super.call(
       "propose",
@@ -626,8 +626,8 @@ export class ENSGovernor extends ethereum.SmartContract {
         ethereum.Value.fromAddressArray(targets),
         ethereum.Value.fromUnsignedBigIntArray(values),
         ethereum.Value.fromBytesArray(calldatas),
-        ethereum.Value.fromString(description)
-      ]
+        ethereum.Value.fromString(description),
+      ],
     );
 
     return result[0].toBigInt();
@@ -637,7 +637,7 @@ export class ENSGovernor extends ethereum.SmartContract {
     targets: Array<Address>,
     values: Array<BigInt>,
     calldatas: Array<Bytes>,
-    description: string
+    description: string,
   ): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "propose",
@@ -646,8 +646,8 @@ export class ENSGovernor extends ethereum.SmartContract {
         ethereum.Value.fromAddressArray(targets),
         ethereum.Value.fromUnsignedBigIntArray(values),
         ethereum.Value.fromBytesArray(calldatas),
-        ethereum.Value.fromString(description)
-      ]
+        ethereum.Value.fromString(description),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -660,7 +660,7 @@ export class ENSGovernor extends ethereum.SmartContract {
     targets: Array<Address>,
     values: Array<BigInt>,
     calldatas: Array<Bytes>,
-    descriptionHash: Bytes
+    descriptionHash: Bytes,
   ): BigInt {
     let result = super.call(
       "queue",
@@ -669,8 +669,8 @@ export class ENSGovernor extends ethereum.SmartContract {
         ethereum.Value.fromAddressArray(targets),
         ethereum.Value.fromUnsignedBigIntArray(values),
         ethereum.Value.fromBytesArray(calldatas),
-        ethereum.Value.fromFixedBytes(descriptionHash)
-      ]
+        ethereum.Value.fromFixedBytes(descriptionHash),
+      ],
     );
 
     return result[0].toBigInt();
@@ -680,7 +680,7 @@ export class ENSGovernor extends ethereum.SmartContract {
     targets: Array<Address>,
     values: Array<BigInt>,
     calldatas: Array<Bytes>,
-    descriptionHash: Bytes
+    descriptionHash: Bytes,
   ): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "queue",
@@ -689,8 +689,8 @@ export class ENSGovernor extends ethereum.SmartContract {
         ethereum.Value.fromAddressArray(targets),
         ethereum.Value.fromUnsignedBigIntArray(values),
         ethereum.Value.fromBytesArray(calldatas),
-        ethereum.Value.fromFixedBytes(descriptionHash)
-      ]
+        ethereum.Value.fromFixedBytes(descriptionHash),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -701,7 +701,7 @@ export class ENSGovernor extends ethereum.SmartContract {
 
   quorum(blockNumber: BigInt): BigInt {
     let result = super.call("quorum", "quorum(uint256):(uint256)", [
-      ethereum.Value.fromUnsignedBigInt(blockNumber)
+      ethereum.Value.fromUnsignedBigInt(blockNumber),
     ]);
 
     return result[0].toBigInt();
@@ -709,7 +709,7 @@ export class ENSGovernor extends ethereum.SmartContract {
 
   try_quorum(blockNumber: BigInt): ethereum.CallResult<BigInt> {
     let result = super.tryCall("quorum", "quorum(uint256):(uint256)", [
-      ethereum.Value.fromUnsignedBigInt(blockNumber)
+      ethereum.Value.fromUnsignedBigInt(blockNumber),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -722,7 +722,7 @@ export class ENSGovernor extends ethereum.SmartContract {
     let result = super.call(
       "quorumDenominator",
       "quorumDenominator():(uint256)",
-      []
+      [],
     );
 
     return result[0].toBigInt();
@@ -732,7 +732,7 @@ export class ENSGovernor extends ethereum.SmartContract {
     let result = super.tryCall(
       "quorumDenominator",
       "quorumDenominator():(uint256)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -745,7 +745,7 @@ export class ENSGovernor extends ethereum.SmartContract {
     let result = super.call(
       "quorumNumerator",
       "quorumNumerator():(uint256)",
-      []
+      [],
     );
 
     return result[0].toBigInt();
@@ -755,7 +755,7 @@ export class ENSGovernor extends ethereum.SmartContract {
     let result = super.tryCall(
       "quorumNumerator",
       "quorumNumerator():(uint256)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -766,7 +766,7 @@ export class ENSGovernor extends ethereum.SmartContract {
 
   state(proposalId: BigInt): i32 {
     let result = super.call("state", "state(uint256):(uint8)", [
-      ethereum.Value.fromUnsignedBigInt(proposalId)
+      ethereum.Value.fromUnsignedBigInt(proposalId),
     ]);
 
     return result[0].toI32();
@@ -774,7 +774,7 @@ export class ENSGovernor extends ethereum.SmartContract {
 
   try_state(proposalId: BigInt): ethereum.CallResult<i32> {
     let result = super.tryCall("state", "state(uint256):(uint8)", [
-      ethereum.Value.fromUnsignedBigInt(proposalId)
+      ethereum.Value.fromUnsignedBigInt(proposalId),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -787,7 +787,7 @@ export class ENSGovernor extends ethereum.SmartContract {
     let result = super.call(
       "supportsInterface",
       "supportsInterface(bytes4):(bool)",
-      [ethereum.Value.fromFixedBytes(interfaceId)]
+      [ethereum.Value.fromFixedBytes(interfaceId)],
     );
 
     return result[0].toBoolean();
@@ -797,7 +797,7 @@ export class ENSGovernor extends ethereum.SmartContract {
     let result = super.tryCall(
       "supportsInterface",
       "supportsInterface(bytes4):(bool)",
-      [ethereum.Value.fromFixedBytes(interfaceId)]
+      [ethereum.Value.fromFixedBytes(interfaceId)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();

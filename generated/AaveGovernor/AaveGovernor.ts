@@ -7,7 +7,7 @@ import {
   Entity,
   Bytes,
   Address,
-  BigInt
+  BigInt,
 } from "@graphprotocol/graph-ts";
 
 export class AbstainWins extends ethereum.Event {
@@ -312,7 +312,7 @@ export class AaveGovernor__getProposalBasicDataResult {
     value7: BigInt,
     value8: BigInt,
     value9: Address,
-    value10: Bytes
+    value10: Bytes,
   ) {
     this.value0 = value0;
     this.value1 = value1;
@@ -400,7 +400,7 @@ export class AaveGovernor__getVoterDataResult {
     value1: BigInt,
     value2: BigInt,
     value3: BigInt,
-    value4: Address
+    value4: Address,
   ) {
     this.value0 = value0;
     this.value1 = value1;
@@ -455,7 +455,7 @@ export class AaveGovernor extends ethereum.SmartContract {
     let result = super.tryCall(
       "COUNT_CHOICES",
       "COUNT_CHOICES():(uint256)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -468,7 +468,7 @@ export class AaveGovernor extends ethereum.SmartContract {
     let result = super.call(
       "MAX_MAXMOVESTOVOTINGALLOWED",
       "MAX_MAXMOVESTOVOTINGALLOWED():(uint256)",
-      []
+      [],
     );
 
     return result[0].toBigInt();
@@ -478,7 +478,7 @@ export class AaveGovernor extends ethereum.SmartContract {
     let result = super.tryCall(
       "MAX_MAXMOVESTOVOTINGALLOWED",
       "MAX_MAXMOVESTOVOTINGALLOWED():(uint256)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -491,7 +491,7 @@ export class AaveGovernor extends ethereum.SmartContract {
     let result = super.call(
       "MIN_MAXMOVESTOVOTINGALLOWED",
       "MIN_MAXMOVESTOVOTINGALLOWED():(uint256)",
-      []
+      [],
     );
 
     return result[0].toBigInt();
@@ -501,7 +501,7 @@ export class AaveGovernor extends ethereum.SmartContract {
     let result = super.tryCall(
       "MIN_MAXMOVESTOVOTINGALLOWED",
       "MIN_MAXMOVESTOVOTINGALLOWED():(uint256)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -514,7 +514,7 @@ export class AaveGovernor extends ethereum.SmartContract {
     let result = super.call(
       "MIN_STATUS_DURATION",
       "MIN_STATUS_DURATION():(uint256)",
-      []
+      [],
     );
 
     return result[0].toBigInt();
@@ -524,7 +524,7 @@ export class AaveGovernor extends ethereum.SmartContract {
     let result = super.tryCall(
       "MIN_STATUS_DURATION",
       "MIN_STATUS_DURATION():(uint256)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -543,7 +543,7 @@ export class AaveGovernor extends ethereum.SmartContract {
     let result = super.tryCall(
       "MIN_THRESHOLD",
       "MIN_THRESHOLD():(uint256)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -556,7 +556,7 @@ export class AaveGovernor extends ethereum.SmartContract {
     let result = super.call(
       "getGovParamsProvider",
       "getGovParamsProvider():(address)",
-      []
+      [],
     );
 
     return result[0].toAddress();
@@ -566,7 +566,7 @@ export class AaveGovernor extends ethereum.SmartContract {
     let result = super.tryCall(
       "getGovParamsProvider",
       "getGovParamsProvider():(address)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -579,7 +579,7 @@ export class AaveGovernor extends ethereum.SmartContract {
     let result = super.call(
       "getLeadingChoice",
       "getLeadingChoice(uint256):(uint256)",
-      [ethereum.Value.fromUnsignedBigInt(_proposalId)]
+      [ethereum.Value.fromUnsignedBigInt(_proposalId)],
     );
 
     return result[0].toBigInt();
@@ -589,7 +589,7 @@ export class AaveGovernor extends ethereum.SmartContract {
     let result = super.tryCall(
       "getLeadingChoice",
       "getLeadingChoice(uint256):(uint256)",
-      [ethereum.Value.fromUnsignedBigInt(_proposalId)]
+      [ethereum.Value.fromUnsignedBigInt(_proposalId)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -602,19 +602,19 @@ export class AaveGovernor extends ethereum.SmartContract {
     let result = super.call(
       "getLimitBlockOfProposal",
       "getLimitBlockOfProposal(uint256):(uint256)",
-      [ethereum.Value.fromUnsignedBigInt(_proposalId)]
+      [ethereum.Value.fromUnsignedBigInt(_proposalId)],
     );
 
     return result[0].toBigInt();
   }
 
   try_getLimitBlockOfProposal(
-    _proposalId: BigInt
+    _proposalId: BigInt,
   ): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "getLimitBlockOfProposal",
       "getLimitBlockOfProposal(uint256):(uint256)",
-      [ethereum.Value.fromUnsignedBigInt(_proposalId)]
+      [ethereum.Value.fromUnsignedBigInt(_proposalId)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -624,12 +624,12 @@ export class AaveGovernor extends ethereum.SmartContract {
   }
 
   getProposalBasicData(
-    _proposalId: BigInt
+    _proposalId: BigInt,
   ): AaveGovernor__getProposalBasicDataResult {
     let result = super.call(
       "getProposalBasicData",
       "getProposalBasicData(uint256):(uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,address,bytes32)",
-      [ethereum.Value.fromUnsignedBigInt(_proposalId)]
+      [ethereum.Value.fromUnsignedBigInt(_proposalId)],
     );
 
     return new AaveGovernor__getProposalBasicDataResult(
@@ -643,17 +643,17 @@ export class AaveGovernor extends ethereum.SmartContract {
       result[7].toBigInt(),
       result[8].toBigInt(),
       result[9].toAddress(),
-      result[10].toBytes()
+      result[10].toBytes(),
     );
   }
 
   try_getProposalBasicData(
-    _proposalId: BigInt
+    _proposalId: BigInt,
   ): ethereum.CallResult<AaveGovernor__getProposalBasicDataResult> {
     let result = super.tryCall(
       "getProposalBasicData",
       "getProposalBasicData(uint256):(uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,address,bytes32)",
-      [ethereum.Value.fromUnsignedBigInt(_proposalId)]
+      [ethereum.Value.fromUnsignedBigInt(_proposalId)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -671,22 +671,22 @@ export class AaveGovernor extends ethereum.SmartContract {
         value[7].toBigInt(),
         value[8].toBigInt(),
         value[9].toAddress(),
-        value[10].toBytes()
-      )
+        value[10].toBytes(),
+      ),
     );
   }
 
   getVoterData(
     _proposalId: BigInt,
-    _voterAddress: Address
+    _voterAddress: Address,
   ): AaveGovernor__getVoterDataResult {
     let result = super.call(
       "getVoterData",
       "getVoterData(uint256,address):(uint256,uint256,uint256,uint256,address)",
       [
         ethereum.Value.fromUnsignedBigInt(_proposalId),
-        ethereum.Value.fromAddress(_voterAddress)
-      ]
+        ethereum.Value.fromAddress(_voterAddress),
+      ],
     );
 
     return new AaveGovernor__getVoterDataResult(
@@ -694,21 +694,21 @@ export class AaveGovernor extends ethereum.SmartContract {
       result[1].toBigInt(),
       result[2].toBigInt(),
       result[3].toBigInt(),
-      result[4].toAddress()
+      result[4].toAddress(),
     );
   }
 
   try_getVoterData(
     _proposalId: BigInt,
-    _voterAddress: Address
+    _voterAddress: Address,
   ): ethereum.CallResult<AaveGovernor__getVoterDataResult> {
     let result = super.tryCall(
       "getVoterData",
       "getVoterData(uint256,address):(uint256,uint256,uint256,uint256,address)",
       [
         ethereum.Value.fromUnsignedBigInt(_proposalId),
-        ethereum.Value.fromAddress(_voterAddress)
-      ]
+        ethereum.Value.fromAddress(_voterAddress),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -720,8 +720,8 @@ export class AaveGovernor extends ethereum.SmartContract {
         value[1].toBigInt(),
         value[2].toBigInt(),
         value[3].toBigInt(),
-        value[4].toAddress()
-      )
+        value[4].toAddress(),
+      ),
     );
   }
 
@@ -729,7 +729,7 @@ export class AaveGovernor extends ethereum.SmartContract {
     let result = super.call(
       "getVotesData",
       "getVotesData(uint256):(uint256[3])",
-      [ethereum.Value.fromUnsignedBigInt(_proposalId)]
+      [ethereum.Value.fromUnsignedBigInt(_proposalId)],
     );
 
     return result[0].toBigIntArray();
@@ -739,7 +739,7 @@ export class AaveGovernor extends ethereum.SmartContract {
     let result = super.tryCall(
       "getVotesData",
       "getVotesData(uint256):(uint256[3])",
-      [ethereum.Value.fromUnsignedBigInt(_proposalId)]
+      [ethereum.Value.fromUnsignedBigInt(_proposalId)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();

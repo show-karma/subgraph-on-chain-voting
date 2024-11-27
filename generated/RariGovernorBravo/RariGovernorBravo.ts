@@ -7,7 +7,7 @@ import {
   Entity,
   Bytes,
   Address,
-  BigInt
+  BigInt,
 } from "@graphprotocol/graph-ts";
 
 export class NewAdmin extends ethereum.Event {
@@ -294,7 +294,7 @@ export class RariGovernorBravo__getActionsResult {
     value0: Array<Address>,
     value1: Array<BigInt>,
     value2: Array<string>,
-    value3: Array<Bytes>
+    value3: Array<Bytes>,
   ) {
     this.value0 = value0;
     this.value1 = value1;
@@ -364,7 +364,7 @@ export class RariGovernorBravo__proposalsResult {
     value6: BigInt,
     value7: BigInt,
     value8: boolean,
-    value9: boolean
+    value9: boolean,
   ) {
     this.value0 = value0;
     this.value1 = value1;
@@ -443,7 +443,7 @@ export class RariGovernorBravo extends ethereum.SmartContract {
     let result = super.call(
       "BALLOT_TYPEHASH",
       "BALLOT_TYPEHASH():(bytes32)",
-      []
+      [],
     );
 
     return result[0].toBytes();
@@ -453,7 +453,7 @@ export class RariGovernorBravo extends ethereum.SmartContract {
     let result = super.tryCall(
       "BALLOT_TYPEHASH",
       "BALLOT_TYPEHASH():(bytes32)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -466,7 +466,7 @@ export class RariGovernorBravo extends ethereum.SmartContract {
     let result = super.call(
       "DOMAIN_TYPEHASH",
       "DOMAIN_TYPEHASH():(bytes32)",
-      []
+      [],
     );
 
     return result[0].toBytes();
@@ -476,7 +476,7 @@ export class RariGovernorBravo extends ethereum.SmartContract {
     let result = super.tryCall(
       "DOMAIN_TYPEHASH",
       "DOMAIN_TYPEHASH():(bytes32)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -489,7 +489,7 @@ export class RariGovernorBravo extends ethereum.SmartContract {
     let result = super.call(
       "MAX_PROPOSAL_THRESHOLD",
       "MAX_PROPOSAL_THRESHOLD():(uint256)",
-      []
+      [],
     );
 
     return result[0].toBigInt();
@@ -499,7 +499,7 @@ export class RariGovernorBravo extends ethereum.SmartContract {
     let result = super.tryCall(
       "MAX_PROPOSAL_THRESHOLD",
       "MAX_PROPOSAL_THRESHOLD():(uint256)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -512,7 +512,7 @@ export class RariGovernorBravo extends ethereum.SmartContract {
     let result = super.call(
       "MAX_VOTING_DELAY",
       "MAX_VOTING_DELAY():(uint256)",
-      []
+      [],
     );
 
     return result[0].toBigInt();
@@ -522,7 +522,7 @@ export class RariGovernorBravo extends ethereum.SmartContract {
     let result = super.tryCall(
       "MAX_VOTING_DELAY",
       "MAX_VOTING_DELAY():(uint256)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -535,7 +535,7 @@ export class RariGovernorBravo extends ethereum.SmartContract {
     let result = super.call(
       "MAX_VOTING_PERIOD",
       "MAX_VOTING_PERIOD():(uint256)",
-      []
+      [],
     );
 
     return result[0].toBigInt();
@@ -545,7 +545,7 @@ export class RariGovernorBravo extends ethereum.SmartContract {
     let result = super.tryCall(
       "MAX_VOTING_PERIOD",
       "MAX_VOTING_PERIOD():(uint256)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -558,7 +558,7 @@ export class RariGovernorBravo extends ethereum.SmartContract {
     let result = super.call(
       "MIN_PROPOSAL_THRESHOLD",
       "MIN_PROPOSAL_THRESHOLD():(uint256)",
-      []
+      [],
     );
 
     return result[0].toBigInt();
@@ -568,7 +568,7 @@ export class RariGovernorBravo extends ethereum.SmartContract {
     let result = super.tryCall(
       "MIN_PROPOSAL_THRESHOLD",
       "MIN_PROPOSAL_THRESHOLD():(uint256)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -581,7 +581,7 @@ export class RariGovernorBravo extends ethereum.SmartContract {
     let result = super.call(
       "MIN_VOTING_DELAY",
       "MIN_VOTING_DELAY():(uint256)",
-      []
+      [],
     );
 
     return result[0].toBigInt();
@@ -591,7 +591,7 @@ export class RariGovernorBravo extends ethereum.SmartContract {
     let result = super.tryCall(
       "MIN_VOTING_DELAY",
       "MIN_VOTING_DELAY():(uint256)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -604,7 +604,7 @@ export class RariGovernorBravo extends ethereum.SmartContract {
     let result = super.call(
       "MIN_VOTING_PERIOD",
       "MIN_VOTING_PERIOD():(uint256)",
-      []
+      [],
     );
 
     return result[0].toBigInt();
@@ -614,7 +614,7 @@ export class RariGovernorBravo extends ethereum.SmartContract {
     let result = super.tryCall(
       "MIN_VOTING_PERIOD",
       "MIN_VOTING_PERIOD():(uint256)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -642,24 +642,24 @@ export class RariGovernorBravo extends ethereum.SmartContract {
     let result = super.call(
       "getActions",
       "getActions(uint256):(address[],uint256[],string[],bytes[])",
-      [ethereum.Value.fromUnsignedBigInt(proposalId)]
+      [ethereum.Value.fromUnsignedBigInt(proposalId)],
     );
 
     return new RariGovernorBravo__getActionsResult(
       result[0].toAddressArray(),
       result[1].toBigIntArray(),
       result[2].toStringArray(),
-      result[3].toBytesArray()
+      result[3].toBytesArray(),
     );
   }
 
   try_getActions(
-    proposalId: BigInt
+    proposalId: BigInt,
   ): ethereum.CallResult<RariGovernorBravo__getActionsResult> {
     let result = super.tryCall(
       "getActions",
       "getActions(uint256):(address[],uint256[],string[],bytes[])",
-      [ethereum.Value.fromUnsignedBigInt(proposalId)]
+      [ethereum.Value.fromUnsignedBigInt(proposalId)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -670,40 +670,40 @@ export class RariGovernorBravo extends ethereum.SmartContract {
         value[0].toAddressArray(),
         value[1].toBigIntArray(),
         value[2].toStringArray(),
-        value[3].toBytesArray()
-      )
+        value[3].toBytesArray(),
+      ),
     );
   }
 
   getReceipt(
     proposalId: BigInt,
-    voter: Address
+    voter: Address,
   ): RariGovernorBravo__getReceiptResultValue0Struct {
     let result = super.call(
       "getReceipt",
       "getReceipt(uint256,address):((bool,uint8,uint96))",
       [
         ethereum.Value.fromUnsignedBigInt(proposalId),
-        ethereum.Value.fromAddress(voter)
-      ]
+        ethereum.Value.fromAddress(voter),
+      ],
     );
 
     return changetype<RariGovernorBravo__getReceiptResultValue0Struct>(
-      result[0].toTuple()
+      result[0].toTuple(),
     );
   }
 
   try_getReceipt(
     proposalId: BigInt,
-    voter: Address
+    voter: Address,
   ): ethereum.CallResult<RariGovernorBravo__getReceiptResultValue0Struct> {
     let result = super.tryCall(
       "getReceipt",
       "getReceipt(uint256,address):((bool,uint8,uint96))",
       [
         ethereum.Value.fromUnsignedBigInt(proposalId),
-        ethereum.Value.fromAddress(voter)
-      ]
+        ethereum.Value.fromAddress(voter),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -711,8 +711,8 @@ export class RariGovernorBravo extends ethereum.SmartContract {
     let value = result.value;
     return ethereum.CallResult.fromValue(
       changetype<RariGovernorBravo__getReceiptResultValue0Struct>(
-        value[0].toTuple()
-      )
+        value[0].toTuple(),
+      ),
     );
   }
 
@@ -726,7 +726,7 @@ export class RariGovernorBravo extends ethereum.SmartContract {
     let result = super.tryCall(
       "implementation",
       "implementation():(address)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -739,7 +739,7 @@ export class RariGovernorBravo extends ethereum.SmartContract {
     let result = super.call(
       "initialProposalId",
       "initialProposalId():(uint256)",
-      []
+      [],
     );
 
     return result[0].toBigInt();
@@ -749,7 +749,7 @@ export class RariGovernorBravo extends ethereum.SmartContract {
     let result = super.tryCall(
       "initialProposalId",
       "initialProposalId():(uint256)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -762,7 +762,7 @@ export class RariGovernorBravo extends ethereum.SmartContract {
     let result = super.call(
       "latestProposalIds",
       "latestProposalIds(address):(uint256)",
-      [ethereum.Value.fromAddress(param0)]
+      [ethereum.Value.fromAddress(param0)],
     );
 
     return result[0].toBigInt();
@@ -772,7 +772,7 @@ export class RariGovernorBravo extends ethereum.SmartContract {
     let result = super.tryCall(
       "latestProposalIds",
       "latestProposalIds(address):(uint256)",
-      [ethereum.Value.fromAddress(param0)]
+      [ethereum.Value.fromAddress(param0)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -821,7 +821,7 @@ export class RariGovernorBravo extends ethereum.SmartContract {
     let result = super.tryCall(
       "proposalCount",
       "proposalCount():(uint256)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -834,7 +834,7 @@ export class RariGovernorBravo extends ethereum.SmartContract {
     let result = super.call(
       "proposalMaxOperations",
       "proposalMaxOperations():(uint256)",
-      []
+      [],
     );
 
     return result[0].toBigInt();
@@ -844,7 +844,7 @@ export class RariGovernorBravo extends ethereum.SmartContract {
     let result = super.tryCall(
       "proposalMaxOperations",
       "proposalMaxOperations():(uint256)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -857,7 +857,7 @@ export class RariGovernorBravo extends ethereum.SmartContract {
     let result = super.call(
       "proposalThreshold",
       "proposalThreshold():(uint256)",
-      []
+      [],
     );
 
     return result[0].toBigInt();
@@ -867,7 +867,7 @@ export class RariGovernorBravo extends ethereum.SmartContract {
     let result = super.tryCall(
       "proposalThreshold",
       "proposalThreshold():(uint256)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -880,7 +880,7 @@ export class RariGovernorBravo extends ethereum.SmartContract {
     let result = super.call(
       "proposals",
       "proposals(uint256):(uint256,address,uint256,uint256,uint256,uint256,uint256,uint256,bool,bool)",
-      [ethereum.Value.fromUnsignedBigInt(param0)]
+      [ethereum.Value.fromUnsignedBigInt(param0)],
     );
 
     return new RariGovernorBravo__proposalsResult(
@@ -893,17 +893,17 @@ export class RariGovernorBravo extends ethereum.SmartContract {
       result[6].toBigInt(),
       result[7].toBigInt(),
       result[8].toBoolean(),
-      result[9].toBoolean()
+      result[9].toBoolean(),
     );
   }
 
   try_proposals(
-    param0: BigInt
+    param0: BigInt,
   ): ethereum.CallResult<RariGovernorBravo__proposalsResult> {
     let result = super.tryCall(
       "proposals",
       "proposals(uint256):(uint256,address,uint256,uint256,uint256,uint256,uint256,uint256,bool,bool)",
-      [ethereum.Value.fromUnsignedBigInt(param0)]
+      [ethereum.Value.fromUnsignedBigInt(param0)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -920,8 +920,8 @@ export class RariGovernorBravo extends ethereum.SmartContract {
         value[6].toBigInt(),
         value[7].toBigInt(),
         value[8].toBoolean(),
-        value[9].toBoolean()
-      )
+        value[9].toBoolean(),
+      ),
     );
   }
 
@@ -930,7 +930,7 @@ export class RariGovernorBravo extends ethereum.SmartContract {
     values: Array<BigInt>,
     signatures: Array<string>,
     calldatas: Array<Bytes>,
-    description: string
+    description: string,
   ): BigInt {
     let result = super.call(
       "propose",
@@ -940,8 +940,8 @@ export class RariGovernorBravo extends ethereum.SmartContract {
         ethereum.Value.fromUnsignedBigIntArray(values),
         ethereum.Value.fromStringArray(signatures),
         ethereum.Value.fromBytesArray(calldatas),
-        ethereum.Value.fromString(description)
-      ]
+        ethereum.Value.fromString(description),
+      ],
     );
 
     return result[0].toBigInt();
@@ -952,7 +952,7 @@ export class RariGovernorBravo extends ethereum.SmartContract {
     values: Array<BigInt>,
     signatures: Array<string>,
     calldatas: Array<Bytes>,
-    description: string
+    description: string,
   ): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "propose",
@@ -962,8 +962,8 @@ export class RariGovernorBravo extends ethereum.SmartContract {
         ethereum.Value.fromUnsignedBigIntArray(values),
         ethereum.Value.fromStringArray(signatures),
         ethereum.Value.fromBytesArray(calldatas),
-        ethereum.Value.fromString(description)
-      ]
+        ethereum.Value.fromString(description),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1004,7 +1004,7 @@ export class RariGovernorBravo extends ethereum.SmartContract {
 
   state(proposalId: BigInt): i32 {
     let result = super.call("state", "state(uint256):(uint8)", [
-      ethereum.Value.fromUnsignedBigInt(proposalId)
+      ethereum.Value.fromUnsignedBigInt(proposalId),
     ]);
 
     return result[0].toI32();
@@ -1012,7 +1012,7 @@ export class RariGovernorBravo extends ethereum.SmartContract {
 
   try_state(proposalId: BigInt): ethereum.CallResult<i32> {
     let result = super.tryCall("state", "state(uint256):(uint8)", [
-      ethereum.Value.fromUnsignedBigInt(proposalId)
+      ethereum.Value.fromUnsignedBigInt(proposalId),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();

@@ -7,7 +7,7 @@ import {
   Entity,
   Bytes,
   Address,
-  BigInt
+  BigInt,
 } from "@graphprotocol/graph-ts";
 
 export class ExecutorAuthorized extends ethereum.Event {
@@ -415,7 +415,7 @@ export class DyDxGovernor extends ethereum.SmartContract {
     let result = super.call(
       "ADD_EXECUTOR_ROLE",
       "ADD_EXECUTOR_ROLE():(bytes32)",
-      []
+      [],
     );
 
     return result[0].toBytes();
@@ -425,7 +425,7 @@ export class DyDxGovernor extends ethereum.SmartContract {
     let result = super.tryCall(
       "ADD_EXECUTOR_ROLE",
       "ADD_EXECUTOR_ROLE():(bytes32)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -438,7 +438,7 @@ export class DyDxGovernor extends ethereum.SmartContract {
     let result = super.call(
       "DEFAULT_ADMIN_ROLE",
       "DEFAULT_ADMIN_ROLE():(bytes32)",
-      []
+      [],
     );
 
     return result[0].toBytes();
@@ -448,7 +448,7 @@ export class DyDxGovernor extends ethereum.SmartContract {
     let result = super.tryCall(
       "DEFAULT_ADMIN_ROLE",
       "DEFAULT_ADMIN_ROLE():(bytes32)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -461,7 +461,7 @@ export class DyDxGovernor extends ethereum.SmartContract {
     let result = super.call(
       "DOMAIN_TYPEHASH",
       "DOMAIN_TYPEHASH():(bytes32)",
-      []
+      [],
     );
 
     return result[0].toBytes();
@@ -471,7 +471,7 @@ export class DyDxGovernor extends ethereum.SmartContract {
     let result = super.tryCall(
       "DOMAIN_TYPEHASH",
       "DOMAIN_TYPEHASH():(bytes32)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -484,7 +484,7 @@ export class DyDxGovernor extends ethereum.SmartContract {
     let result = super.call(
       "EIP712_DOMAIN_NAME",
       "EIP712_DOMAIN_NAME():(string)",
-      []
+      [],
     );
 
     return result[0].toString();
@@ -494,7 +494,7 @@ export class DyDxGovernor extends ethereum.SmartContract {
     let result = super.tryCall(
       "EIP712_DOMAIN_NAME",
       "EIP712_DOMAIN_NAME():(string)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -522,7 +522,7 @@ export class DyDxGovernor extends ethereum.SmartContract {
     let result = super.call(
       "VOTE_EMITTED_TYPEHASH",
       "VOTE_EMITTED_TYPEHASH():(bytes32)",
-      []
+      [],
     );
 
     return result[0].toBytes();
@@ -532,7 +532,7 @@ export class DyDxGovernor extends ethereum.SmartContract {
     let result = super.tryCall(
       "VOTE_EMITTED_TYPEHASH",
       "VOTE_EMITTED_TYPEHASH():(bytes32)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -548,7 +548,7 @@ export class DyDxGovernor extends ethereum.SmartContract {
     signatures: Array<string>,
     calldatas: Array<Bytes>,
     withDelegatecalls: Array<boolean>,
-    ipfsHash: Bytes
+    ipfsHash: Bytes,
   ): BigInt {
     let result = super.call(
       "create",
@@ -560,8 +560,8 @@ export class DyDxGovernor extends ethereum.SmartContract {
         ethereum.Value.fromStringArray(signatures),
         ethereum.Value.fromBytesArray(calldatas),
         ethereum.Value.fromBooleanArray(withDelegatecalls),
-        ethereum.Value.fromFixedBytes(ipfsHash)
-      ]
+        ethereum.Value.fromFixedBytes(ipfsHash),
+      ],
     );
 
     return result[0].toBigInt();
@@ -574,7 +574,7 @@ export class DyDxGovernor extends ethereum.SmartContract {
     signatures: Array<string>,
     calldatas: Array<Bytes>,
     withDelegatecalls: Array<boolean>,
-    ipfsHash: Bytes
+    ipfsHash: Bytes,
   ): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "create",
@@ -586,8 +586,8 @@ export class DyDxGovernor extends ethereum.SmartContract {
         ethereum.Value.fromStringArray(signatures),
         ethereum.Value.fromBytesArray(calldatas),
         ethereum.Value.fromBooleanArray(withDelegatecalls),
-        ethereum.Value.fromFixedBytes(ipfsHash)
-      ]
+        ethereum.Value.fromFixedBytes(ipfsHash),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -600,7 +600,7 @@ export class DyDxGovernor extends ethereum.SmartContract {
     let result = super.call(
       "getGovernanceStrategy",
       "getGovernanceStrategy():(address)",
-      []
+      [],
     );
 
     return result[0].toAddress();
@@ -610,7 +610,7 @@ export class DyDxGovernor extends ethereum.SmartContract {
     let result = super.tryCall(
       "getGovernanceStrategy",
       "getGovernanceStrategy():(address)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -620,26 +620,26 @@ export class DyDxGovernor extends ethereum.SmartContract {
   }
 
   getProposalById(
-    proposalId: BigInt
+    proposalId: BigInt,
   ): DyDxGovernor__getProposalByIdResultValue0Struct {
     let result = super.call(
       "getProposalById",
       "getProposalById(uint256):((uint256,address,address,address[],uint256[],string[],bytes[],bool[],uint256,uint256,uint256,uint256,uint256,bool,bool,address,bytes32))",
-      [ethereum.Value.fromUnsignedBigInt(proposalId)]
+      [ethereum.Value.fromUnsignedBigInt(proposalId)],
     );
 
     return changetype<DyDxGovernor__getProposalByIdResultValue0Struct>(
-      result[0].toTuple()
+      result[0].toTuple(),
     );
   }
 
   try_getProposalById(
-    proposalId: BigInt
+    proposalId: BigInt,
   ): ethereum.CallResult<DyDxGovernor__getProposalByIdResultValue0Struct> {
     let result = super.tryCall(
       "getProposalById",
       "getProposalById(uint256):((uint256,address,address,address[],uint256[],string[],bytes[],bool[],uint256,uint256,uint256,uint256,uint256,bool,bool,address,bytes32))",
-      [ethereum.Value.fromUnsignedBigInt(proposalId)]
+      [ethereum.Value.fromUnsignedBigInt(proposalId)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -647,8 +647,8 @@ export class DyDxGovernor extends ethereum.SmartContract {
     let value = result.value;
     return ethereum.CallResult.fromValue(
       changetype<DyDxGovernor__getProposalByIdResultValue0Struct>(
-        value[0].toTuple()
-      )
+        value[0].toTuple(),
+      ),
     );
   }
 
@@ -656,7 +656,7 @@ export class DyDxGovernor extends ethereum.SmartContract {
     let result = super.call(
       "getProposalState",
       "getProposalState(uint256):(uint8)",
-      [ethereum.Value.fromUnsignedBigInt(proposalId)]
+      [ethereum.Value.fromUnsignedBigInt(proposalId)],
     );
 
     return result[0].toI32();
@@ -666,7 +666,7 @@ export class DyDxGovernor extends ethereum.SmartContract {
     let result = super.tryCall(
       "getProposalState",
       "getProposalState(uint256):(uint8)",
-      [ethereum.Value.fromUnsignedBigInt(proposalId)]
+      [ethereum.Value.fromUnsignedBigInt(proposalId)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -679,7 +679,7 @@ export class DyDxGovernor extends ethereum.SmartContract {
     let result = super.call(
       "getProposalsCount",
       "getProposalsCount():(uint256)",
-      []
+      [],
     );
 
     return result[0].toBigInt();
@@ -689,7 +689,7 @@ export class DyDxGovernor extends ethereum.SmartContract {
     let result = super.tryCall(
       "getProposalsCount",
       "getProposalsCount():(uint256)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -700,7 +700,7 @@ export class DyDxGovernor extends ethereum.SmartContract {
 
   getRoleAdmin(role: Bytes): Bytes {
     let result = super.call("getRoleAdmin", "getRoleAdmin(bytes32):(bytes32)", [
-      ethereum.Value.fromFixedBytes(role)
+      ethereum.Value.fromFixedBytes(role),
     ]);
 
     return result[0].toBytes();
@@ -710,7 +710,7 @@ export class DyDxGovernor extends ethereum.SmartContract {
     let result = super.tryCall(
       "getRoleAdmin",
       "getRoleAdmin(bytes32):(bytes32)",
-      [ethereum.Value.fromFixedBytes(role)]
+      [ethereum.Value.fromFixedBytes(role)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -721,33 +721,33 @@ export class DyDxGovernor extends ethereum.SmartContract {
 
   getVoteOnProposal(
     proposalId: BigInt,
-    voter: Address
+    voter: Address,
   ): DyDxGovernor__getVoteOnProposalResultValue0Struct {
     let result = super.call(
       "getVoteOnProposal",
       "getVoteOnProposal(uint256,address):((bool,uint248))",
       [
         ethereum.Value.fromUnsignedBigInt(proposalId),
-        ethereum.Value.fromAddress(voter)
-      ]
+        ethereum.Value.fromAddress(voter),
+      ],
     );
 
     return changetype<DyDxGovernor__getVoteOnProposalResultValue0Struct>(
-      result[0].toTuple()
+      result[0].toTuple(),
     );
   }
 
   try_getVoteOnProposal(
     proposalId: BigInt,
-    voter: Address
+    voter: Address,
   ): ethereum.CallResult<DyDxGovernor__getVoteOnProposalResultValue0Struct> {
     let result = super.tryCall(
       "getVoteOnProposal",
       "getVoteOnProposal(uint256,address):((bool,uint248))",
       [
         ethereum.Value.fromUnsignedBigInt(proposalId),
-        ethereum.Value.fromAddress(voter)
-      ]
+        ethereum.Value.fromAddress(voter),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -755,8 +755,8 @@ export class DyDxGovernor extends ethereum.SmartContract {
     let value = result.value;
     return ethereum.CallResult.fromValue(
       changetype<DyDxGovernor__getVoteOnProposalResultValue0Struct>(
-        value[0].toTuple()
-      )
+        value[0].toTuple(),
+      ),
     );
   }
 
@@ -770,7 +770,7 @@ export class DyDxGovernor extends ethereum.SmartContract {
     let result = super.tryCall(
       "getVotingDelay",
       "getVotingDelay():(uint256)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -782,7 +782,7 @@ export class DyDxGovernor extends ethereum.SmartContract {
   hasRole(role: Bytes, account: Address): boolean {
     let result = super.call("hasRole", "hasRole(bytes32,address):(bool)", [
       ethereum.Value.fromFixedBytes(role),
-      ethereum.Value.fromAddress(account)
+      ethereum.Value.fromAddress(account),
     ]);
 
     return result[0].toBoolean();
@@ -791,7 +791,7 @@ export class DyDxGovernor extends ethereum.SmartContract {
   try_hasRole(role: Bytes, account: Address): ethereum.CallResult<boolean> {
     let result = super.tryCall("hasRole", "hasRole(bytes32,address):(bool)", [
       ethereum.Value.fromFixedBytes(role),
-      ethereum.Value.fromAddress(account)
+      ethereum.Value.fromAddress(account),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -804,7 +804,7 @@ export class DyDxGovernor extends ethereum.SmartContract {
     let result = super.call(
       "isExecutorAuthorized",
       "isExecutorAuthorized(address):(bool)",
-      [ethereum.Value.fromAddress(executor)]
+      [ethereum.Value.fromAddress(executor)],
     );
 
     return result[0].toBoolean();
@@ -814,7 +814,7 @@ export class DyDxGovernor extends ethereum.SmartContract {
     let result = super.tryCall(
       "isExecutorAuthorized",
       "isExecutorAuthorized(address):(bool)",
-      [ethereum.Value.fromAddress(executor)]
+      [ethereum.Value.fromAddress(executor)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -827,7 +827,7 @@ export class DyDxGovernor extends ethereum.SmartContract {
     let result = super.call(
       "supportsInterface",
       "supportsInterface(bytes4):(bool)",
-      [ethereum.Value.fromFixedBytes(interfaceId)]
+      [ethereum.Value.fromFixedBytes(interfaceId)],
     );
 
     return result[0].toBoolean();
@@ -837,7 +837,7 @@ export class DyDxGovernor extends ethereum.SmartContract {
     let result = super.tryCall(
       "supportsInterface",
       "supportsInterface(bytes4):(bool)",
-      [ethereum.Value.fromFixedBytes(interfaceId)]
+      [ethereum.Value.fromFixedBytes(interfaceId)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();

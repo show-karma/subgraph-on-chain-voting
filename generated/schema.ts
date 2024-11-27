@@ -8,7 +8,7 @@ import {
   store,
   Bytes,
   BigInt,
-  BigDecimal
+  BigDecimal,
 } from "@graphprotocol/graph-ts";
 
 export class Organization extends Entity {
@@ -23,10 +23,16 @@ export class Organization extends Entity {
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        `Entities of type Organization must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type Organization must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`,
       );
       store.set("Organization", id.toString(), this);
     }
+  }
+
+  static loadInBlock(id: string): Organization | null {
+    return changetype<Organization | null>(
+      store.get_in_block("Organization", id),
+    );
   }
 
   static load(id: string): Organization | null {
@@ -59,10 +65,14 @@ export class User extends Entity {
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        `Entities of type User must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type User must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`,
       );
       store.set("User", id.toString(), this);
     }
+  }
+
+  static loadInBlock(id: string): User | null {
+    return changetype<User | null>(store.get_in_block("User", id));
   }
 
   static load(id: string): User | null {
@@ -82,13 +92,8 @@ export class User extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get votes(): Array<string> {
-    let value = this.get("votes");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toStringArray();
-    }
+  get votes(): VoteLoader {
+    return new VoteLoader("User", this.get("id")!.toString(), "votes");
   }
 
   get organization(): string | null {
@@ -121,10 +126,14 @@ export class Proposal extends Entity {
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        `Entities of type Proposal must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type Proposal must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`,
       );
       store.set("Proposal", id.toString(), this);
     }
+  }
+
+  static loadInBlock(id: string): Proposal | null {
+    return changetype<Proposal | null>(store.get_in_block("Proposal", id));
   }
 
   static load(id: string): Proposal | null {
@@ -183,13 +192,8 @@ export class Proposal extends Entity {
     this.set("proposer", Value.fromString(value));
   }
 
-  get votes(): Array<string> {
-    let value = this.get("votes");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toStringArray();
-    }
+  get votes(): VoteLoader {
+    return new VoteLoader("Proposal", this.get("id")!.toString(), "votes");
   }
 
   get organization(): string {
@@ -261,10 +265,14 @@ export class Vote extends Entity {
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        `Entities of type Vote must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type Vote must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`,
       );
       store.set("Vote", id.toString(), this);
     }
+  }
+
+  static loadInBlock(id: string): Vote | null {
+    return changetype<Vote | null>(store.get_in_block("Vote", id));
   }
 
   static load(id: string): Vote | null {
@@ -398,5 +406,23 @@ export class Vote extends Entity {
 
   set timestamp(value: BigInt) {
     this.set("timestamp", Value.fromBigInt(value));
+  }
+}
+
+export class VoteLoader extends Entity {
+  _entity: string;
+  _field: string;
+  _id: string;
+
+  constructor(entity: string, id: string, field: string) {
+    super();
+    this._entity = entity;
+    this._id = id;
+    this._field = field;
+  }
+
+  load(): Vote[] {
+    let value = store.loadRelated(this._entity, this._id, this._field);
+    return changetype<Vote[]>(value);
   }
 }

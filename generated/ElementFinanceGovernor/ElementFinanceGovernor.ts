@@ -7,7 +7,7 @@ import {
   Entity,
   Bytes,
   Address,
-  BigInt
+  BigInt,
 } from "@graphprotocol/graph-ts";
 
 export class ProposalCreated extends ethereum.Event {
@@ -81,7 +81,7 @@ export class Voted__Params {
 
   get vote(): VotedVoteStruct {
     return changetype<VotedVoteStruct>(
-      this._event.parameters[2].value.toTuple()
+      this._event.parameters[2].value.toTuple(),
     );
   }
 }
@@ -110,7 +110,7 @@ export class ElementFinanceGovernor__proposalsResult {
     value2: BigInt,
     value3: BigInt,
     value4: BigInt,
-    value5: BigInt
+    value5: BigInt,
   ) {
     this.value0 = value0;
     this.value1 = value1;
@@ -170,7 +170,7 @@ export class ElementFinanceGovernor__votesResult {
     map.set("value0", ethereum.Value.fromUnsignedBigInt(this.value0));
     map.set(
       "value1",
-      ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(this.value1))
+      ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(this.value1)),
     );
     return map;
   }
@@ -199,7 +199,7 @@ export class ElementFinanceGovernor extends ethereum.SmartContract {
     let result = super.tryCall(
       "DAY_IN_BLOCKS",
       "DAY_IN_BLOCKS():(uint256)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -212,7 +212,7 @@ export class ElementFinanceGovernor extends ethereum.SmartContract {
     let result = super.call(
       "approvedVaults",
       "approvedVaults(address):(bool)",
-      [ethereum.Value.fromAddress(param0)]
+      [ethereum.Value.fromAddress(param0)],
     );
 
     return result[0].toBoolean();
@@ -222,7 +222,7 @@ export class ElementFinanceGovernor extends ethereum.SmartContract {
     let result = super.tryCall(
       "approvedVaults",
       "approvedVaults(address):(bool)",
-      [ethereum.Value.fromAddress(param0)]
+      [ethereum.Value.fromAddress(param0)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -233,7 +233,7 @@ export class ElementFinanceGovernor extends ethereum.SmartContract {
 
   authorized(param0: Address): boolean {
     let result = super.call("authorized", "authorized(address):(bool)", [
-      ethereum.Value.fromAddress(param0)
+      ethereum.Value.fromAddress(param0),
     ]);
 
     return result[0].toBoolean();
@@ -241,7 +241,7 @@ export class ElementFinanceGovernor extends ethereum.SmartContract {
 
   try_authorized(param0: Address): ethereum.CallResult<boolean> {
     let result = super.tryCall("authorized", "authorized(address):(bool)", [
-      ethereum.Value.fromAddress(param0)
+      ethereum.Value.fromAddress(param0),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -275,7 +275,7 @@ export class ElementFinanceGovernor extends ethereum.SmartContract {
     let result = super.tryCall(
       "extraVoteTime",
       "extraVoteTime():(uint256)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -288,19 +288,19 @@ export class ElementFinanceGovernor extends ethereum.SmartContract {
     let result = super.call(
       "getProposalVotingPower",
       "getProposalVotingPower(uint256):(uint128[3])",
-      [ethereum.Value.fromUnsignedBigInt(proposalId)]
+      [ethereum.Value.fromUnsignedBigInt(proposalId)],
     );
 
     return result[0].toBigIntArray();
   }
 
   try_getProposalVotingPower(
-    proposalId: BigInt
+    proposalId: BigInt,
   ): ethereum.CallResult<Array<BigInt>> {
     let result = super.tryCall(
       "getProposalVotingPower",
       "getProposalVotingPower(uint256):(uint128[3])",
-      [ethereum.Value.fromUnsignedBigInt(proposalId)]
+      [ethereum.Value.fromUnsignedBigInt(proposalId)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -311,7 +311,7 @@ export class ElementFinanceGovernor extends ethereum.SmartContract {
 
   isAuthorized(who: Address): boolean {
     let result = super.call("isAuthorized", "isAuthorized(address):(bool)", [
-      ethereum.Value.fromAddress(who)
+      ethereum.Value.fromAddress(who),
     ]);
 
     return result[0].toBoolean();
@@ -319,7 +319,7 @@ export class ElementFinanceGovernor extends ethereum.SmartContract {
 
   try_isAuthorized(who: Address): ethereum.CallResult<boolean> {
     let result = super.tryCall("isAuthorized", "isAuthorized(address):(bool)", [
-      ethereum.Value.fromAddress(who)
+      ethereum.Value.fromAddress(who),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -347,7 +347,7 @@ export class ElementFinanceGovernor extends ethereum.SmartContract {
     let result = super.call(
       "minProposalPower",
       "minProposalPower():(uint256)",
-      []
+      [],
     );
 
     return result[0].toBigInt();
@@ -357,7 +357,7 @@ export class ElementFinanceGovernor extends ethereum.SmartContract {
     let result = super.tryCall(
       "minProposalPower",
       "minProposalPower():(uint256)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -391,7 +391,7 @@ export class ElementFinanceGovernor extends ethereum.SmartContract {
     let result = super.tryCall(
       "proposalCount",
       "proposalCount():(uint256)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -404,7 +404,7 @@ export class ElementFinanceGovernor extends ethereum.SmartContract {
     let result = super.call(
       "proposals",
       "proposals(uint256):(bytes32,uint128,uint128,uint128,uint128,uint128)",
-      [ethereum.Value.fromUnsignedBigInt(param0)]
+      [ethereum.Value.fromUnsignedBigInt(param0)],
     );
 
     return new ElementFinanceGovernor__proposalsResult(
@@ -413,17 +413,17 @@ export class ElementFinanceGovernor extends ethereum.SmartContract {
       result[2].toBigInt(),
       result[3].toBigInt(),
       result[4].toBigInt(),
-      result[5].toBigInt()
+      result[5].toBigInt(),
     );
   }
 
   try_proposals(
-    param0: BigInt
+    param0: BigInt,
   ): ethereum.CallResult<ElementFinanceGovernor__proposalsResult> {
     let result = super.tryCall(
       "proposals",
       "proposals(uint256):(bytes32,uint128,uint128,uint128,uint128,uint128)",
-      [ethereum.Value.fromUnsignedBigInt(param0)]
+      [ethereum.Value.fromUnsignedBigInt(param0)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -436,15 +436,15 @@ export class ElementFinanceGovernor extends ethereum.SmartContract {
         value[2].toBigInt(),
         value[3].toBigInt(),
         value[4].toBigInt(),
-        value[5].toBigInt()
-      )
+        value[5].toBigInt(),
+      ),
     );
   }
 
   quorums(target: Address, functionSelector: Bytes): BigInt {
     let result = super.call("quorums", "quorums(address,bytes4):(uint256)", [
       ethereum.Value.fromAddress(target),
-      ethereum.Value.fromFixedBytes(functionSelector)
+      ethereum.Value.fromFixedBytes(functionSelector),
     ]);
 
     return result[0].toBigInt();
@@ -452,11 +452,11 @@ export class ElementFinanceGovernor extends ethereum.SmartContract {
 
   try_quorums(
     target: Address,
-    functionSelector: Bytes
+    functionSelector: Bytes,
   ): ethereum.CallResult<BigInt> {
     let result = super.tryCall("quorums", "quorums(address,bytes4):(uint256)", [
       ethereum.Value.fromAddress(target),
-      ethereum.Value.fromFixedBytes(functionSelector)
+      ethereum.Value.fromFixedBytes(functionSelector),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -469,7 +469,7 @@ export class ElementFinanceGovernor extends ethereum.SmartContract {
     votingVaults: Array<Address>,
     extraVaultData: Array<Bytes>,
     proposalId: BigInt,
-    ballot: i32
+    ballot: i32,
   ): BigInt {
     let result = super.call(
       "vote",
@@ -478,8 +478,8 @@ export class ElementFinanceGovernor extends ethereum.SmartContract {
         ethereum.Value.fromAddressArray(votingVaults),
         ethereum.Value.fromBytesArray(extraVaultData),
         ethereum.Value.fromUnsignedBigInt(proposalId),
-        ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(ballot))
-      ]
+        ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(ballot)),
+      ],
     );
 
     return result[0].toBigInt();
@@ -489,7 +489,7 @@ export class ElementFinanceGovernor extends ethereum.SmartContract {
     votingVaults: Array<Address>,
     extraVaultData: Array<Bytes>,
     proposalId: BigInt,
-    ballot: i32
+    ballot: i32,
   ): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "vote",
@@ -498,8 +498,8 @@ export class ElementFinanceGovernor extends ethereum.SmartContract {
         ethereum.Value.fromAddressArray(votingVaults),
         ethereum.Value.fromBytesArray(extraVaultData),
         ethereum.Value.fromUnsignedBigInt(proposalId),
-        ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(ballot))
-      ]
+        ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(ballot)),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -511,26 +511,26 @@ export class ElementFinanceGovernor extends ethereum.SmartContract {
   votes(param0: Address, param1: BigInt): ElementFinanceGovernor__votesResult {
     let result = super.call("votes", "votes(address,uint256):(uint128,uint8)", [
       ethereum.Value.fromAddress(param0),
-      ethereum.Value.fromUnsignedBigInt(param1)
+      ethereum.Value.fromUnsignedBigInt(param1),
     ]);
 
     return new ElementFinanceGovernor__votesResult(
       result[0].toBigInt(),
-      result[1].toI32()
+      result[1].toI32(),
     );
   }
 
   try_votes(
     param0: Address,
-    param1: BigInt
+    param1: BigInt,
   ): ethereum.CallResult<ElementFinanceGovernor__votesResult> {
     let result = super.tryCall(
       "votes",
       "votes(address,uint256):(uint128,uint8)",
       [
         ethereum.Value.fromAddress(param0),
-        ethereum.Value.fromUnsignedBigInt(param1)
-      ]
+        ethereum.Value.fromUnsignedBigInt(param1),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -539,8 +539,8 @@ export class ElementFinanceGovernor extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(
       new ElementFinanceGovernor__votesResult(
         value[0].toBigInt(),
-        value[1].toI32()
-      )
+        value[1].toI32(),
+      ),
     );
   }
 }

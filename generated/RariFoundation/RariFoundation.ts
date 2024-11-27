@@ -10,6 +10,24 @@ import {
   BigInt,
 } from "@graphprotocol/graph-ts";
 
+export class Initialized extends ethereum.Event {
+  get params(): Initialized__Params {
+    return new Initialized__Params(this);
+  }
+}
+
+export class Initialized__Params {
+  _event: Initialized;
+
+  constructor(event: Initialized) {
+    this._event = event;
+  }
+
+  get version(): i32 {
+    return this._event.parameters[0].value.toI32();
+  }
+}
+
 export class ProposalCanceled extends ethereum.Event {
   get params(): ProposalCanceled__Params {
     return new ProposalCanceled__Params(this);
@@ -118,79 +136,25 @@ export class ProposalQueued__Params {
   }
 }
 
-export class ProposalThresholdUpdated extends ethereum.Event {
-  get params(): ProposalThresholdUpdated__Params {
-    return new ProposalThresholdUpdated__Params(this);
+export class QuorumNumeratorUpdated extends ethereum.Event {
+  get params(): QuorumNumeratorUpdated__Params {
+    return new QuorumNumeratorUpdated__Params(this);
   }
 }
 
-export class ProposalThresholdUpdated__Params {
-  _event: ProposalThresholdUpdated;
+export class QuorumNumeratorUpdated__Params {
+  _event: QuorumNumeratorUpdated;
 
-  constructor(event: ProposalThresholdUpdated) {
+  constructor(event: QuorumNumeratorUpdated) {
     this._event = event;
   }
 
-  get oldProposalThreshold(): BigInt {
+  get oldQuorumNumerator(): BigInt {
     return this._event.parameters[0].value.toBigInt();
   }
 
-  get newProposalThreshold(): BigInt {
+  get newQuorumNumerator(): BigInt {
     return this._event.parameters[1].value.toBigInt();
-  }
-}
-
-export class QuorumUpdated extends ethereum.Event {
-  get params(): QuorumUpdated__Params {
-    return new QuorumUpdated__Params(this);
-  }
-}
-
-export class QuorumUpdated__Params {
-  _event: QuorumUpdated;
-
-  constructor(event: QuorumUpdated) {
-    this._event = event;
-  }
-
-  get oldQuorum(): BigInt {
-    return this._event.parameters[0].value.toBigInt();
-  }
-
-  get newQuorum(): BigInt {
-    return this._event.parameters[1].value.toBigInt();
-  }
-}
-
-export class Rollback extends ethereum.Event {
-  get params(): Rollback__Params {
-    return new Rollback__Params(this);
-  }
-}
-
-export class Rollback__Params {
-  _event: Rollback;
-
-  constructor(event: Rollback) {
-    this._event = event;
-  }
-}
-
-export class RollbackQueued extends ethereum.Event {
-  get params(): RollbackQueued__Params {
-    return new RollbackQueued__Params(this);
-  }
-}
-
-export class RollbackQueued__Params {
-  _event: RollbackQueued;
-
-  constructor(event: RollbackQueued) {
-    this._event = event;
-  }
-
-  get eta(): BigInt {
-    return this._event.parameters[0].value.toBigInt();
   }
 }
 
@@ -250,51 +214,45 @@ export class VoteCast__Params {
   }
 }
 
-export class VotingDelayUpdated extends ethereum.Event {
-  get params(): VotingDelayUpdated__Params {
-    return new VotingDelayUpdated__Params(this);
+export class VoteCastWithParams extends ethereum.Event {
+  get params(): VoteCastWithParams__Params {
+    return new VoteCastWithParams__Params(this);
   }
 }
 
-export class VotingDelayUpdated__Params {
-  _event: VotingDelayUpdated;
+export class VoteCastWithParams__Params {
+  _event: VoteCastWithParams;
 
-  constructor(event: VotingDelayUpdated) {
+  constructor(event: VoteCastWithParams) {
     this._event = event;
   }
 
-  get oldVotingDelay(): BigInt {
-    return this._event.parameters[0].value.toBigInt();
+  get voter(): Address {
+    return this._event.parameters[0].value.toAddress();
   }
 
-  get newVotingDelay(): BigInt {
+  get proposalId(): BigInt {
     return this._event.parameters[1].value.toBigInt();
   }
-}
 
-export class VotingPeriodUpdated extends ethereum.Event {
-  get params(): VotingPeriodUpdated__Params {
-    return new VotingPeriodUpdated__Params(this);
+  get support(): i32 {
+    return this._event.parameters[2].value.toI32();
+  }
+
+  get weight(): BigInt {
+    return this._event.parameters[3].value.toBigInt();
+  }
+
+  get reason(): string {
+    return this._event.parameters[4].value.toString();
+  }
+
+  get params(): Bytes {
+    return this._event.parameters[5].value.toBytes();
   }
 }
 
-export class VotingPeriodUpdated__Params {
-  _event: VotingPeriodUpdated;
-
-  constructor(event: VotingPeriodUpdated) {
-    this._event = event;
-  }
-
-  get oldVotingPeriod(): BigInt {
-    return this._event.parameters[0].value.toBigInt();
-  }
-
-  get newVotingPeriod(): BigInt {
-    return this._event.parameters[1].value.toBigInt();
-  }
-}
-
-export class FeiGovernance__getActionsResult {
+export class RariFoundation__getActionsResult {
   value0: Array<Address>;
   value1: Array<BigInt>;
   value2: Array<string>;
@@ -338,7 +296,7 @@ export class FeiGovernance__getActionsResult {
   }
 }
 
-export class FeiGovernance__getReceiptResultValue0Struct extends ethereum.Tuple {
+export class RariFoundation__getReceiptResultValue0Struct extends ethereum.Tuple {
   get hasVoted(): boolean {
     return this[0].toBoolean();
   }
@@ -352,7 +310,7 @@ export class FeiGovernance__getReceiptResultValue0Struct extends ethereum.Tuple 
   }
 }
 
-export class FeiGovernance__proposalsResult {
+export class RariFoundation__proposalsResult {
   value0: BigInt;
   value1: Address;
   value2: BigInt;
@@ -444,32 +402,9 @@ export class FeiGovernance__proposalsResult {
   }
 }
 
-export class FeiGovernance extends ethereum.SmartContract {
-  static bind(address: Address): FeiGovernance {
-    return new FeiGovernance("FeiGovernance", address);
-  }
-
-  BACKUP_GOVERNOR(): Address {
-    let result = super.call(
-      "BACKUP_GOVERNOR",
-      "BACKUP_GOVERNOR():(address)",
-      [],
-    );
-
-    return result[0].toAddress();
-  }
-
-  try_BACKUP_GOVERNOR(): ethereum.CallResult<Address> {
-    let result = super.tryCall(
-      "BACKUP_GOVERNOR",
-      "BACKUP_GOVERNOR():(address)",
-      [],
-    );
-    if (result.reverted) {
-      return new ethereum.CallResult();
-    }
-    let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toAddress());
+export class RariFoundation extends ethereum.SmartContract {
+  static bind(address: Address): RariFoundation {
+    return new RariFoundation("RariFoundation", address);
   }
 
   BALLOT_TYPEHASH(): Bytes {
@@ -510,27 +445,27 @@ export class FeiGovernance extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toString());
   }
 
-  ROLLBACK_DEADLINE(): BigInt {
+  EXTENDED_BALLOT_TYPEHASH(): Bytes {
     let result = super.call(
-      "ROLLBACK_DEADLINE",
-      "ROLLBACK_DEADLINE():(uint256)",
+      "EXTENDED_BALLOT_TYPEHASH",
+      "EXTENDED_BALLOT_TYPEHASH():(bytes32)",
       [],
     );
 
-    return result[0].toBigInt();
+    return result[0].toBytes();
   }
 
-  try_ROLLBACK_DEADLINE(): ethereum.CallResult<BigInt> {
+  try_EXTENDED_BALLOT_TYPEHASH(): ethereum.CallResult<Bytes> {
     let result = super.tryCall(
-      "ROLLBACK_DEADLINE",
-      "ROLLBACK_DEADLINE():(uint256)",
+      "EXTENDED_BALLOT_TYPEHASH",
+      "EXTENDED_BALLOT_TYPEHASH():(bytes32)",
       [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
     let value = result.value;
-    return ethereum.CallResult.fromValue(value[0].toBigInt());
+    return ethereum.CallResult.fromValue(value[0].toBytes());
   }
 
   castVote(proposalId: BigInt, support: i32): BigInt {
@@ -640,14 +575,112 @@ export class FeiGovernance extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  getActions(proposalId: BigInt): FeiGovernance__getActionsResult {
+  castVoteWithReasonAndParams(
+    proposalId: BigInt,
+    support: i32,
+    reason: string,
+    params: Bytes,
+  ): BigInt {
+    let result = super.call(
+      "castVoteWithReasonAndParams",
+      "castVoteWithReasonAndParams(uint256,uint8,string,bytes):(uint256)",
+      [
+        ethereum.Value.fromUnsignedBigInt(proposalId),
+        ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(support)),
+        ethereum.Value.fromString(reason),
+        ethereum.Value.fromBytes(params),
+      ],
+    );
+
+    return result[0].toBigInt();
+  }
+
+  try_castVoteWithReasonAndParams(
+    proposalId: BigInt,
+    support: i32,
+    reason: string,
+    params: Bytes,
+  ): ethereum.CallResult<BigInt> {
+    let result = super.tryCall(
+      "castVoteWithReasonAndParams",
+      "castVoteWithReasonAndParams(uint256,uint8,string,bytes):(uint256)",
+      [
+        ethereum.Value.fromUnsignedBigInt(proposalId),
+        ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(support)),
+        ethereum.Value.fromString(reason),
+        ethereum.Value.fromBytes(params),
+      ],
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  castVoteWithReasonAndParamsBySig(
+    proposalId: BigInt,
+    support: i32,
+    reason: string,
+    params: Bytes,
+    v: i32,
+    r: Bytes,
+    s: Bytes,
+  ): BigInt {
+    let result = super.call(
+      "castVoteWithReasonAndParamsBySig",
+      "castVoteWithReasonAndParamsBySig(uint256,uint8,string,bytes,uint8,bytes32,bytes32):(uint256)",
+      [
+        ethereum.Value.fromUnsignedBigInt(proposalId),
+        ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(support)),
+        ethereum.Value.fromString(reason),
+        ethereum.Value.fromBytes(params),
+        ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(v)),
+        ethereum.Value.fromFixedBytes(r),
+        ethereum.Value.fromFixedBytes(s),
+      ],
+    );
+
+    return result[0].toBigInt();
+  }
+
+  try_castVoteWithReasonAndParamsBySig(
+    proposalId: BigInt,
+    support: i32,
+    reason: string,
+    params: Bytes,
+    v: i32,
+    r: Bytes,
+    s: Bytes,
+  ): ethereum.CallResult<BigInt> {
+    let result = super.tryCall(
+      "castVoteWithReasonAndParamsBySig",
+      "castVoteWithReasonAndParamsBySig(uint256,uint8,string,bytes,uint8,bytes32,bytes32):(uint256)",
+      [
+        ethereum.Value.fromUnsignedBigInt(proposalId),
+        ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(support)),
+        ethereum.Value.fromString(reason),
+        ethereum.Value.fromBytes(params),
+        ethereum.Value.fromUnsignedBigInt(BigInt.fromI32(v)),
+        ethereum.Value.fromFixedBytes(r),
+        ethereum.Value.fromFixedBytes(s),
+      ],
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  getActions(proposalId: BigInt): RariFoundation__getActionsResult {
     let result = super.call(
       "getActions",
       "getActions(uint256):(address[],uint256[],string[],bytes[])",
       [ethereum.Value.fromUnsignedBigInt(proposalId)],
     );
 
-    return new FeiGovernance__getActionsResult(
+    return new RariFoundation__getActionsResult(
       result[0].toAddressArray(),
       result[1].toBigIntArray(),
       result[2].toStringArray(),
@@ -657,7 +690,7 @@ export class FeiGovernance extends ethereum.SmartContract {
 
   try_getActions(
     proposalId: BigInt,
-  ): ethereum.CallResult<FeiGovernance__getActionsResult> {
+  ): ethereum.CallResult<RariFoundation__getActionsResult> {
     let result = super.tryCall(
       "getActions",
       "getActions(uint256):(address[],uint256[],string[],bytes[])",
@@ -668,7 +701,7 @@ export class FeiGovernance extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      new FeiGovernance__getActionsResult(
+      new RariFoundation__getActionsResult(
         value[0].toAddressArray(),
         value[1].toBigIntArray(),
         value[2].toStringArray(),
@@ -680,7 +713,7 @@ export class FeiGovernance extends ethereum.SmartContract {
   getReceipt(
     proposalId: BigInt,
     voter: Address,
-  ): FeiGovernance__getReceiptResultValue0Struct {
+  ): RariFoundation__getReceiptResultValue0Struct {
     let result = super.call(
       "getReceipt",
       "getReceipt(uint256,address):((bool,uint8,uint96))",
@@ -690,7 +723,7 @@ export class FeiGovernance extends ethereum.SmartContract {
       ],
     );
 
-    return changetype<FeiGovernance__getReceiptResultValue0Struct>(
+    return changetype<RariFoundation__getReceiptResultValue0Struct>(
       result[0].toTuple(),
     );
   }
@@ -698,7 +731,7 @@ export class FeiGovernance extends ethereum.SmartContract {
   try_getReceipt(
     proposalId: BigInt,
     voter: Address,
-  ): ethereum.CallResult<FeiGovernance__getReceiptResultValue0Struct> {
+  ): ethereum.CallResult<RariFoundation__getReceiptResultValue0Struct> {
     let result = super.tryCall(
       "getReceipt",
       "getReceipt(uint256,address):((bool,uint8,uint96))",
@@ -712,7 +745,7 @@ export class FeiGovernance extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      changetype<FeiGovernance__getReceiptResultValue0Struct>(
+      changetype<RariFoundation__getReceiptResultValue0Struct>(
         value[0].toTuple(),
       ),
     );
@@ -737,6 +770,45 @@ export class FeiGovernance extends ethereum.SmartContract {
       [
         ethereum.Value.fromAddress(account),
         ethereum.Value.fromUnsignedBigInt(blockNumber),
+      ],
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  getVotesWithParams(
+    account: Address,
+    blockNumber: BigInt,
+    params: Bytes,
+  ): BigInt {
+    let result = super.call(
+      "getVotesWithParams",
+      "getVotesWithParams(address,uint256,bytes):(uint256)",
+      [
+        ethereum.Value.fromAddress(account),
+        ethereum.Value.fromUnsignedBigInt(blockNumber),
+        ethereum.Value.fromBytes(params),
+      ],
+    );
+
+    return result[0].toBigInt();
+  }
+
+  try_getVotesWithParams(
+    account: Address,
+    blockNumber: BigInt,
+    params: Bytes,
+  ): ethereum.CallResult<BigInt> {
+    let result = super.tryCall(
+      "getVotesWithParams",
+      "getVotesWithParams(address,uint256,bytes):(uint256)",
+      [
+        ethereum.Value.fromAddress(account),
+        ethereum.Value.fromUnsignedBigInt(blockNumber),
+        ethereum.Value.fromBytes(params),
       ],
     );
     if (result.reverted) {
@@ -826,6 +898,143 @@ export class FeiGovernance extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(value[0].toString());
+  }
+
+  onERC1155BatchReceived(
+    param0: Address,
+    param1: Address,
+    param2: Array<BigInt>,
+    param3: Array<BigInt>,
+    param4: Bytes,
+  ): Bytes {
+    let result = super.call(
+      "onERC1155BatchReceived",
+      "onERC1155BatchReceived(address,address,uint256[],uint256[],bytes):(bytes4)",
+      [
+        ethereum.Value.fromAddress(param0),
+        ethereum.Value.fromAddress(param1),
+        ethereum.Value.fromUnsignedBigIntArray(param2),
+        ethereum.Value.fromUnsignedBigIntArray(param3),
+        ethereum.Value.fromBytes(param4),
+      ],
+    );
+
+    return result[0].toBytes();
+  }
+
+  try_onERC1155BatchReceived(
+    param0: Address,
+    param1: Address,
+    param2: Array<BigInt>,
+    param3: Array<BigInt>,
+    param4: Bytes,
+  ): ethereum.CallResult<Bytes> {
+    let result = super.tryCall(
+      "onERC1155BatchReceived",
+      "onERC1155BatchReceived(address,address,uint256[],uint256[],bytes):(bytes4)",
+      [
+        ethereum.Value.fromAddress(param0),
+        ethereum.Value.fromAddress(param1),
+        ethereum.Value.fromUnsignedBigIntArray(param2),
+        ethereum.Value.fromUnsignedBigIntArray(param3),
+        ethereum.Value.fromBytes(param4),
+      ],
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBytes());
+  }
+
+  onERC1155Received(
+    param0: Address,
+    param1: Address,
+    param2: BigInt,
+    param3: BigInt,
+    param4: Bytes,
+  ): Bytes {
+    let result = super.call(
+      "onERC1155Received",
+      "onERC1155Received(address,address,uint256,uint256,bytes):(bytes4)",
+      [
+        ethereum.Value.fromAddress(param0),
+        ethereum.Value.fromAddress(param1),
+        ethereum.Value.fromUnsignedBigInt(param2),
+        ethereum.Value.fromUnsignedBigInt(param3),
+        ethereum.Value.fromBytes(param4),
+      ],
+    );
+
+    return result[0].toBytes();
+  }
+
+  try_onERC1155Received(
+    param0: Address,
+    param1: Address,
+    param2: BigInt,
+    param3: BigInt,
+    param4: Bytes,
+  ): ethereum.CallResult<Bytes> {
+    let result = super.tryCall(
+      "onERC1155Received",
+      "onERC1155Received(address,address,uint256,uint256,bytes):(bytes4)",
+      [
+        ethereum.Value.fromAddress(param0),
+        ethereum.Value.fromAddress(param1),
+        ethereum.Value.fromUnsignedBigInt(param2),
+        ethereum.Value.fromUnsignedBigInt(param3),
+        ethereum.Value.fromBytes(param4),
+      ],
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBytes());
+  }
+
+  onERC721Received(
+    param0: Address,
+    param1: Address,
+    param2: BigInt,
+    param3: Bytes,
+  ): Bytes {
+    let result = super.call(
+      "onERC721Received",
+      "onERC721Received(address,address,uint256,bytes):(bytes4)",
+      [
+        ethereum.Value.fromAddress(param0),
+        ethereum.Value.fromAddress(param1),
+        ethereum.Value.fromUnsignedBigInt(param2),
+        ethereum.Value.fromBytes(param3),
+      ],
+    );
+
+    return result[0].toBytes();
+  }
+
+  try_onERC721Received(
+    param0: Address,
+    param1: Address,
+    param2: BigInt,
+    param3: Bytes,
+  ): ethereum.CallResult<Bytes> {
+    let result = super.tryCall(
+      "onERC721Received",
+      "onERC721Received(address,address,uint256,bytes):(bytes4)",
+      [
+        ethereum.Value.fromAddress(param0),
+        ethereum.Value.fromAddress(param1),
+        ethereum.Value.fromUnsignedBigInt(param2),
+        ethereum.Value.fromBytes(param3),
+      ],
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBytes());
   }
 
   proposalDeadline(proposalId: BigInt): BigInt {
@@ -918,14 +1127,14 @@ export class FeiGovernance extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  proposals(proposalId: BigInt): FeiGovernance__proposalsResult {
+  proposals(proposalId: BigInt): RariFoundation__proposalsResult {
     let result = super.call(
       "proposals",
       "proposals(uint256):(uint256,address,uint256,uint256,uint256,uint256,uint256,uint256,bool,bool)",
       [ethereum.Value.fromUnsignedBigInt(proposalId)],
     );
 
-    return new FeiGovernance__proposalsResult(
+    return new RariFoundation__proposalsResult(
       result[0].toBigInt(),
       result[1].toAddress(),
       result[2].toBigInt(),
@@ -941,7 +1150,7 @@ export class FeiGovernance extends ethereum.SmartContract {
 
   try_proposals(
     proposalId: BigInt,
-  ): ethereum.CallResult<FeiGovernance__proposalsResult> {
+  ): ethereum.CallResult<RariFoundation__proposalsResult> {
     let result = super.tryCall(
       "proposals",
       "proposals(uint256):(uint256,address,uint256,uint256,uint256,uint256,uint256,uint256,bool,bool)",
@@ -952,7 +1161,7 @@ export class FeiGovernance extends ethereum.SmartContract {
     }
     let value = result.value;
     return ethereum.CallResult.fromValue(
-      new FeiGovernance__proposalsResult(
+      new RariFoundation__proposalsResult(
         value[0].toBigInt(),
         value[1].toAddress(),
         value[2].toBigInt(),
@@ -1100,18 +1309,87 @@ export class FeiGovernance extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(value[0].toBigInt());
   }
 
-  quorum(param0: BigInt): BigInt {
+  quorum(blockNumber: BigInt): BigInt {
     let result = super.call("quorum", "quorum(uint256):(uint256)", [
-      ethereum.Value.fromUnsignedBigInt(param0),
+      ethereum.Value.fromUnsignedBigInt(blockNumber),
     ]);
 
     return result[0].toBigInt();
   }
 
-  try_quorum(param0: BigInt): ethereum.CallResult<BigInt> {
+  try_quorum(blockNumber: BigInt): ethereum.CallResult<BigInt> {
     let result = super.tryCall("quorum", "quorum(uint256):(uint256)", [
-      ethereum.Value.fromUnsignedBigInt(param0),
+      ethereum.Value.fromUnsignedBigInt(blockNumber),
     ]);
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  quorumDenominator(): BigInt {
+    let result = super.call(
+      "quorumDenominator",
+      "quorumDenominator():(uint256)",
+      [],
+    );
+
+    return result[0].toBigInt();
+  }
+
+  try_quorumDenominator(): ethereum.CallResult<BigInt> {
+    let result = super.tryCall(
+      "quorumDenominator",
+      "quorumDenominator():(uint256)",
+      [],
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  quorumNumerator(blockNumber: BigInt): BigInt {
+    let result = super.call(
+      "quorumNumerator",
+      "quorumNumerator(uint256):(uint256)",
+      [ethereum.Value.fromUnsignedBigInt(blockNumber)],
+    );
+
+    return result[0].toBigInt();
+  }
+
+  try_quorumNumerator(blockNumber: BigInt): ethereum.CallResult<BigInt> {
+    let result = super.tryCall(
+      "quorumNumerator",
+      "quorumNumerator(uint256):(uint256)",
+      [ethereum.Value.fromUnsignedBigInt(blockNumber)],
+    );
+    if (result.reverted) {
+      return new ethereum.CallResult();
+    }
+    let value = result.value;
+    return ethereum.CallResult.fromValue(value[0].toBigInt());
+  }
+
+  quorumNumerator1(): BigInt {
+    let result = super.call(
+      "quorumNumerator",
+      "quorumNumerator():(uint256)",
+      [],
+    );
+
+    return result[0].toBigInt();
+  }
+
+  try_quorumNumerator1(): ethereum.CallResult<BigInt> {
+    let result = super.tryCall(
+      "quorumNumerator",
+      "quorumNumerator():(uint256)",
+      [],
+    );
     if (result.reverted) {
       return new ethereum.CallResult();
     }
@@ -1252,122 +1530,36 @@ export class FeiGovernance extends ethereum.SmartContract {
   }
 }
 
-export class ConstructorCall extends ethereum.Call {
-  get inputs(): ConstructorCall__Inputs {
-    return new ConstructorCall__Inputs(this);
+export class __RariGovernor_initCall extends ethereum.Call {
+  get inputs(): __RariGovernor_initCall__Inputs {
+    return new __RariGovernor_initCall__Inputs(this);
   }
 
-  get outputs(): ConstructorCall__Outputs {
-    return new ConstructorCall__Outputs(this);
+  get outputs(): __RariGovernor_initCall__Outputs {
+    return new __RariGovernor_initCall__Outputs(this);
   }
 }
 
-export class ConstructorCall__Inputs {
-  _call: ConstructorCall;
+export class __RariGovernor_initCall__Inputs {
+  _call: __RariGovernor_initCall;
 
-  constructor(call: ConstructorCall) {
+  constructor(call: __RariGovernor_initCall) {
     this._call = call;
   }
 
-  get tribe(): Address {
+  get tokenAddress(): Address {
     return this._call.inputValues[0].value.toAddress();
   }
 
-  get timelock(): Address {
+  get timelockAddress(): Address {
     return this._call.inputValues[1].value.toAddress();
   }
-
-  get guardian(): Address {
-    return this._call.inputValues[2].value.toAddress();
-  }
 }
 
-export class ConstructorCall__Outputs {
-  _call: ConstructorCall;
+export class __RariGovernor_initCall__Outputs {
+  _call: __RariGovernor_initCall;
 
-  constructor(call: ConstructorCall) {
-    this._call = call;
-  }
-}
-
-export class __acceptAdminCall extends ethereum.Call {
-  get inputs(): __acceptAdminCall__Inputs {
-    return new __acceptAdminCall__Inputs(this);
-  }
-
-  get outputs(): __acceptAdminCall__Outputs {
-    return new __acceptAdminCall__Outputs(this);
-  }
-}
-
-export class __acceptAdminCall__Inputs {
-  _call: __acceptAdminCall;
-
-  constructor(call: __acceptAdminCall) {
-    this._call = call;
-  }
-}
-
-export class __acceptAdminCall__Outputs {
-  _call: __acceptAdminCall;
-
-  constructor(call: __acceptAdminCall) {
-    this._call = call;
-  }
-}
-
-export class __executeRollbackCall extends ethereum.Call {
-  get inputs(): __executeRollbackCall__Inputs {
-    return new __executeRollbackCall__Inputs(this);
-  }
-
-  get outputs(): __executeRollbackCall__Outputs {
-    return new __executeRollbackCall__Outputs(this);
-  }
-}
-
-export class __executeRollbackCall__Inputs {
-  _call: __executeRollbackCall;
-
-  constructor(call: __executeRollbackCall) {
-    this._call = call;
-  }
-}
-
-export class __executeRollbackCall__Outputs {
-  _call: __executeRollbackCall;
-
-  constructor(call: __executeRollbackCall) {
-    this._call = call;
-  }
-}
-
-export class __rollbackCall extends ethereum.Call {
-  get inputs(): __rollbackCall__Inputs {
-    return new __rollbackCall__Inputs(this);
-  }
-
-  get outputs(): __rollbackCall__Outputs {
-    return new __rollbackCall__Outputs(this);
-  }
-}
-
-export class __rollbackCall__Inputs {
-  _call: __rollbackCall;
-
-  constructor(call: __rollbackCall) {
-    this._call = call;
-  }
-
-  get eta(): BigInt {
-    return this._call.inputValues[0].value.toBigInt();
-  }
-}
-
-export class __rollbackCall__Outputs {
-  _call: __rollbackCall;
-
-  constructor(call: __rollbackCall) {
+  constructor(call: __RariGovernor_initCall) {
     this._call = call;
   }
 }
@@ -1532,6 +1724,110 @@ export class CastVoteWithReasonCall__Outputs {
   }
 }
 
+export class CastVoteWithReasonAndParamsCall extends ethereum.Call {
+  get inputs(): CastVoteWithReasonAndParamsCall__Inputs {
+    return new CastVoteWithReasonAndParamsCall__Inputs(this);
+  }
+
+  get outputs(): CastVoteWithReasonAndParamsCall__Outputs {
+    return new CastVoteWithReasonAndParamsCall__Outputs(this);
+  }
+}
+
+export class CastVoteWithReasonAndParamsCall__Inputs {
+  _call: CastVoteWithReasonAndParamsCall;
+
+  constructor(call: CastVoteWithReasonAndParamsCall) {
+    this._call = call;
+  }
+
+  get proposalId(): BigInt {
+    return this._call.inputValues[0].value.toBigInt();
+  }
+
+  get support(): i32 {
+    return this._call.inputValues[1].value.toI32();
+  }
+
+  get reason(): string {
+    return this._call.inputValues[2].value.toString();
+  }
+
+  get params(): Bytes {
+    return this._call.inputValues[3].value.toBytes();
+  }
+}
+
+export class CastVoteWithReasonAndParamsCall__Outputs {
+  _call: CastVoteWithReasonAndParamsCall;
+
+  constructor(call: CastVoteWithReasonAndParamsCall) {
+    this._call = call;
+  }
+
+  get value0(): BigInt {
+    return this._call.outputValues[0].value.toBigInt();
+  }
+}
+
+export class CastVoteWithReasonAndParamsBySigCall extends ethereum.Call {
+  get inputs(): CastVoteWithReasonAndParamsBySigCall__Inputs {
+    return new CastVoteWithReasonAndParamsBySigCall__Inputs(this);
+  }
+
+  get outputs(): CastVoteWithReasonAndParamsBySigCall__Outputs {
+    return new CastVoteWithReasonAndParamsBySigCall__Outputs(this);
+  }
+}
+
+export class CastVoteWithReasonAndParamsBySigCall__Inputs {
+  _call: CastVoteWithReasonAndParamsBySigCall;
+
+  constructor(call: CastVoteWithReasonAndParamsBySigCall) {
+    this._call = call;
+  }
+
+  get proposalId(): BigInt {
+    return this._call.inputValues[0].value.toBigInt();
+  }
+
+  get support(): i32 {
+    return this._call.inputValues[1].value.toI32();
+  }
+
+  get reason(): string {
+    return this._call.inputValues[2].value.toString();
+  }
+
+  get params(): Bytes {
+    return this._call.inputValues[3].value.toBytes();
+  }
+
+  get v(): i32 {
+    return this._call.inputValues[4].value.toI32();
+  }
+
+  get r(): Bytes {
+    return this._call.inputValues[5].value.toBytes();
+  }
+
+  get s(): Bytes {
+    return this._call.inputValues[6].value.toBytes();
+  }
+}
+
+export class CastVoteWithReasonAndParamsBySigCall__Outputs {
+  _call: CastVoteWithReasonAndParamsBySigCall;
+
+  constructor(call: CastVoteWithReasonAndParamsBySigCall) {
+    this._call = call;
+  }
+
+  get value0(): BigInt {
+    return this._call.outputValues[0].value.toBigInt();
+  }
+}
+
 export class ExecuteCall extends ethereum.Call {
   get inputs(): ExecuteCall__Inputs {
     return new ExecuteCall__Inputs(this);
@@ -1605,6 +1901,152 @@ export class Execute1Call__Outputs {
 
   constructor(call: Execute1Call) {
     this._call = call;
+  }
+}
+
+export class OnERC1155BatchReceivedCall extends ethereum.Call {
+  get inputs(): OnERC1155BatchReceivedCall__Inputs {
+    return new OnERC1155BatchReceivedCall__Inputs(this);
+  }
+
+  get outputs(): OnERC1155BatchReceivedCall__Outputs {
+    return new OnERC1155BatchReceivedCall__Outputs(this);
+  }
+}
+
+export class OnERC1155BatchReceivedCall__Inputs {
+  _call: OnERC1155BatchReceivedCall;
+
+  constructor(call: OnERC1155BatchReceivedCall) {
+    this._call = call;
+  }
+
+  get value0(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get value1(): Address {
+    return this._call.inputValues[1].value.toAddress();
+  }
+
+  get value2(): Array<BigInt> {
+    return this._call.inputValues[2].value.toBigIntArray();
+  }
+
+  get value3(): Array<BigInt> {
+    return this._call.inputValues[3].value.toBigIntArray();
+  }
+
+  get value4(): Bytes {
+    return this._call.inputValues[4].value.toBytes();
+  }
+}
+
+export class OnERC1155BatchReceivedCall__Outputs {
+  _call: OnERC1155BatchReceivedCall;
+
+  constructor(call: OnERC1155BatchReceivedCall) {
+    this._call = call;
+  }
+
+  get value0(): Bytes {
+    return this._call.outputValues[0].value.toBytes();
+  }
+}
+
+export class OnERC1155ReceivedCall extends ethereum.Call {
+  get inputs(): OnERC1155ReceivedCall__Inputs {
+    return new OnERC1155ReceivedCall__Inputs(this);
+  }
+
+  get outputs(): OnERC1155ReceivedCall__Outputs {
+    return new OnERC1155ReceivedCall__Outputs(this);
+  }
+}
+
+export class OnERC1155ReceivedCall__Inputs {
+  _call: OnERC1155ReceivedCall;
+
+  constructor(call: OnERC1155ReceivedCall) {
+    this._call = call;
+  }
+
+  get value0(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get value1(): Address {
+    return this._call.inputValues[1].value.toAddress();
+  }
+
+  get value2(): BigInt {
+    return this._call.inputValues[2].value.toBigInt();
+  }
+
+  get value3(): BigInt {
+    return this._call.inputValues[3].value.toBigInt();
+  }
+
+  get value4(): Bytes {
+    return this._call.inputValues[4].value.toBytes();
+  }
+}
+
+export class OnERC1155ReceivedCall__Outputs {
+  _call: OnERC1155ReceivedCall;
+
+  constructor(call: OnERC1155ReceivedCall) {
+    this._call = call;
+  }
+
+  get value0(): Bytes {
+    return this._call.outputValues[0].value.toBytes();
+  }
+}
+
+export class OnERC721ReceivedCall extends ethereum.Call {
+  get inputs(): OnERC721ReceivedCall__Inputs {
+    return new OnERC721ReceivedCall__Inputs(this);
+  }
+
+  get outputs(): OnERC721ReceivedCall__Outputs {
+    return new OnERC721ReceivedCall__Outputs(this);
+  }
+}
+
+export class OnERC721ReceivedCall__Inputs {
+  _call: OnERC721ReceivedCall;
+
+  constructor(call: OnERC721ReceivedCall) {
+    this._call = call;
+  }
+
+  get value0(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get value1(): Address {
+    return this._call.inputValues[1].value.toAddress();
+  }
+
+  get value2(): BigInt {
+    return this._call.inputValues[2].value.toBigInt();
+  }
+
+  get value3(): Bytes {
+    return this._call.inputValues[3].value.toBytes();
+  }
+}
+
+export class OnERC721ReceivedCall__Outputs {
+  _call: OnERC721ReceivedCall;
+
+  constructor(call: OnERC721ReceivedCall) {
+    this._call = call;
+  }
+
+  get value0(): Bytes {
+    return this._call.outputValues[0].value.toBytes();
   }
 }
 
@@ -1780,122 +2222,70 @@ export class Queue1Call__Outputs {
   }
 }
 
-export class SetProposalThresholdCall extends ethereum.Call {
-  get inputs(): SetProposalThresholdCall__Inputs {
-    return new SetProposalThresholdCall__Inputs(this);
+export class RelayCall extends ethereum.Call {
+  get inputs(): RelayCall__Inputs {
+    return new RelayCall__Inputs(this);
   }
 
-  get outputs(): SetProposalThresholdCall__Outputs {
-    return new SetProposalThresholdCall__Outputs(this);
+  get outputs(): RelayCall__Outputs {
+    return new RelayCall__Outputs(this);
   }
 }
 
-export class SetProposalThresholdCall__Inputs {
-  _call: SetProposalThresholdCall;
+export class RelayCall__Inputs {
+  _call: RelayCall;
 
-  constructor(call: SetProposalThresholdCall) {
+  constructor(call: RelayCall) {
     this._call = call;
   }
 
-  get newProposalThreshold(): BigInt {
+  get target(): Address {
+    return this._call.inputValues[0].value.toAddress();
+  }
+
+  get value(): BigInt {
+    return this._call.inputValues[1].value.toBigInt();
+  }
+
+  get data(): Bytes {
+    return this._call.inputValues[2].value.toBytes();
+  }
+}
+
+export class RelayCall__Outputs {
+  _call: RelayCall;
+
+  constructor(call: RelayCall) {
+    this._call = call;
+  }
+}
+
+export class UpdateQuorumNumeratorCall extends ethereum.Call {
+  get inputs(): UpdateQuorumNumeratorCall__Inputs {
+    return new UpdateQuorumNumeratorCall__Inputs(this);
+  }
+
+  get outputs(): UpdateQuorumNumeratorCall__Outputs {
+    return new UpdateQuorumNumeratorCall__Outputs(this);
+  }
+}
+
+export class UpdateQuorumNumeratorCall__Inputs {
+  _call: UpdateQuorumNumeratorCall;
+
+  constructor(call: UpdateQuorumNumeratorCall) {
+    this._call = call;
+  }
+
+  get newQuorumNumerator(): BigInt {
     return this._call.inputValues[0].value.toBigInt();
   }
 }
 
-export class SetProposalThresholdCall__Outputs {
-  _call: SetProposalThresholdCall;
+export class UpdateQuorumNumeratorCall__Outputs {
+  _call: UpdateQuorumNumeratorCall;
 
-  constructor(call: SetProposalThresholdCall) {
-    this._call = call;
-  }
-}
-
-export class SetQuorumCall extends ethereum.Call {
-  get inputs(): SetQuorumCall__Inputs {
-    return new SetQuorumCall__Inputs(this);
-  }
-
-  get outputs(): SetQuorumCall__Outputs {
-    return new SetQuorumCall__Outputs(this);
-  }
-}
-
-export class SetQuorumCall__Inputs {
-  _call: SetQuorumCall;
-
-  constructor(call: SetQuorumCall) {
-    this._call = call;
-  }
-
-  get newQuorum(): BigInt {
-    return this._call.inputValues[0].value.toBigInt();
-  }
-}
-
-export class SetQuorumCall__Outputs {
-  _call: SetQuorumCall;
-
-  constructor(call: SetQuorumCall) {
-    this._call = call;
-  }
-}
-
-export class SetVotingDelayCall extends ethereum.Call {
-  get inputs(): SetVotingDelayCall__Inputs {
-    return new SetVotingDelayCall__Inputs(this);
-  }
-
-  get outputs(): SetVotingDelayCall__Outputs {
-    return new SetVotingDelayCall__Outputs(this);
-  }
-}
-
-export class SetVotingDelayCall__Inputs {
-  _call: SetVotingDelayCall;
-
-  constructor(call: SetVotingDelayCall) {
-    this._call = call;
-  }
-
-  get newVotingDelay(): BigInt {
-    return this._call.inputValues[0].value.toBigInt();
-  }
-}
-
-export class SetVotingDelayCall__Outputs {
-  _call: SetVotingDelayCall;
-
-  constructor(call: SetVotingDelayCall) {
-    this._call = call;
-  }
-}
-
-export class SetVotingPeriodCall extends ethereum.Call {
-  get inputs(): SetVotingPeriodCall__Inputs {
-    return new SetVotingPeriodCall__Inputs(this);
-  }
-
-  get outputs(): SetVotingPeriodCall__Outputs {
-    return new SetVotingPeriodCall__Outputs(this);
-  }
-}
-
-export class SetVotingPeriodCall__Inputs {
-  _call: SetVotingPeriodCall;
-
-  constructor(call: SetVotingPeriodCall) {
-    this._call = call;
-  }
-
-  get newVotingPeriod(): BigInt {
-    return this._call.inputValues[0].value.toBigInt();
-  }
-}
-
-export class SetVotingPeriodCall__Outputs {
-  _call: SetVotingPeriodCall;
-
-  constructor(call: SetVotingPeriodCall) {
+  constructor(call: UpdateQuorumNumeratorCall) {
     this._call = call;
   }
 }

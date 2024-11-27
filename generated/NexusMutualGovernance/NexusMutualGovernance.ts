@@ -7,7 +7,7 @@ import {
   Entity,
   Bytes,
   Address,
-  BigInt
+  BigInt,
 } from "@graphprotocol/graph-ts";
 
 export class ActionFailed extends ethereum.Event {
@@ -381,7 +381,7 @@ export class NexusMutualGovernance__proposalResult {
     value1: BigInt,
     value2: BigInt,
     value3: BigInt,
-    value4: BigInt
+    value4: BigInt,
   ) {
     this.value0 = value0;
     this.value1 = value1;
@@ -489,8 +489,8 @@ export class NexusMutualGovernance extends ethereum.SmartContract {
       "memberProposalVote(address,uint256):(uint256)",
       [
         ethereum.Value.fromAddress(param0),
-        ethereum.Value.fromUnsignedBigInt(param1)
-      ]
+        ethereum.Value.fromUnsignedBigInt(param1),
+      ],
     );
 
     return result[0].toBigInt();
@@ -498,15 +498,15 @@ export class NexusMutualGovernance extends ethereum.SmartContract {
 
   try_memberProposalVote(
     param0: Address,
-    param1: BigInt
+    param1: BigInt,
   ): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "memberProposalVote",
       "memberProposalVote(address,uint256):(uint256)",
       [
         ethereum.Value.fromAddress(param0),
-        ethereum.Value.fromUnsignedBigInt(param1)
-      ]
+        ethereum.Value.fromUnsignedBigInt(param1),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -521,8 +521,8 @@ export class NexusMutualGovernance extends ethereum.SmartContract {
       "proposalRejectedByAB(uint256,address):(bool)",
       [
         ethereum.Value.fromUnsignedBigInt(param0),
-        ethereum.Value.fromAddress(param1)
-      ]
+        ethereum.Value.fromAddress(param1),
+      ],
     );
 
     return result[0].toBoolean();
@@ -530,15 +530,15 @@ export class NexusMutualGovernance extends ethereum.SmartContract {
 
   try_proposalRejectedByAB(
     param0: BigInt,
-    param1: Address
+    param1: Address,
   ): ethereum.CallResult<boolean> {
     let result = super.tryCall(
       "proposalRejectedByAB",
       "proposalRejectedByAB(uint256,address):(bool)",
       [
         ethereum.Value.fromUnsignedBigInt(param0),
-        ethereum.Value.fromAddress(param1)
-      ]
+        ethereum.Value.fromAddress(param1),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -549,35 +549,35 @@ export class NexusMutualGovernance extends ethereum.SmartContract {
 
   voteTallyData(
     _proposalId: BigInt,
-    _solution: BigInt
+    _solution: BigInt,
   ): NexusMutualGovernance__voteTallyDataResult {
     let result = super.call(
       "voteTallyData",
       "voteTallyData(uint256,uint256):(uint256,uint256,uint256)",
       [
         ethereum.Value.fromUnsignedBigInt(_proposalId),
-        ethereum.Value.fromUnsignedBigInt(_solution)
-      ]
+        ethereum.Value.fromUnsignedBigInt(_solution),
+      ],
     );
 
     return new NexusMutualGovernance__voteTallyDataResult(
       result[0].toBigInt(),
       result[1].toBigInt(),
-      result[2].toBigInt()
+      result[2].toBigInt(),
     );
   }
 
   try_voteTallyData(
     _proposalId: BigInt,
-    _solution: BigInt
+    _solution: BigInt,
   ): ethereum.CallResult<NexusMutualGovernance__voteTallyDataResult> {
     let result = super.tryCall(
       "voteTallyData",
       "voteTallyData(uint256,uint256):(uint256,uint256,uint256)",
       [
         ethereum.Value.fromUnsignedBigInt(_proposalId),
-        ethereum.Value.fromUnsignedBigInt(_solution)
-      ]
+        ethereum.Value.fromUnsignedBigInt(_solution),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -587,34 +587,34 @@ export class NexusMutualGovernance extends ethereum.SmartContract {
       new NexusMutualGovernance__voteTallyDataResult(
         value[0].toBigInt(),
         value[1].toBigInt(),
-        value[2].toBigInt()
-      )
+        value[2].toBigInt(),
+      ),
     );
   }
 
   proposalDetails(
-    _proposalId: BigInt
+    _proposalId: BigInt,
   ): NexusMutualGovernance__proposalDetailsResult {
     let result = super.call(
       "proposalDetails",
       "proposalDetails(uint256):(uint256,uint256,uint256)",
-      [ethereum.Value.fromUnsignedBigInt(_proposalId)]
+      [ethereum.Value.fromUnsignedBigInt(_proposalId)],
     );
 
     return new NexusMutualGovernance__proposalDetailsResult(
       result[0].toBigInt(),
       result[1].toBigInt(),
-      result[2].toBigInt()
+      result[2].toBigInt(),
     );
   }
 
   try_proposalDetails(
-    _proposalId: BigInt
+    _proposalId: BigInt,
   ): ethereum.CallResult<NexusMutualGovernance__proposalDetailsResult> {
     let result = super.tryCall(
       "proposalDetails",
       "proposalDetails(uint256):(uint256,uint256,uint256)",
-      [ethereum.Value.fromUnsignedBigInt(_proposalId)]
+      [ethereum.Value.fromUnsignedBigInt(_proposalId)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -624,8 +624,8 @@ export class NexusMutualGovernance extends ethereum.SmartContract {
       new NexusMutualGovernance__proposalDetailsResult(
         value[0].toBigInt(),
         value[1].toBigInt(),
-        value[2].toBigInt()
-      )
+        value[2].toBigInt(),
+      ),
     );
   }
 
@@ -635,8 +635,8 @@ export class NexusMutualGovernance extends ethereum.SmartContract {
       "claimReward(address,uint256):(uint256)",
       [
         ethereum.Value.fromAddress(_memberAddress),
-        ethereum.Value.fromUnsignedBigInt(_maxRecords)
-      ]
+        ethereum.Value.fromUnsignedBigInt(_maxRecords),
+      ],
     );
 
     return result[0].toBigInt();
@@ -644,15 +644,15 @@ export class NexusMutualGovernance extends ethereum.SmartContract {
 
   try_claimReward(
     _memberAddress: Address,
-    _maxRecords: BigInt
+    _maxRecords: BigInt,
   ): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "claimReward",
       "claimReward(address,uint256):(uint256)",
       [
         ethereum.Value.fromAddress(_memberAddress),
-        ethereum.Value.fromUnsignedBigInt(_maxRecords)
-      ]
+        ethereum.Value.fromUnsignedBigInt(_maxRecords),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -665,7 +665,7 @@ export class NexusMutualGovernance extends ethereum.SmartContract {
     let result = super.call(
       "proposalActionStatus",
       "proposalActionStatus(uint256):(uint256)",
-      [ethereum.Value.fromUnsignedBigInt(param0)]
+      [ethereum.Value.fromUnsignedBigInt(param0)],
     );
 
     return result[0].toBigInt();
@@ -675,7 +675,7 @@ export class NexusMutualGovernance extends ethereum.SmartContract {
     let result = super.tryCall(
       "proposalActionStatus",
       "proposalActionStatus(uint256):(uint256)",
-      [ethereum.Value.fromUnsignedBigInt(param0)]
+      [ethereum.Value.fromUnsignedBigInt(param0)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -686,34 +686,34 @@ export class NexusMutualGovernance extends ethereum.SmartContract {
 
   getSolutionAction(
     _proposalId: BigInt,
-    _solution: BigInt
+    _solution: BigInt,
   ): NexusMutualGovernance__getSolutionActionResult {
     let result = super.call(
       "getSolutionAction",
       "getSolutionAction(uint256,uint256):(uint256,bytes)",
       [
         ethereum.Value.fromUnsignedBigInt(_proposalId),
-        ethereum.Value.fromUnsignedBigInt(_solution)
-      ]
+        ethereum.Value.fromUnsignedBigInt(_solution),
+      ],
     );
 
     return new NexusMutualGovernance__getSolutionActionResult(
       result[0].toBigInt(),
-      result[1].toBytes()
+      result[1].toBytes(),
     );
   }
 
   try_getSolutionAction(
     _proposalId: BigInt,
-    _solution: BigInt
+    _solution: BigInt,
   ): ethereum.CallResult<NexusMutualGovernance__getSolutionActionResult> {
     let result = super.tryCall(
       "getSolutionAction",
       "getSolutionAction(uint256,uint256):(uint256,bytes)",
       [
         ethereum.Value.fromUnsignedBigInt(_proposalId),
-        ethereum.Value.fromUnsignedBigInt(_solution)
-      ]
+        ethereum.Value.fromUnsignedBigInt(_solution),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -722,8 +722,8 @@ export class NexusMutualGovernance extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(
       new NexusMutualGovernance__getSolutionActionResult(
         value[0].toBigInt(),
-        value[1].toBytes()
-      )
+        value[1].toBytes(),
+      ),
     );
   }
 
@@ -731,7 +731,7 @@ export class NexusMutualGovernance extends ethereum.SmartContract {
     let result = super.call(
       "proposal",
       "proposal(uint256):(uint256,uint256,uint256,uint256,uint256)",
-      [ethereum.Value.fromUnsignedBigInt(_proposalId)]
+      [ethereum.Value.fromUnsignedBigInt(_proposalId)],
     );
 
     return new NexusMutualGovernance__proposalResult(
@@ -739,17 +739,17 @@ export class NexusMutualGovernance extends ethereum.SmartContract {
       result[1].toBigInt(),
       result[2].toBigInt(),
       result[3].toBigInt(),
-      result[4].toBigInt()
+      result[4].toBigInt(),
     );
   }
 
   try_proposal(
-    _proposalId: BigInt
+    _proposalId: BigInt,
   ): ethereum.CallResult<NexusMutualGovernance__proposalResult> {
     let result = super.tryCall(
       "proposal",
       "proposal(uint256):(uint256,uint256,uint256,uint256,uint256)",
-      [ethereum.Value.fromUnsignedBigInt(_proposalId)]
+      [ethereum.Value.fromUnsignedBigInt(_proposalId)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -761,8 +761,8 @@ export class NexusMutualGovernance extends ethereum.SmartContract {
         value[1].toBigInt(),
         value[2].toBigInt(),
         value[3].toBigInt(),
-        value[4].toBigInt()
-      )
+        value[4].toBigInt(),
+      ),
     );
   }
 
@@ -770,7 +770,7 @@ export class NexusMutualGovernance extends ethereum.SmartContract {
     let result = super.call(
       "tokenHoldingTime",
       "tokenHoldingTime():(uint256)",
-      []
+      [],
     );
 
     return result[0].toBigInt();
@@ -780,7 +780,7 @@ export class NexusMutualGovernance extends ethereum.SmartContract {
     let result = super.tryCall(
       "tokenHoldingTime",
       "tokenHoldingTime():(uint256)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -793,7 +793,7 @@ export class NexusMutualGovernance extends ethereum.SmartContract {
     let result = super.call(
       "getPendingReward",
       "getPendingReward(address):(uint256)",
-      [ethereum.Value.fromAddress(_memberAddress)]
+      [ethereum.Value.fromAddress(_memberAddress)],
     );
 
     return result[0].toBigInt();
@@ -803,7 +803,7 @@ export class NexusMutualGovernance extends ethereum.SmartContract {
     let result = super.tryCall(
       "getPendingReward",
       "getPendingReward(address):(uint256)",
-      [ethereum.Value.fromAddress(_memberAddress)]
+      [ethereum.Value.fromAddress(_memberAddress)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -818,8 +818,8 @@ export class NexusMutualGovernance extends ethereum.SmartContract {
       "rewardClaimed(uint256,address):(bool)",
       [
         ethereum.Value.fromUnsignedBigInt(param0),
-        ethereum.Value.fromAddress(param1)
-      ]
+        ethereum.Value.fromAddress(param1),
+      ],
     );
 
     return result[0].toBoolean();
@@ -827,15 +827,15 @@ export class NexusMutualGovernance extends ethereum.SmartContract {
 
   try_rewardClaimed(
     param0: BigInt,
-    param1: Address
+    param1: Address,
   ): ethereum.CallResult<boolean> {
     let result = super.tryCall(
       "rewardClaimed",
       "rewardClaimed(uint256,address):(bool)",
       [
         ethereum.Value.fromUnsignedBigInt(param0),
-        ethereum.Value.fromAddress(param1)
-      ]
+        ethereum.Value.fromAddress(param1),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -845,27 +845,27 @@ export class NexusMutualGovernance extends ethereum.SmartContract {
   }
 
   getUintParameters(
-    code: Bytes
+    code: Bytes,
   ): NexusMutualGovernance__getUintParametersResult {
     let result = super.call(
       "getUintParameters",
       "getUintParameters(bytes8):(bytes8,uint256)",
-      [ethereum.Value.fromFixedBytes(code)]
+      [ethereum.Value.fromFixedBytes(code)],
     );
 
     return new NexusMutualGovernance__getUintParametersResult(
       result[0].toBytes(),
-      result[1].toBigInt()
+      result[1].toBigInt(),
     );
   }
 
   try_getUintParameters(
-    code: Bytes
+    code: Bytes,
   ): ethereum.CallResult<NexusMutualGovernance__getUintParametersResult> {
     let result = super.tryCall(
       "getUintParameters",
       "getUintParameters(bytes8):(bytes8,uint256)",
-      [ethereum.Value.fromFixedBytes(code)]
+      [ethereum.Value.fromFixedBytes(code)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -874,8 +874,8 @@ export class NexusMutualGovernance extends ethereum.SmartContract {
     return ethereum.CallResult.fromValue(
       new NexusMutualGovernance__getUintParametersResult(
         value[0].toBytes(),
-        value[1].toBigInt()
-      )
+        value[1].toBigInt(),
+      ),
     );
   }
 
@@ -883,7 +883,7 @@ export class NexusMutualGovernance extends ethereum.SmartContract {
     let result = super.call(
       "followerDelegation",
       "followerDelegation(address):(uint256)",
-      [ethereum.Value.fromAddress(param0)]
+      [ethereum.Value.fromAddress(param0)],
     );
 
     return result[0].toBigInt();
@@ -893,7 +893,7 @@ export class NexusMutualGovernance extends ethereum.SmartContract {
     let result = super.tryCall(
       "followerDelegation",
       "followerDelegation(address):(uint256)",
-      [ethereum.Value.fromAddress(param0)]
+      [ethereum.Value.fromAddress(param0)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -906,7 +906,7 @@ export class NexusMutualGovernance extends ethereum.SmartContract {
     let result = super.call(
       "getProposalLength",
       "getProposalLength():(uint256)",
-      []
+      [],
     );
 
     return result[0].toBigInt();
@@ -916,7 +916,7 @@ export class NexusMutualGovernance extends ethereum.SmartContract {
     let result = super.tryCall(
       "getProposalLength",
       "getProposalLength():(uint256)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -929,7 +929,7 @@ export class NexusMutualGovernance extends ethereum.SmartContract {
     let result = super.call(
       "allowedToCreateProposal",
       "allowedToCreateProposal(uint256):(bool)",
-      [ethereum.Value.fromUnsignedBigInt(category)]
+      [ethereum.Value.fromUnsignedBigInt(category)],
     );
 
     return result[0].toBoolean();
@@ -939,7 +939,7 @@ export class NexusMutualGovernance extends ethereum.SmartContract {
     let result = super.tryCall(
       "allowedToCreateProposal",
       "allowedToCreateProposal(uint256):(bool)",
-      [ethereum.Value.fromUnsignedBigInt(category)]
+      [ethereum.Value.fromUnsignedBigInt(category)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -967,7 +967,7 @@ export class NexusMutualGovernance extends ethereum.SmartContract {
     let result = super.call(
       "allowedToCatgorize",
       "allowedToCatgorize():(uint256)",
-      []
+      [],
     );
 
     return result[0].toBigInt();
@@ -977,7 +977,7 @@ export class NexusMutualGovernance extends ethereum.SmartContract {
     let result = super.tryCall(
       "allowedToCatgorize",
       "allowedToCatgorize():(uint256)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -990,23 +990,23 @@ export class NexusMutualGovernance extends ethereum.SmartContract {
     let result = super.call(
       "allDelegation",
       "allDelegation(uint256):(address,address,uint256)",
-      [ethereum.Value.fromUnsignedBigInt(param0)]
+      [ethereum.Value.fromUnsignedBigInt(param0)],
     );
 
     return new NexusMutualGovernance__allDelegationResult(
       result[0].toAddress(),
       result[1].toAddress(),
-      result[2].toBigInt()
+      result[2].toBigInt(),
     );
   }
 
   try_allDelegation(
-    param0: BigInt
+    param0: BigInt,
   ): ethereum.CallResult<NexusMutualGovernance__allDelegationResult> {
     let result = super.tryCall(
       "allDelegation",
       "allDelegation(uint256):(address,address,uint256)",
-      [ethereum.Value.fromUnsignedBigInt(param0)]
+      [ethereum.Value.fromUnsignedBigInt(param0)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1016,8 +1016,8 @@ export class NexusMutualGovernance extends ethereum.SmartContract {
       new NexusMutualGovernance__allDelegationResult(
         value[0].toAddress(),
         value[1].toAddress(),
-        value[2].toBigInt()
-      )
+        value[2].toBigInt(),
+      ),
     );
   }
 
@@ -1025,7 +1025,7 @@ export class NexusMutualGovernance extends ethereum.SmartContract {
     let result = super.call(
       "canCloseProposal",
       "canCloseProposal(uint256):(uint256)",
-      [ethereum.Value.fromUnsignedBigInt(_proposalId)]
+      [ethereum.Value.fromUnsignedBigInt(_proposalId)],
     );
 
     return result[0].toBigInt();
@@ -1035,7 +1035,7 @@ export class NexusMutualGovernance extends ethereum.SmartContract {
     let result = super.tryCall(
       "canCloseProposal",
       "canCloseProposal(uint256):(uint256)",
-      [ethereum.Value.fromUnsignedBigInt(_proposalId)]
+      [ethereum.Value.fromUnsignedBigInt(_proposalId)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1048,7 +1048,7 @@ export class NexusMutualGovernance extends ethereum.SmartContract {
     let result = super.call(
       "getFollowers",
       "getFollowers(address):(uint256[])",
-      [ethereum.Value.fromAddress(_add)]
+      [ethereum.Value.fromAddress(_add)],
     );
 
     return result[0].toBigIntArray();
@@ -1058,7 +1058,7 @@ export class NexusMutualGovernance extends ethereum.SmartContract {
     let result = super.tryCall(
       "getFollowers",
       "getFollowers(address):(uint256[])",
-      [ethereum.Value.fromAddress(_add)]
+      [ethereum.Value.fromAddress(_add)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1071,7 +1071,7 @@ export class NexusMutualGovernance extends ethereum.SmartContract {
     let result = super.call(
       "isOpenForDelegation",
       "isOpenForDelegation(address):(bool)",
-      [ethereum.Value.fromAddress(param0)]
+      [ethereum.Value.fromAddress(param0)],
     );
 
     return result[0].toBoolean();
@@ -1081,7 +1081,7 @@ export class NexusMutualGovernance extends ethereum.SmartContract {
     let result = super.tryCall(
       "isOpenForDelegation",
       "isOpenForDelegation(address):(bool)",
-      [ethereum.Value.fromAddress(param0)]
+      [ethereum.Value.fromAddress(param0)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1094,7 +1094,7 @@ export class NexusMutualGovernance extends ethereum.SmartContract {
     let result = super.call(
       "lastRewardClaimed",
       "lastRewardClaimed(address):(uint256)",
-      [ethereum.Value.fromAddress(param0)]
+      [ethereum.Value.fromAddress(param0)],
     );
 
     return result[0].toBigInt();
@@ -1104,7 +1104,7 @@ export class NexusMutualGovernance extends ethereum.SmartContract {
     let result = super.tryCall(
       "lastRewardClaimed",
       "lastRewardClaimed(address):(uint256)",
-      [ethereum.Value.fromAddress(param0)]
+      [ethereum.Value.fromAddress(param0)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1117,7 +1117,7 @@ export class NexusMutualGovernance extends ethereum.SmartContract {
     let result = super.call(
       "proposalVoteTally",
       "proposalVoteTally(uint256):(uint256)",
-      [ethereum.Value.fromUnsignedBigInt(param0)]
+      [ethereum.Value.fromUnsignedBigInt(param0)],
     );
 
     return result[0].toBigInt();
@@ -1127,7 +1127,7 @@ export class NexusMutualGovernance extends ethereum.SmartContract {
     let result = super.tryCall(
       "proposalVoteTally",
       "proposalVoteTally(uint256):(uint256)",
-      [ethereum.Value.fromUnsignedBigInt(param0)]
+      [ethereum.Value.fromUnsignedBigInt(param0)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1140,7 +1140,7 @@ export class NexusMutualGovernance extends ethereum.SmartContract {
     let result = super.call(
       "nxMasterAddress",
       "nxMasterAddress():(address)",
-      []
+      [],
     );
 
     return result[0].toAddress();
@@ -1150,7 +1150,7 @@ export class NexusMutualGovernance extends ethereum.SmartContract {
     let result = super.tryCall(
       "nxMasterAddress",
       "nxMasterAddress():(address)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -1163,7 +1163,7 @@ export class NexusMutualGovernance extends ethereum.SmartContract {
     let result = super.call(
       "alreadyDelegated",
       "alreadyDelegated(address):(bool)",
-      [ethereum.Value.fromAddress(_add)]
+      [ethereum.Value.fromAddress(_add)],
     );
 
     return result[0].toBoolean();
@@ -1173,7 +1173,7 @@ export class NexusMutualGovernance extends ethereum.SmartContract {
     let result = super.tryCall(
       "alreadyDelegated",
       "alreadyDelegated(address):(bool)",
-      [ethereum.Value.fromAddress(_add)]
+      [ethereum.Value.fromAddress(_add)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();

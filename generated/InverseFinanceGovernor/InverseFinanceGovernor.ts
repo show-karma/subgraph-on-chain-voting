@@ -7,7 +7,7 @@ import {
   Entity,
   Bytes,
   Address,
-  BigInt
+  BigInt,
 } from "@graphprotocol/graph-ts";
 
 export class NewGuardian extends ethereum.Event {
@@ -242,7 +242,7 @@ export class InverseFinanceGovernor__getActionsResult {
     value0: Array<Address>,
     value1: Array<BigInt>,
     value2: Array<string>,
-    value3: Array<Bytes>
+    value3: Array<Bytes>,
   ) {
     this.value0 = value0;
     this.value1 = value1;
@@ -310,7 +310,7 @@ export class InverseFinanceGovernor__proposalsResult {
     value5: BigInt,
     value6: BigInt,
     value7: boolean,
-    value8: boolean
+    value8: boolean,
   ) {
     this.value0 = value0;
     this.value1 = value1;
@@ -383,7 +383,7 @@ export class InverseFinanceGovernor extends ethereum.SmartContract {
     let result = super.call(
       "BALLOT_TYPEHASH",
       "BALLOT_TYPEHASH():(bytes32)",
-      []
+      [],
     );
 
     return result[0].toBytes();
@@ -393,7 +393,7 @@ export class InverseFinanceGovernor extends ethereum.SmartContract {
     let result = super.tryCall(
       "BALLOT_TYPEHASH",
       "BALLOT_TYPEHASH():(bytes32)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -406,7 +406,7 @@ export class InverseFinanceGovernor extends ethereum.SmartContract {
     let result = super.call(
       "DOMAIN_TYPEHASH",
       "DOMAIN_TYPEHASH():(bytes32)",
-      []
+      [],
     );
 
     return result[0].toBytes();
@@ -416,7 +416,7 @@ export class InverseFinanceGovernor extends ethereum.SmartContract {
     let result = super.tryCall(
       "DOMAIN_TYPEHASH",
       "DOMAIN_TYPEHASH():(bytes32)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -429,24 +429,24 @@ export class InverseFinanceGovernor extends ethereum.SmartContract {
     let result = super.call(
       "getActions",
       "getActions(uint256):(address[],uint256[],string[],bytes[])",
-      [ethereum.Value.fromUnsignedBigInt(proposalId)]
+      [ethereum.Value.fromUnsignedBigInt(proposalId)],
     );
 
     return new InverseFinanceGovernor__getActionsResult(
       result[0].toAddressArray(),
       result[1].toBigIntArray(),
       result[2].toStringArray(),
-      result[3].toBytesArray()
+      result[3].toBytesArray(),
     );
   }
 
   try_getActions(
-    proposalId: BigInt
+    proposalId: BigInt,
   ): ethereum.CallResult<InverseFinanceGovernor__getActionsResult> {
     let result = super.tryCall(
       "getActions",
       "getActions(uint256):(address[],uint256[],string[],bytes[])",
-      [ethereum.Value.fromUnsignedBigInt(proposalId)]
+      [ethereum.Value.fromUnsignedBigInt(proposalId)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -457,40 +457,40 @@ export class InverseFinanceGovernor extends ethereum.SmartContract {
         value[0].toAddressArray(),
         value[1].toBigIntArray(),
         value[2].toStringArray(),
-        value[3].toBytesArray()
-      )
+        value[3].toBytesArray(),
+      ),
     );
   }
 
   getReceipt(
     proposalId: BigInt,
-    voter: Address
+    voter: Address,
   ): InverseFinanceGovernor__getReceiptResultValue0Struct {
     let result = super.call(
       "getReceipt",
       "getReceipt(uint256,address):((bool,bool,uint96))",
       [
         ethereum.Value.fromUnsignedBigInt(proposalId),
-        ethereum.Value.fromAddress(voter)
-      ]
+        ethereum.Value.fromAddress(voter),
+      ],
     );
 
     return changetype<InverseFinanceGovernor__getReceiptResultValue0Struct>(
-      result[0].toTuple()
+      result[0].toTuple(),
     );
   }
 
   try_getReceipt(
     proposalId: BigInt,
-    voter: Address
+    voter: Address,
   ): ethereum.CallResult<InverseFinanceGovernor__getReceiptResultValue0Struct> {
     let result = super.tryCall(
       "getReceipt",
       "getReceipt(uint256,address):((bool,bool,uint96))",
       [
         ethereum.Value.fromUnsignedBigInt(proposalId),
-        ethereum.Value.fromAddress(voter)
-      ]
+        ethereum.Value.fromAddress(voter),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -498,8 +498,8 @@ export class InverseFinanceGovernor extends ethereum.SmartContract {
     let value = result.value;
     return ethereum.CallResult.fromValue(
       changetype<InverseFinanceGovernor__getReceiptResultValue0Struct>(
-        value[0].toTuple()
-      )
+        value[0].toTuple(),
+      ),
     );
   }
 
@@ -537,7 +537,7 @@ export class InverseFinanceGovernor extends ethereum.SmartContract {
     let result = super.call(
       "latestProposalIds",
       "latestProposalIds(address):(uint256)",
-      [ethereum.Value.fromAddress(param0)]
+      [ethereum.Value.fromAddress(param0)],
     );
 
     return result[0].toBigInt();
@@ -547,7 +547,7 @@ export class InverseFinanceGovernor extends ethereum.SmartContract {
     let result = super.tryCall(
       "latestProposalIds",
       "latestProposalIds(address):(uint256)",
-      [ethereum.Value.fromAddress(param0)]
+      [ethereum.Value.fromAddress(param0)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -581,7 +581,7 @@ export class InverseFinanceGovernor extends ethereum.SmartContract {
     let result = super.tryCall(
       "proposalCount",
       "proposalCount():(uint256)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -594,7 +594,7 @@ export class InverseFinanceGovernor extends ethereum.SmartContract {
     let result = super.call(
       "proposalMaxOperations",
       "proposalMaxOperations():(uint256)",
-      []
+      [],
     );
 
     return result[0].toBigInt();
@@ -604,7 +604,7 @@ export class InverseFinanceGovernor extends ethereum.SmartContract {
     let result = super.tryCall(
       "proposalMaxOperations",
       "proposalMaxOperations():(uint256)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -617,7 +617,7 @@ export class InverseFinanceGovernor extends ethereum.SmartContract {
     let result = super.call(
       "proposalThreshold",
       "proposalThreshold():(uint256)",
-      []
+      [],
     );
 
     return result[0].toBigInt();
@@ -627,7 +627,7 @@ export class InverseFinanceGovernor extends ethereum.SmartContract {
     let result = super.tryCall(
       "proposalThreshold",
       "proposalThreshold():(uint256)",
-      []
+      [],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -640,7 +640,7 @@ export class InverseFinanceGovernor extends ethereum.SmartContract {
     let result = super.call(
       "proposals",
       "proposals(uint256):(uint256,address,uint256,uint256,uint256,uint256,uint256,bool,bool)",
-      [ethereum.Value.fromUnsignedBigInt(param0)]
+      [ethereum.Value.fromUnsignedBigInt(param0)],
     );
 
     return new InverseFinanceGovernor__proposalsResult(
@@ -652,17 +652,17 @@ export class InverseFinanceGovernor extends ethereum.SmartContract {
       result[5].toBigInt(),
       result[6].toBigInt(),
       result[7].toBoolean(),
-      result[8].toBoolean()
+      result[8].toBoolean(),
     );
   }
 
   try_proposals(
-    param0: BigInt
+    param0: BigInt,
   ): ethereum.CallResult<InverseFinanceGovernor__proposalsResult> {
     let result = super.tryCall(
       "proposals",
       "proposals(uint256):(uint256,address,uint256,uint256,uint256,uint256,uint256,bool,bool)",
-      [ethereum.Value.fromUnsignedBigInt(param0)]
+      [ethereum.Value.fromUnsignedBigInt(param0)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -678,8 +678,8 @@ export class InverseFinanceGovernor extends ethereum.SmartContract {
         value[5].toBigInt(),
         value[6].toBigInt(),
         value[7].toBoolean(),
-        value[8].toBoolean()
-      )
+        value[8].toBoolean(),
+      ),
     );
   }
 
@@ -688,7 +688,7 @@ export class InverseFinanceGovernor extends ethereum.SmartContract {
     values: Array<BigInt>,
     signatures: Array<string>,
     calldatas: Array<Bytes>,
-    description: string
+    description: string,
   ): BigInt {
     let result = super.call(
       "propose",
@@ -698,8 +698,8 @@ export class InverseFinanceGovernor extends ethereum.SmartContract {
         ethereum.Value.fromUnsignedBigIntArray(values),
         ethereum.Value.fromStringArray(signatures),
         ethereum.Value.fromBytesArray(calldatas),
-        ethereum.Value.fromString(description)
-      ]
+        ethereum.Value.fromString(description),
+      ],
     );
 
     return result[0].toBigInt();
@@ -710,7 +710,7 @@ export class InverseFinanceGovernor extends ethereum.SmartContract {
     values: Array<BigInt>,
     signatures: Array<string>,
     calldatas: Array<Bytes>,
-    description: string
+    description: string,
   ): ethereum.CallResult<BigInt> {
     let result = super.tryCall(
       "propose",
@@ -720,8 +720,8 @@ export class InverseFinanceGovernor extends ethereum.SmartContract {
         ethereum.Value.fromUnsignedBigIntArray(values),
         ethereum.Value.fromStringArray(signatures),
         ethereum.Value.fromBytesArray(calldatas),
-        ethereum.Value.fromString(description)
-      ]
+        ethereum.Value.fromString(description),
+      ],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -734,7 +734,7 @@ export class InverseFinanceGovernor extends ethereum.SmartContract {
     let result = super.call(
       "proposerWhitelist",
       "proposerWhitelist(address):(bool)",
-      [ethereum.Value.fromAddress(param0)]
+      [ethereum.Value.fromAddress(param0)],
     );
 
     return result[0].toBoolean();
@@ -744,7 +744,7 @@ export class InverseFinanceGovernor extends ethereum.SmartContract {
     let result = super.tryCall(
       "proposerWhitelist",
       "proposerWhitelist(address):(bool)",
-      [ethereum.Value.fromAddress(param0)]
+      [ethereum.Value.fromAddress(param0)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -770,7 +770,7 @@ export class InverseFinanceGovernor extends ethereum.SmartContract {
 
   state(proposalId: BigInt): i32 {
     let result = super.call("state", "state(uint256):(uint8)", [
-      ethereum.Value.fromUnsignedBigInt(proposalId)
+      ethereum.Value.fromUnsignedBigInt(proposalId),
     ]);
 
     return result[0].toI32();
@@ -778,7 +778,7 @@ export class InverseFinanceGovernor extends ethereum.SmartContract {
 
   try_state(proposalId: BigInt): ethereum.CallResult<i32> {
     let result = super.tryCall("state", "state(uint256):(uint8)", [
-      ethereum.Value.fromUnsignedBigInt(proposalId)
+      ethereum.Value.fromUnsignedBigInt(proposalId),
     ]);
     if (result.reverted) {
       return new ethereum.CallResult();
@@ -851,7 +851,7 @@ export class InverseFinanceGovernor extends ethereum.SmartContract {
     let result = super.call(
       "xinvExchangeRates",
       "xinvExchangeRates(uint256):(uint256)",
-      [ethereum.Value.fromUnsignedBigInt(param0)]
+      [ethereum.Value.fromUnsignedBigInt(param0)],
     );
 
     return result[0].toBigInt();
@@ -861,7 +861,7 @@ export class InverseFinanceGovernor extends ethereum.SmartContract {
     let result = super.tryCall(
       "xinvExchangeRates",
       "xinvExchangeRates(uint256):(uint256)",
-      [ethereum.Value.fromUnsignedBigInt(param0)]
+      [ethereum.Value.fromUnsignedBigInt(param0)],
     );
     if (result.reverted) {
       return new ethereum.CallResult();
