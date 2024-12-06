@@ -2,14 +2,14 @@
   "name": "dao-on-chain-voting",
   "license": "UNLICENSED",
   "scripts": {
-    "codegen": "graph codegen",
-    "build": "graph build",
-    "deploy": "graph deploy --product hosted-service show-karma/dao-on-chain-voting",
-    "create-local": "graph create --node http://localhost:8020/ show-karma/dao-on-chain-voting",
-    "remove-local": "graph remove --node http://localhost:8020/ show-karma/dao-on-chain-voting",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 show-karma/dao-on-chain-voting",
+    "codegen": "node_modules/.bin/graph codegen",
+    "build": "node_modules/.bin/graph build",
+    "deploy": "node_modules/.bin/graph deploy --product hosted-service show-karma/dao-on-chain-voting",
+    "create-local": "node_modules/.bin/graph create --node http://localhost:8020/ show-karma/dao-on-chain-voting",
+    "remove-local": "node_modules/.bin/graph remove --node http://localhost:8020/ show-karma/dao-on-chain-voting",
+    "deploy-local": "node_modules/.bin/graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 show-karma/dao-on-chain-voting",
 
-    "deploy:mainnet": "node_modules/.bin/graph codegen && node_modules/.bin/graph build && graph deploy --studio dao-on-chain-voting"
+    "deploy:mainnet": "node_modules/.bin/graph codegen && node_modules/.bin/graph build && node_modules/.bin/graph deploy --studio dao-on-chain-voting"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.82.0",
