@@ -9,7 +9,7 @@
     "remove-local": "graph remove --node http://localhost:8020/ show-karma/dao-on-chain-voting",
     "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 show-karma/dao-on-chain-voting",
 
-    "deploy:mainnet": "graph codegen && graph build && graph deploy --studio dao-on-chain-voting"
+    "deploy:mainnet": "node_modules/.bin/graph codegen && node_modules/.bin/graph build && graph deploy --studio dao-on-chain-voting"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.82.0",
