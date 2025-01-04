@@ -251,6 +251,40 @@ export class Proposal extends Entity {
       this.set("endDate", Value.fromBigInt(<BigInt>value));
     }
   }
+
+  get forVotes(): BigInt | null {
+    let value = this.get("forVotes");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set forVotes(value: BigInt | null) {
+    if (!value) {
+      this.unset("forVotes");
+    } else {
+      this.set("forVotes", Value.fromBigInt(<BigInt>value));
+    }
+  }
+
+  get againstVotes(): BigInt | null {
+    let value = this.get("againstVotes");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set againstVotes(value: BigInt | null) {
+    if (!value) {
+      this.unset("againstVotes");
+    } else {
+      this.set("againstVotes", Value.fromBigInt(<BigInt>value));
+    }
+  }
 }
 
 export class Vote extends Entity {

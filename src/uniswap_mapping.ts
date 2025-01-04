@@ -11,6 +11,19 @@ import { User, Vote, Proposal, Organization } from "../generated/schema";
 import { getProposalId } from "./proposals";
 const daoName = "uniswap";
 
+function checkAndUpdateProposalStatus(proposal: Proposal): void {
+  let forVotes = proposal.forVotes;
+  let againstVotes = proposal.againstVotes;
+
+  if (!forVotes) forVotes = BigInt.fromI32(0);
+  if (!againstVotes) againstVotes = BigInt.fromI32(0);
+
+  if (againstVotes.gt(forVotes)) {
+    proposal.status = "Defeated";
+    proposal.save();
+  }
+}
+
 export function handleProposalCanceled(event: ProposalCanceled): void {
   let proposal = Proposal.load(getProposalId(daoName, event.params.id));
   if (proposal != null) {
@@ -27,6 +40,8 @@ export function handleProposalCreated(event: ProposalCreated): void {
   proposal.startDate = event.block.timestamp;
   proposal.description = event.params.description;
   proposal.proposer = event.params.proposer.toHexString();
+  proposal.forVotes = BigInt.fromI32(0);
+  proposal.againstVotes = BigInt.fromI32(0);
   let org = new Organization(daoName);
   org.save();
   proposal.organization = org.id;
@@ -65,6 +80,7 @@ function voteCast(
     user = new User(voter);
   }
   let org = new Organization(daoName);
+  user.organization = org.id;
   user.save();
   if (proposal != null) {
     vote.proposal = proposal.id;
@@ -85,9 +101,30 @@ export function handleVoteCast(event: VoteCast): void {
     event.block.timestamp
   );
   const voteWeight = vote.weight;
-  if (voteWeight && voteWeight.gt(new BigInt(0))) {
+  if (voteWeight && voteWeight.gt(BigInt.fromI32(0))) {
     vote.support = params.support ? 1 : 0;
     vote.save();
+
+    // Update proposal vote counts
+    let proposal = Proposal.load(getProposalId(daoName, params.proposalId));
+    if (proposal) {
+      let currentForVotes = proposal.forVotes;
+      let currentAgainstVotes = proposal.againstVotes;
+
+      if (!currentForVotes) currentForVotes = BigInt.fromI32(0);
+      if (!currentAgainstVotes) currentAgainstVotes = BigInt.fromI32(0);
+
+      if (params.support) {
+        proposal.forVotes = currentForVotes.plus(voteWeight);
+      } else {
+        proposal.againstVotes = currentAgainstVotes.plus(voteWeight);
+      }
+
+      // Check if proposal should be marked as defeated
+      checkAndUpdateProposalStatus(proposal);
+
+      proposal.save();
+    }
   }
 }
 
@@ -100,7 +137,7 @@ export function handleVoteCastBravo(event: VoteCastBravo): void {
     event.block.timestamp
   );
   const voteWeight = vote.weight;
-  if (voteWeight && voteWeight.gt(new BigInt(0))) {
+  if (voteWeight && voteWeight.gt(BigInt.fromI32(0))) {
     vote.support = params.support;
     vote.reason = params.reason;
     vote.save();

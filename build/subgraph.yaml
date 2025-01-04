@@ -19,7 +19,7 @@ dataSources:
         - Vote
       abis:
         - name: ENSGovernor
-          file: ENSGovernor/ENSGovernor.json
+          file: ENSGovernor\ENSGovernor.json
       eventHandlers:
         - event: ProposalCanceled(uint256)
           handler: handleProposalCanceled
@@ -31,7 +31,7 @@ dataSources:
           handler: handleProposalQueued
         - event: VoteCast(indexed address,uint256,uint8,uint256,string)
           handler: handleVoteCast
-      file: ENSGovernor/ENSGovernor.wasm
+      file: ENSGovernor\ENSGovernor.wasm
   - kind: ethereum/contract
     name: GitcoinGovernorAlpha
     network: mainnet
@@ -49,7 +49,7 @@ dataSources:
         - Vote
       abis:
         - name: GitcoinGovernorAlpha
-          file: GitcoinGovernorAlpha/GitcoinGovernorAlpha.json
+          file: GitcoinGovernorAlpha\GitcoinGovernorAlpha.json
       eventHandlers:
         - event: ProposalCanceled(uint256)
           handler: handleProposalCanceled
@@ -61,7 +61,7 @@ dataSources:
           handler: handleProposalQueued
         - event: VoteCast(address,uint256,bool,uint256)
           handler: handleVoteCast
-      file: GitcoinGovernorAlpha/GitcoinGovernorAlpha.wasm
+      file: GitcoinGovernorAlpha\GitcoinGovernorAlpha.wasm
   - kind: ethereum/contract
     name: PoolTogetherGovernorAlpha
     network: mainnet
@@ -79,7 +79,7 @@ dataSources:
         - Vote
       abis:
         - name: PoolTogetherGovernorAlpha
-          file: PoolTogetherGovernorAlpha/PoolTogetherGovernorAlpha.json
+          file: PoolTogetherGovernorAlpha\PoolTogetherGovernorAlpha.json
       eventHandlers:
         - event: ProposalCanceled(uint256)
           handler: handleProposalCanceled
@@ -91,7 +91,7 @@ dataSources:
           handler: handleProposalQueued
         - event: VoteCast(address,uint256,bool,uint256)
           handler: handleVoteCast
-      file: PoolTogetherGovernorAlpha/PoolTogetherGovernorAlpha.wasm
+      file: PoolTogetherGovernorAlpha\PoolTogetherGovernorAlpha.wasm
   - kind: ethereum/contract
     name: UniswapGovernorAlpha
     network: mainnet
@@ -109,7 +109,7 @@ dataSources:
         - Vote
       abis:
         - name: UniswapGovernorAlpha
-          file: UniswapGovernorAlpha/UniswapGovernorAlpha.json
+          file: UniswapGovernorAlpha\UniswapGovernorAlpha.json
       eventHandlers:
         - event: ProposalCanceled(uint256)
           handler: handleProposalCanceled
@@ -121,7 +121,7 @@ dataSources:
           handler: handleProposalQueued
         - event: VoteCast(address,uint256,bool,uint256)
           handler: handleVoteCast
-      file: UniswapGovernorAlpha/UniswapGovernorAlpha.wasm
+      file: UniswapGovernorAlpha\UniswapGovernorAlpha.wasm
   - kind: ethereum/contract
     name: UniswapGovernorBravo
     network: mainnet
@@ -139,7 +139,7 @@ dataSources:
         - Vote
       abis:
         - name: UniswapGovernorBravo
-          file: UniswapGovernorBravo/UniswapGovernorBravo.json
+          file: UniswapGovernorBravo\UniswapGovernorBravo.json
       eventHandlers:
         - event: ProposalCanceled(uint256)
           handler: handleProposalCanceled
@@ -151,7 +151,7 @@ dataSources:
           handler: handleProposalQueued
         - event: VoteCast(indexed address,uint256,uint8,uint256,string)
           handler: handleVoteCastBravo
-      file: UniswapGovernorAlpha/UniswapGovernorAlpha.wasm
+      file: UniswapGovernorAlpha\UniswapGovernorAlpha.wasm
   - kind: ethereum/contract
     name: NexusMutualGovernance
     network: mainnet
@@ -169,13 +169,13 @@ dataSources:
         - Vote
       abis:
         - name: NexusMutualGovernance
-          file: NexusMutualGovernance/NexusMutualGovernance.json
+          file: NexusMutualGovernance\NexusMutualGovernance.json
       eventHandlers:
         - event: Proposal(indexed address,indexed uint256,uint256,string,string,string)
           handler: handleProposalCreated
         - event: Vote(indexed address,indexed uint256,indexed uint256,uint256,uint256)
           handler: handleVoteCast
-      file: NexusMutualGovernance/NexusMutualGovernance.wasm
+      file: NexusMutualGovernance\NexusMutualGovernance.wasm
   - kind: ethereum/contract
     name: RariGovernorBravo
     network: mainnet
@@ -193,7 +193,7 @@ dataSources:
         - Vote
       abis:
         - name: RariGovernorBravo
-          file: RariGovernorBravo/RariGovernorBravo.json
+          file: RariGovernorBravo\RariGovernorBravo.json
       eventHandlers:
         - event: ProposalCanceled(uint256)
           handler: handleProposalCanceled
@@ -205,7 +205,7 @@ dataSources:
           handler: handleProposalQueued
         - event: VoteCast(indexed address,uint256,uint8,uint256,string)
           handler: handleVoteCast
-      file: RariGovernorBravo/RariGovernorBravo.wasm
+      file: RariGovernorBravo\RariGovernorBravo.wasm
   - kind: ethereum/contract
     name: IndexedGovernorAlpha
     network: mainnet
@@ -223,7 +223,7 @@ dataSources:
         - Vote
       abis:
         - name: IndexedGovernorAlpha
-          file: IndexedGovernorAlpha/IndexedGovernorAlpha.json
+          file: IndexedGovernorAlpha\IndexedGovernorAlpha.json
       eventHandlers:
         - event: ProposalCanceled(uint256)
           handler: handleProposalCanceled
@@ -235,7 +235,7 @@ dataSources:
           handler: handleProposalQueued
         - event: VoteCast(address,uint256,bool,uint256)
           handler: handleVoteCast
-      file: IndexedGovernorAlpha/IndexedGovernorAlpha.wasm
+      file: IndexedGovernorAlpha\IndexedGovernorAlpha.wasm
   - kind: ethereum/contract
     name: AmpleforthGovernorBravo
     network: mainnet
@@ -253,7 +253,7 @@ dataSources:
         - Vote
       abis:
         - name: AmpleforthGovernorBravo
-          file: AmpleforthGovernorBravo/AmpleforthGovernorBravo.json
+          file: AmpleforthGovernorBravo\AmpleforthGovernorBravo.json
       eventHandlers:
         - event: ProposalCanceled(uint256)
           handler: handleProposalCanceled
@@ -265,7 +265,7 @@ dataSources:
           handler: handleProposalQueued
         - event: VoteCast(indexed address,uint256,uint8,uint256,string)
           handler: handleVoteCast
-      file: AmpleforthGovernorBravo/AmpleforthGovernorBravo.wasm
+      file: AmpleforthGovernorBravo\AmpleforthGovernorBravo.wasm
   - kind: ethereum/contract
     name: InverseFinanceGovernor
     network: mainnet
@@ -283,7 +283,7 @@ dataSources:
         - Vote
       abis:
         - name: InverseFinanceGovernor
-          file: InverseFinanceGovernor/InverseFinanceGovernor.json
+          file: InverseFinanceGovernor\InverseFinanceGovernor.json
       eventHandlers:
         - event: ProposalCanceled(uint256)
           handler: handleProposalCanceled
@@ -295,7 +295,7 @@ dataSources:
           handler: handleProposalQueued
         - event: VoteCast(address,uint256,bool,uint256)
           handler: handleVoteCast
-      file: InverseFinanceGovernor/InverseFinanceGovernor.wasm
+      file: InverseFinanceGovernor\InverseFinanceGovernor.wasm
   - kind: ethereum/contract
     name: FeiGovernance
     network: mainnet
@@ -313,7 +313,7 @@ dataSources:
         - Vote
       abis:
         - name: FeiGovernance
-          file: FeiGovernance/FeiGovernance.json
+          file: FeiGovernance\FeiGovernance.json
       eventHandlers:
         - event: ProposalCanceled(uint256)
           handler: handleProposalCanceled
@@ -325,7 +325,7 @@ dataSources:
           handler: handleProposalQueued
         - event: VoteCast(indexed address,uint256,uint8,uint256,string)
           handler: handleVoteCast
-      file: FeiGovernance/FeiGovernance.wasm
+      file: FeiGovernance\FeiGovernance.wasm
   - kind: ethereum/contract
     name: YamFinanceGovernor
     network: mainnet
@@ -343,7 +343,7 @@ dataSources:
         - Vote
       abis:
         - name: YamFinanceGovernor
-          file: YamFinanceGovernor/YamFinanceGovernor.json
+          file: YamFinanceGovernor\YamFinanceGovernor.json
       eventHandlers:
         - event: ProposalCanceled(uint256)
           handler: handleProposalCanceled
@@ -355,7 +355,7 @@ dataSources:
           handler: handleProposalQueued
         - event: VoteCast(address,uint256,bool,uint256)
           handler: handleVoteCast
-      file: YamFinanceGovernor/YamFinanceGovernor.wasm
+      file: YamFinanceGovernor\YamFinanceGovernor.wasm
   - kind: ethereum/contract
     name: YamGovernorAlpha
     network: mainnet
@@ -373,7 +373,7 @@ dataSources:
         - Vote
       abis:
         - name: YamGovernorAlpha
-          file: YamGovernorAlpha/YamGovernorAlpha.json
+          file: YamGovernorAlpha\YamGovernorAlpha.json
       eventHandlers:
         - event: ProposalCanceled(uint256)
           handler: handleProposalCanceled
@@ -385,7 +385,7 @@ dataSources:
           handler: handleProposalQueued
         - event: VoteCast(address,uint256,bool,uint256)
           handler: handleVoteCast
-      file: YamFinanceGovernor/YamFinanceGovernor.wasm
+      file: YamFinanceGovernor\YamFinanceGovernor.wasm
   - kind: ethereum/contract
     name: CompoundGovernor
     network: mainnet
@@ -403,7 +403,7 @@ dataSources:
         - Vote
       abis:
         - name: CompoundGovernor
-          file: CompoundGovernor/CompoundGovernor.json
+          file: CompoundGovernor\CompoundGovernor.json
       eventHandlers:
         - event: ProposalCanceled(uint256)
           handler: handleProposalCanceled
@@ -415,7 +415,7 @@ dataSources:
           handler: handleProposalQueued
         - event: VoteCast(indexed address,uint256,uint8,uint256,string)
           handler: handleVoteCast
-      file: CompoundGovernor/CompoundGovernor.wasm
+      file: CompoundGovernor\CompoundGovernor.wasm
   - kind: ethereum/contract
     name: NounsToken
     network: mainnet
@@ -433,7 +433,7 @@ dataSources:
         - Vote
       abis:
         - name: NounsToken
-          file: NounsToken/NounsToken.json
+          file: NounsToken\NounsToken.json
       eventHandlers:
         - event: ProposalCanceled(uint256)
           handler: handleProposalCanceled
@@ -445,7 +445,7 @@ dataSources:
           handler: handleProposalQueued
         - event: VoteCast(indexed address,uint256,uint8,uint256,string)
           handler: handleVoteCast
-      file: NounsToken/NounsToken.wasm
+      file: NounsToken\NounsToken.wasm
   - kind: ethereum/contract
     name: AaveGovernor
     network: mainnet
@@ -463,7 +463,7 @@ dataSources:
         - Vote
       abis:
         - name: AaveGovernor
-          file: AaveGovernor/AaveGovernor.json
+          file: AaveGovernor\AaveGovernor.json
       eventHandlers:
         - event: ProposalCreated(indexed uint256,indexed bytes32,indexed
             bytes32,uint256,uint256,uint256,uint256,uint256,address)
@@ -475,7 +475,7 @@ dataSources:
         - event: VoteEmitted(indexed uint256,indexed address,indexed
             uint256,address,uint256,uint256)
           handler: handleVoteCast
-      file: AaveGovernor/AaveGovernor.wasm
+      file: AaveGovernor\AaveGovernor.wasm
   - kind: ethereum/contract
     name: IdleFinanceToken
     network: mainnet
@@ -493,7 +493,7 @@ dataSources:
         - Vote
       abis:
         - name: IdleFinanceToken
-          file: IdleFinanceToken/IdleFinanceToken.json
+          file: IdleFinanceToken\IdleFinanceToken.json
       eventHandlers:
         - event: ProposalCanceled(uint256)
           handler: handleProposalCanceled
@@ -505,7 +505,7 @@ dataSources:
           handler: handleProposalQueued
         - event: VoteCast(indexed address,uint256,uint8,uint256,string)
           handler: handleVoteCast
-      file: IdleFinanceToken/IdleFinanceToken.wasm
+      file: IdleFinanceToken\IdleFinanceToken.wasm
   - kind: ethereum/contract
     name: IdleFinanceTokenAlpha
     network: mainnet
@@ -523,7 +523,7 @@ dataSources:
         - Vote
       abis:
         - name: IdleFinanceTokenAlpha
-          file: IdleFinanceTokenAlpha/IdleFinanceTokenAlpha.json
+          file: IdleFinanceTokenAlpha\IdleFinanceTokenAlpha.json
       eventHandlers:
         - event: ProposalCanceled(uint256)
           handler: handleProposalCanceled
@@ -535,7 +535,7 @@ dataSources:
           handler: handleProposalQueued
         - event: VoteCast(address,uint256,bool,uint256)
           handler: handleVoteCastAlpha
-      file: IdleFinanceToken/IdleFinanceToken.wasm
+      file: IdleFinanceToken\IdleFinanceToken.wasm
   - kind: ethereum/contract
     name: DyDxGovernor
     network: mainnet
@@ -553,7 +553,7 @@ dataSources:
         - Vote
       abis:
         - name: DyDxGovernor
-          file: DyDxGovernor/DyDxGovernor.json
+          file: DyDxGovernor\DyDxGovernor.json
       eventHandlers:
         - event: ProposalCanceled(uint256)
           handler: handleProposalCanceled
@@ -566,7 +566,7 @@ dataSources:
           handler: handleProposalQueued
         - event: VoteEmitted(uint256,indexed address,bool,uint256)
           handler: handleVoteCast
-      file: DyDxGovernor/DyDxGovernor.wasm
+      file: DyDxGovernor\DyDxGovernor.wasm
   - kind: ethereum/contract
     name: ElementFinanceGovernor
     network: mainnet
@@ -584,7 +584,7 @@ dataSources:
         - Vote
       abis:
         - name: ElementFinanceGovernor
-          file: ElementFinanceGovernor/ElementFinance.json
+          file: ElementFinanceGovernor\ElementFinance.json
       eventHandlers:
         - event: ProposalCreated(uint256,uint256,uint256,uint256)
           handler: handleProposalCreated
@@ -592,7 +592,7 @@ dataSources:
           handler: handleProposalExecuted
         - event: Voted(indexed address,indexed uint256,(uint128,uint8))
           handler: handleVoteCast
-      file: ElementFinanceGovernor/ElementFinanceGovernor.wasm
+      file: ElementFinanceGovernor\ElementFinanceGovernor.wasm
   - kind: ethereum
     name: RariFoundation
     network: mainnet
@@ -602,7 +602,7 @@ dataSources:
       startBlock: 15719153
     mapping:
       kind: ethereum/events
-      apiVersion: 0.0.7
+      apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
         - User
@@ -610,7 +610,7 @@ dataSources:
         - Vote
       abis:
         - name: RariFoundation
-          file: RariFoundation/RariFoundation.json
+          file: RariFoundation\RariFoundation.json
       eventHandlers:
         - event: ProposalCanceled(uint256)
           handler: handleProposalCanceled
@@ -624,4 +624,4 @@ dataSources:
           handler: handleVoteCast
         - event: VoteCastWithParams(indexed address,uint256,uint8,uint256,string,bytes)
           handler: handleVoteCast
-      file: RariFoundation/RariFoundation.wasm
+      file: RariFoundation\RariFoundation.wasm

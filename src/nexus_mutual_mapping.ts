@@ -1,54 +1,79 @@
 import { BigInt } from "@graphprotocol/graph-ts";
 import {
-  Proposal,
-  VoteCast,
-  Vote,
+  NexusMutualGovernance,
+  Proposal as ProposalEvent,
+  Vote as VoteEvent,
 } from "../generated/NexusMutualGovernance/NexusMutualGovernance";
-import {
-  User,
-  Vote as KarmaVote,
-  Proposal as KarmaProposal,
-  Organization,
-} from "../generated/schema";
+import { User, Vote, Proposal, Organization } from "../generated/schema";
 import { getProposalId } from "./proposals";
-const daoName = "community.nexusmutual.eth";
+const daoName = "nexus-mutual.eth";
 
-export function handleProposalCreated(event: Proposal): void {
-  const proposal = new KarmaProposal(
-    getProposalId(daoName, event.params.proposalId)
-  );
+function checkAndUpdateProposalStatus(proposal: Proposal): void {
+  let forVotes = proposal.forVotes;
+  let againstVotes = proposal.againstVotes;
+
+  if (!forVotes) forVotes = BigInt.fromI32(0);
+  if (!againstVotes) againstVotes = BigInt.fromI32(0);
+
+  if (againstVotes.gt(forVotes)) {
+    proposal.status = "Defeated";
+    proposal.save();
+  }
+}
+
+export function handleProposalCreated(event: ProposalEvent): void {
+  let proposal = new Proposal(getProposalId(daoName, event.params.proposalId));
   proposal.status = "Active";
   proposal.timestamp = event.block.timestamp;
   proposal.startDate = event.block.timestamp;
-  proposal.proposer = event.params.proposalOwner.toHexString();
   proposal.description = event.params.proposalTitle;
-  const org = new Organization(daoName);
+  proposal.proposer = event.params.proposalOwner.toHexString();
+  proposal.forVotes = BigInt.fromI32(0);
+  proposal.againstVotes = BigInt.fromI32(0);
+  proposal.endDate = event.block.timestamp;
+  let org = new Organization(daoName);
   org.save();
   proposal.organization = org.id;
   proposal.save();
 }
 
-export function handleVoteCast(event: Vote): void {
-  const vote = new KarmaVote(
+export function handleVoteCast(event: VoteEvent): void {
+  let vote = new Vote(
     event.params.from.toHexString() + event.params.proposalId.toHexString()
   );
-  const proposal = KarmaProposal.load(
-    getProposalId(daoName, event.params.proposalId)
-  );
+  let proposal = Proposal.load(getProposalId(daoName, event.params.proposalId));
   let user = User.load(event.params.from.toHexString());
   if (user == null) {
     user = new User(event.params.from.toHexString());
   }
   let org = new Organization(daoName);
+  user.organization = org.id;
   user.save();
 
-  if (proposal != null) {
+  const voteWeight = event.params.dateAdd;
+  if (voteWeight && voteWeight.gt(BigInt.fromI32(0)) && proposal != null) {
     vote.proposal = proposal.id;
+    vote.user = user.id;
+    vote.support = event.params.solutionChosen.toI32();
+    vote.weight = voteWeight;
+    vote.timestamp = event.block.timestamp;
+    vote.organization = org.id;
+
+    // Update vote counts
+    let currentForVotes = proposal.forVotes;
+    let currentAgainstVotes = proposal.againstVotes;
+
+    if (!currentForVotes) currentForVotes = BigInt.fromI32(0);
+    if (!currentAgainstVotes) currentAgainstVotes = BigInt.fromI32(0);
+
+    if (event.params.solutionChosen.toI32() == 1) {
+      proposal.forVotes = currentForVotes.plus(voteWeight);
+    } else {
+      proposal.againstVotes = currentAgainstVotes.plus(voteWeight);
+    }
+
+    checkAndUpdateProposalStatus(proposal);
+    proposal.save();
+    vote.save();
   }
-  vote.user = user.id;
-  vote.solution = event.params.solutionChosen;
-  vote.timestamp = event.block.timestamp;
-  vote.support = -1;
-  vote.organization = org.id;
-  vote.save();
 }

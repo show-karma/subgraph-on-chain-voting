@@ -1,5 +1,6 @@
 import { BigInt } from "@graphprotocol/graph-ts";
 import {
+  AmpleforthGovernorBravo,
   ProposalCanceled,
   ProposalCreated,
   ProposalExecuted,
@@ -10,11 +11,15 @@ import { User, Vote, Proposal, Organization } from "../generated/schema";
 import { getProposalId } from "./proposals";
 const daoName = "ampleforthorg.eth";
 
-export function handleProposalCanceled(event: ProposalCanceled): void {
-  let proposal = Proposal.load(getProposalId(daoName, event.params.id));
-  if (proposal != null) {
-    proposal.status = "Canceled";
-    proposal.endDate = event.block.timestamp;
+function checkAndUpdateProposalStatus(proposal: Proposal): void {
+  let forVotes = proposal.forVotes;
+  let againstVotes = proposal.againstVotes;
+
+  if (!forVotes) forVotes = BigInt.fromI32(0);
+  if (!againstVotes) againstVotes = BigInt.fromI32(0);
+
+  if (againstVotes.gt(forVotes)) {
+    proposal.status = "Defeated";
     proposal.save();
   }
 }
@@ -26,10 +31,23 @@ export function handleProposalCreated(event: ProposalCreated): void {
   proposal.startDate = event.block.timestamp;
   proposal.description = event.params.description;
   proposal.proposer = event.params.proposer.toHexString();
+  proposal.forVotes = BigInt.fromI32(0);
+  proposal.againstVotes = BigInt.fromI32(0);
+  proposal.endDate = event.block.timestamp;
   let org = new Organization(daoName);
   org.save();
   proposal.organization = org.id;
   proposal.save();
+}
+
+export function handleProposalCanceled(event: ProposalCanceled): void {
+  let proposal = Proposal.load(getProposalId(daoName, event.params.id));
+  if (proposal != null) {
+    proposal.status = "Canceled";
+    proposal.timestamp = event.block.timestamp;
+    proposal.endDate = event.block.timestamp;
+    proposal.save();
+  }
 }
 
 export function handleProposalExecuted(event: ProposalExecuted): void {
@@ -65,15 +83,29 @@ export function handleVoteCast(event: VoteCast): void {
   user.save();
 
   const voteWeight = event.params.votes;
-  if (voteWeight && voteWeight.gt(new BigInt(0))) {
-    if (proposal != null) {
-      vote.proposal = proposal.id;
-    }
+  if (voteWeight && voteWeight.gt(BigInt.fromI32(0)) && proposal != null) {
+    vote.proposal = proposal.id;
     vote.user = user.id;
     vote.support = event.params.support;
-    vote.weight = event.params.votes;
+    vote.weight = voteWeight;
     vote.timestamp = event.block.timestamp;
     vote.organization = org.id;
+
+    // Update vote counts
+    let currentForVotes = proposal.forVotes;
+    let currentAgainstVotes = proposal.againstVotes;
+
+    if (!currentForVotes) currentForVotes = BigInt.fromI32(0);
+    if (!currentAgainstVotes) currentAgainstVotes = BigInt.fromI32(0);
+
+    if (event.params.support) {
+      proposal.forVotes = currentForVotes.plus(voteWeight);
+    } else {
+      proposal.againstVotes = currentAgainstVotes.plus(voteWeight);
+    }
+
+    checkAndUpdateProposalStatus(proposal);
+    proposal.save();
     vote.save();
   }
 }

@@ -1,15 +1,28 @@
 import { BigInt } from "@graphprotocol/graph-ts";
 import {
+  IdleFinanceToken,
   ProposalCanceled,
   ProposalCreated,
   ProposalExecuted,
   ProposalQueued,
   VoteCast,
 } from "../generated/IdleFinanceToken/IdleFinanceToken";
-import { VoteCast as VoteCastAlpha } from "../generated/IdleFinanceTokenAlpha/IdleFinanceTokenAlpha";
 import { User, Vote, Proposal, Organization } from "../generated/schema";
 import { getProposalId } from "./proposals";
-const daoName = "idlefinance.eth";
+const daoName = "idle.eth";
+
+function checkAndUpdateProposalStatus(proposal: Proposal): void {
+  let forVotes = proposal.forVotes;
+  let againstVotes = proposal.againstVotes;
+
+  if (!forVotes) forVotes = BigInt.fromI32(0);
+  if (!againstVotes) againstVotes = BigInt.fromI32(0);
+
+  if (againstVotes.gt(forVotes)) {
+    proposal.status = "Defeated";
+    proposal.save();
+  }
+}
 
 export function handleProposalCanceled(event: ProposalCanceled): void {
   let proposal = Proposal.load(getProposalId(daoName, event.params.id));
@@ -28,6 +41,9 @@ export function handleProposalCreated(event: ProposalCreated): void {
   proposal.startDate = event.block.timestamp;
   proposal.description = event.params.description;
   proposal.proposer = event.params.proposer.toHexString();
+  proposal.forVotes = BigInt.fromI32(0);
+  proposal.againstVotes = BigInt.fromI32(0);
+  proposal.endDate = event.block.timestamp;
   let org = new Organization(daoName);
   org.save();
   proposal.organization = org.id;
@@ -53,59 +69,43 @@ export function handleProposalQueued(event: ProposalQueued): void {
   }
 }
 
-function voteCast(
-  voter: string,
-  proposalId: BigInt,
-  votes: BigInt,
-  timestamp: BigInt
-): Vote {
-  let vote = new Vote(voter + proposalId.toHexString());
-  let proposal = Proposal.load(getProposalId(daoName, proposalId));
-  let user = User.load(voter);
+export function handleVoteCast(event: VoteCast): void {
+  let vote = new Vote(
+    event.params.voter.toHexString() + event.params.proposalId.toHexString()
+  );
+  let proposal = Proposal.load(getProposalId(daoName, event.params.proposalId));
+  let user = User.load(event.params.voter.toHexString());
   if (user == null) {
-    user = new User(voter);
+    user = new User(event.params.voter.toHexString());
   }
   let org = new Organization(daoName);
+  user.organization = org.id;
   user.save();
-  if (proposal != null) {
+
+  const voteWeight = event.params.votes;
+  if (voteWeight && voteWeight.gt(BigInt.fromI32(0)) && proposal != null) {
     vote.proposal = proposal.id;
-  }
-  vote.user = user.id;
+    vote.user = user.id;
+    vote.support = event.params.support;
+    vote.weight = voteWeight;
+    vote.timestamp = event.block.timestamp;
+    vote.organization = org.id;
 
-  vote.weight = votes;
+    // Update vote counts
+    let currentForVotes = proposal.forVotes;
+    let currentAgainstVotes = proposal.againstVotes;
 
-  vote.timestamp = timestamp;
-  vote.organization = org.id;
-  return vote;
-}
+    if (!currentForVotes) currentForVotes = BigInt.fromI32(0);
+    if (!currentAgainstVotes) currentAgainstVotes = BigInt.fromI32(0);
 
-export function handleVoteCast(event: VoteCast): void {
-  const params = event.params;
-  let vote = voteCast(
-    params.voter.toHexString(),
-    params.proposalId,
-    params.votes,
-    event.block.timestamp
-  );
-  const voteWeight = vote.weight;
-  if (voteWeight && voteWeight.gt(new BigInt(0))) {
-    vote.support = params.support;
-    vote.reason = params.reason;
-    vote.save();
-  }
-}
+    if (event.params.support) {
+      proposal.forVotes = currentForVotes.plus(voteWeight);
+    } else {
+      proposal.againstVotes = currentAgainstVotes.plus(voteWeight);
+    }
 
-export function handleVoteCastAlpha(event: VoteCastAlpha): void {
-  const params = event.params;
-  let vote = voteCast(
-    params.voter.toHexString(),
-    params.proposalId,
-    params.votes,
-    event.block.timestamp
-  );
-  const voteWeight = vote.weight;
-  if (voteWeight && voteWeight.gt(new BigInt(0))) {
-    vote.support = event.params.support ? 1 : 0;
+    checkAndUpdateProposalStatus(proposal);
+    proposal.save();
     vote.save();
   }
 }

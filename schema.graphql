@@ -29,6 +29,8 @@ type Proposal @entity {
   timestamp: BigInt!
   startDate: BigInt!
   endDate: BigInt
+  forVotes: BigInt
+  againstVotes: BigInt
 }
 
 type Vote @entity {
