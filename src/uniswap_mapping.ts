@@ -11,16 +11,22 @@ import { User, Vote, Proposal, Organization } from "../generated/schema";
 import { getProposalId } from "./proposals";
 const daoName = "uniswap";
 
-function checkAndUpdateProposalStatus(proposal: Proposal): void {
-  let forVotes = proposal.forVotes;
-  let againstVotes = proposal.againstVotes;
+function checkAndUpdateProposalStatus(
+  proposal: Proposal,
+  event: VoteCast
+): void {
+  const endDate = proposal.endDate;
+  if (!endDate) return;
 
-  if (!forVotes) forVotes = BigInt.fromI32(0);
-  if (!againstVotes) againstVotes = BigInt.fromI32(0);
+  if (proposal.status == "Active" && event.block.timestamp.gt(endDate)) {
+    const forVotes = (proposal.forVotes || BigInt.fromI32(0)) as BigInt;
+    const againstVotes = (proposal.againstVotes || BigInt.fromI32(0)) as BigInt;
 
-  if (againstVotes.gt(forVotes)) {
-    proposal.status = "Defeated";
-    proposal.save();
+    if (againstVotes.gt(forVotes)) {
+      proposal.status = "Defeated";
+      proposal.timestamp = event.block.timestamp;
+      proposal.save();
+    }
   }
 }
 
@@ -42,6 +48,7 @@ export function handleProposalCreated(event: ProposalCreated): void {
   proposal.proposer = event.params.proposer.toHexString();
   proposal.forVotes = BigInt.fromI32(0);
   proposal.againstVotes = BigInt.fromI32(0);
+  proposal.endDate = event.params.endBlock;
   let org = new Organization(daoName);
   org.save();
   proposal.organization = org.id;
@@ -121,7 +128,7 @@ export function handleVoteCast(event: VoteCast): void {
       }
 
       // Check if proposal should be marked as defeated
-      checkAndUpdateProposalStatus(proposal);
+      checkAndUpdateProposalStatus(proposal, event);
 
       proposal.save();
     }

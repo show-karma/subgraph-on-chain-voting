@@ -8,16 +8,22 @@ import { User, Vote, Proposal, Organization } from "../generated/schema";
 import { getProposalId } from "./proposals";
 const daoName = "nexus-mutual.eth";
 
-function checkAndUpdateProposalStatus(proposal: Proposal): void {
-  let forVotes = proposal.forVotes;
-  let againstVotes = proposal.againstVotes;
+function checkAndUpdateProposalStatus(
+  proposal: Proposal,
+  event: VoteEvent
+): void {
+  const endDate = proposal.endDate;
+  if (!endDate) return;
 
-  if (!forVotes) forVotes = BigInt.fromI32(0);
-  if (!againstVotes) againstVotes = BigInt.fromI32(0);
+  if (proposal.status == "Active" && event.block.timestamp.gt(endDate)) {
+    const forVotes = (proposal.forVotes || BigInt.fromI32(0)) as BigInt;
+    const againstVotes = (proposal.againstVotes || BigInt.fromI32(0)) as BigInt;
 
-  if (againstVotes.gt(forVotes)) {
-    proposal.status = "Defeated";
-    proposal.save();
+    if (againstVotes.gt(forVotes)) {
+      proposal.status = "Defeated";
+      proposal.timestamp = event.block.timestamp;
+      proposal.save();
+    }
   }
 }
 
@@ -30,7 +36,7 @@ export function handleProposalCreated(event: ProposalEvent): void {
   proposal.proposer = event.params.proposalOwner.toHexString();
   proposal.forVotes = BigInt.fromI32(0);
   proposal.againstVotes = BigInt.fromI32(0);
-  proposal.endDate = event.block.timestamp;
+  proposal.endDate = event.params.dateAdd.plus(event.block.timestamp);
   let org = new Organization(daoName);
   org.save();
   proposal.organization = org.id;
@@ -72,7 +78,7 @@ export function handleVoteCast(event: VoteEvent): void {
       proposal.againstVotes = currentAgainstVotes.plus(voteWeight);
     }
 
-    checkAndUpdateProposalStatus(proposal);
+    checkAndUpdateProposalStatus(proposal, event);
     proposal.save();
     vote.save();
   }

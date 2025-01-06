@@ -14,15 +14,12 @@ function checkAndUpdateProposalStatus(
   proposal: Proposal,
   event: VoteEmitted
 ): void {
-  if (
-    proposal.status == "Active" &&
-    event.block.timestamp.gt(proposal.endDate!)
-  ) {
-    let forVotes = proposal.forVotes;
-    let againstVotes = proposal.againstVotes;
+  const endDate = proposal.endDate;
+  if (!endDate) return;
 
-    if (!forVotes) forVotes = BigInt.fromI32(0);
-    if (!againstVotes) againstVotes = BigInt.fromI32(0);
+  if (proposal.status == "Active" && event.block.timestamp.gt(endDate)) {
+    const forVotes = (proposal.forVotes || BigInt.fromI32(0)) as BigInt;
+    const againstVotes = (proposal.againstVotes || BigInt.fromI32(0)) as BigInt;
 
     if (againstVotes.gt(forVotes)) {
       proposal.status = "Defeated";
@@ -41,7 +38,9 @@ export function handleProposalCreated(event: ProposalCreated): void {
   proposal.proposer = event.params.proposalExecutor.toHexString();
   proposal.forVotes = BigInt.fromI32(0);
   proposal.againstVotes = BigInt.fromI32(0);
-  proposal.endDate = event.block.timestamp;
+  proposal.endDate = event.params.votingBlocksDuration.plus(
+    event.block.timestamp
+  );
   let org = new Organization(daoName);
   org.save();
   proposal.organization = org.id;

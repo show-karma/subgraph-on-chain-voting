@@ -15,16 +15,12 @@ function checkAndUpdateProposalStatus(
   proposal: Proposal,
   event: VoteCast
 ): void {
-  if (
-    proposal.status == "Active" &&
-    event.block.timestamp.gt(proposal.endDate!)
-  ) {
-    // If the proposal has ended and is still marked as active, check if it was defeated
-    let forVotes = proposal.forVotes;
-    let againstVotes = proposal.againstVotes;
+  const endDate = proposal.endDate;
+  if (!endDate) return;
 
-    if (!forVotes) forVotes = BigInt.fromI32(0);
-    if (!againstVotes) againstVotes = BigInt.fromI32(0);
+  if (proposal.status == "Active" && event.block.timestamp.gt(endDate)) {
+    const forVotes = (proposal.forVotes || BigInt.fromI32(0)) as BigInt;
+    const againstVotes = (proposal.againstVotes || BigInt.fromI32(0)) as BigInt;
 
     if (againstVotes.gt(forVotes)) {
       proposal.status = "Defeated";
