@@ -235,6 +235,32 @@ export class Proposal extends Entity {
     this.set("startDate", Value.fromBigInt(value));
   }
 
+  get startBlock(): BigInt {
+    let value = this.get("startBlock");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set startBlock(value: BigInt) {
+    this.set("startBlock", Value.fromBigInt(value));
+  }
+
+  get endBlock(): BigInt {
+    let value = this.get("endBlock");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set endBlock(value: BigInt) {
+    this.set("endBlock", Value.fromBigInt(value));
+  }
+
   get endDate(): BigInt | null {
     let value = this.get("endDate");
     if (!value || value.kind == ValueKind.NULL) {

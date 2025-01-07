@@ -20,6 +20,7 @@ function checkAndUpdateProposalStatus(proposal: Proposal, event: Voted): void {
     if (againstVotes.gt(forVotes)) {
       proposal.status = "Defeated";
       proposal.timestamp = event.block.timestamp;
+      proposal.endDate = event.block.timestamp;
       proposal.save();
     }
   }
@@ -34,6 +35,7 @@ export function handleProposalCreated(event: ProposalCreated): void {
   proposal.proposer = "0x";
   proposal.forVotes = BigInt.fromI32(0);
   proposal.againstVotes = BigInt.fromI32(0);
+  proposal.startBlock = event.block.number;
   proposal.endDate = event.params.expiration;
   let org = new Organization(daoName);
   org.save();
