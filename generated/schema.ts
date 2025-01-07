@@ -235,32 +235,6 @@ export class Proposal extends Entity {
     this.set("startDate", Value.fromBigInt(value));
   }
 
-  get startBlock(): BigInt {
-    let value = this.get("startBlock");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toBigInt();
-    }
-  }
-
-  set startBlock(value: BigInt) {
-    this.set("startBlock", Value.fromBigInt(value));
-  }
-
-  get endBlock(): BigInt {
-    let value = this.get("endBlock");
-    if (!value || value.kind == ValueKind.NULL) {
-      throw new Error("Cannot return null for a required field.");
-    } else {
-      return value.toBigInt();
-    }
-  }
-
-  set endBlock(value: BigInt) {
-    this.set("endBlock", Value.fromBigInt(value));
-  }
-
   get endDate(): BigInt | null {
     let value = this.get("endDate");
     if (!value || value.kind == ValueKind.NULL) {
@@ -275,40 +249,6 @@ export class Proposal extends Entity {
       this.unset("endDate");
     } else {
       this.set("endDate", Value.fromBigInt(<BigInt>value));
-    }
-  }
-
-  get forVotes(): BigInt | null {
-    let value = this.get("forVotes");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toBigInt();
-    }
-  }
-
-  set forVotes(value: BigInt | null) {
-    if (!value) {
-      this.unset("forVotes");
-    } else {
-      this.set("forVotes", Value.fromBigInt(<BigInt>value));
-    }
-  }
-
-  get againstVotes(): BigInt | null {
-    let value = this.get("againstVotes");
-    if (!value || value.kind == ValueKind.NULL) {
-      return null;
-    } else {
-      return value.toBigInt();
-    }
-  }
-
-  set againstVotes(value: BigInt | null) {
-    if (!value) {
-      this.unset("againstVotes");
-    } else {
-      this.set("againstVotes", Value.fromBigInt(<BigInt>value));
     }
   }
 }

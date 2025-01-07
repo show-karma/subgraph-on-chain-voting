@@ -10,25 +10,7 @@ import { User, Vote, Proposal, Organization } from "../generated/schema";
 import { getProposalId } from "./proposals";
 const daoName = "aave.eth";
 
-function checkAndUpdateProposalStatus(
-  proposal: Proposal,
-  event: VoteEmitted
-): void {
-  const endBlock = proposal.endBlock;
-  if (!endBlock) return;
-
-  if (proposal.status == "Active" && event.block.number.gt(endBlock)) {
-    const forVotes = (proposal.forVotes || BigInt.fromI32(0)) as BigInt;
-    const againstVotes = (proposal.againstVotes || BigInt.fromI32(0)) as BigInt;
-
-    if (againstVotes.gt(forVotes)) {
-      proposal.status = "Defeated";
-      proposal.timestamp = event.block.timestamp;
-      proposal.endDate = event.block.timestamp;
-      proposal.save();
-    }
-  }
-}
+const BLOCK_TIME = BigInt.fromI32(15);
 
 export function handleProposalCreated(event: ProposalCreated): void {
   let proposal = new Proposal(getProposalId(daoName, event.params.proposalId));
@@ -37,11 +19,8 @@ export function handleProposalCreated(event: ProposalCreated): void {
   proposal.startDate = event.block.timestamp;
   proposal.description = event.params.proposalType.toHexString();
   proposal.proposer = event.params.proposalExecutor.toHexString();
-  proposal.forVotes = BigInt.fromI32(0);
-  proposal.againstVotes = BigInt.fromI32(0);
-  proposal.startBlock = event.block.number;
-  proposal.endBlock = event.block.number.plus(
-    event.params.votingBlocksDuration
+  proposal.endDate = event.block.timestamp.plus(
+    event.params.votingBlocksDuration.times(BLOCK_TIME)
   );
   let org = new Organization(daoName);
   org.save();
@@ -78,33 +57,18 @@ export function handleVoteCast(event: VoteEmitted): void {
     user = new User(event.params.voter.toHexString());
   }
   let org = new Organization(daoName);
-  user.organization = org.id;
   user.save();
 
   const voteWeight = event.params.vote;
-  if (voteWeight && voteWeight.gt(BigInt.fromI32(0)) && proposal != null) {
-    vote.proposal = proposal.id;
+  if (voteWeight && voteWeight.gt(new BigInt(0))) {
+    if (proposal != null) {
+      vote.proposal = proposal.id;
+    }
     vote.user = user.id;
-    vote.support = event.params.vote == BigInt.fromI32(1) ? 1 : 0;
-    vote.weight = voteWeight;
+    vote.support = event.params.vote == new BigInt(1) ? 1 : 0;
+    vote.weight = event.params.vote;
     vote.timestamp = event.block.timestamp;
     vote.organization = org.id;
-
-    // Update vote counts
-    let currentForVotes = proposal.forVotes;
-    let currentAgainstVotes = proposal.againstVotes;
-
-    if (!currentForVotes) currentForVotes = BigInt.fromI32(0);
-    if (!currentAgainstVotes) currentAgainstVotes = BigInt.fromI32(0);
-
-    if (vote.support == 1) {
-      proposal.forVotes = currentForVotes.plus(voteWeight);
-    } else {
-      proposal.againstVotes = currentAgainstVotes.plus(voteWeight);
-    }
-
-    checkAndUpdateProposalStatus(proposal, event);
-    proposal.save();
     vote.save();
   }
 }
