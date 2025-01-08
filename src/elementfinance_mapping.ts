@@ -8,8 +8,6 @@ import { User, Vote, Proposal, Organization } from "../generated/schema";
 import { getProposalId } from "./proposals";
 const daoName = "elementfinance.eth";
 
-const BLOCK_TIME = BigInt.fromI32(15);
-
 export function handleProposalCreated(event: ProposalCreated): void {
   let proposal = new Proposal(getProposalId(daoName, event.params.proposalId));
   proposal.status = "Active";

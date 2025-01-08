@@ -18,7 +18,6 @@ export function handleProposalCanceled(event: ProposalCanceled): void {
   if (proposal != null) {
     proposal.status = "Canceled";
     proposal.timestamp = event.block.timestamp;
-    proposal.endDate = event.block.timestamp;
     proposal.save();
   }
 }
@@ -51,7 +50,6 @@ export function handleProposalQueued(event: ProposalQueued): void {
   if (proposal != null) {
     proposal.status = "Queued";
     proposal.timestamp = event.block.timestamp;
-    proposal.endDate = event.block.timestamp;
     proposal.save();
   }
 }

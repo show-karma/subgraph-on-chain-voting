@@ -17,7 +17,6 @@ export function handleProposalCanceled(event: ProposalCanceled): void {
   let proposal = Proposal.load(getProposalId(daoName, event.params.id));
   if (proposal != null) {
     proposal.status = "Canceled";
-    proposal.endDate = event.block.timestamp;
     proposal.save();
   }
 }
@@ -50,7 +49,6 @@ export function handleProposalQueued(event: ProposalQueued): void {
   if (proposal != null) {
     proposal.status = "Queued";
     proposal.timestamp = event.block.timestamp;
-    proposal.endDate = event.block.timestamp;
     proposal.save();
   }
 }
