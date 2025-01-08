@@ -11,12 +11,13 @@ import { User, Vote, Proposal, Organization } from "../generated/schema";
 import { getProposalId } from "./proposals";
 const daoName = "comp-vote.eth";
 
+const BLOCK_TIME = BigInt.fromI32(15);
+
 export function handleProposalCanceled(event: ProposalCanceled): void {
   let proposal = Proposal.load(getProposalId(daoName, event.params.id));
   if (proposal != null) {
     proposal.status = "Canceled";
     proposal.timestamp = event.block.timestamp;
-    proposal.endDate = event.block.timestamp;
     proposal.save();
   }
 }
@@ -28,6 +29,7 @@ export function handleProposalCreated(event: ProposalCreated): void {
   proposal.startDate = event.block.timestamp;
   proposal.description = event.params.description;
   proposal.proposer = event.params.proposer.toHexString();
+  proposal.endDate = event.params.endBlock.times(BLOCK_TIME);
   let org = new Organization(daoName);
   org.save();
   proposal.organization = org.id;
@@ -48,7 +50,6 @@ export function handleProposalQueued(event: ProposalQueued): void {
   if (proposal != null) {
     proposal.status = "Queued";
     proposal.timestamp = event.block.timestamp;
-    proposal.endDate = event.block.timestamp;
     proposal.save();
   }
 }
