@@ -15,7 +15,6 @@ export function handleProposalCreated(event: ProposalCreated): void {
   proposal.startDate = event.block.timestamp;
   proposal.description = event.params.proposalId.toString();
   proposal.proposer = "0x";
-  proposal.endDate = event.params.expiration;
   let org = new Organization(daoName);
   org.save();
   proposal.organization = org.id;

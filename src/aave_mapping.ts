@@ -10,8 +10,6 @@ import { User, Vote, Proposal, Organization } from "../generated/schema";
 import { getProposalId } from "./proposals";
 const daoName = "aave.eth";
 
-const BLOCK_TIME = BigInt.fromI32(15);
-
 export function handleProposalCreated(event: ProposalCreated): void {
   let proposal = new Proposal(getProposalId(daoName, event.params.proposalId));
   proposal.status = "Active";
@@ -19,9 +17,6 @@ export function handleProposalCreated(event: ProposalCreated): void {
   proposal.startDate = event.block.timestamp;
   proposal.description = event.params.proposalType.toHexString();
   proposal.proposer = event.params.proposalExecutor.toHexString();
-  proposal.endDate = event.block.timestamp.plus(
-    event.params.votingBlocksDuration.times(BLOCK_TIME)
-  );
   let org = new Organization(daoName);
   org.save();
   proposal.organization = org.id;
@@ -42,6 +37,7 @@ export function handleProposalQueued(event: StatusChangeToVoting): void {
   if (proposal != null) {
     proposal.status = "Queued";
     proposal.timestamp = event.block.timestamp;
+    proposal.endDate = event.block.timestamp;
     proposal.save();
   }
 }
