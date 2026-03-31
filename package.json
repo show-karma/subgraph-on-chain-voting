@@ -8,7 +8,6 @@
     "create-local": "node_modules/.bin/graph create --node http://localhost:8020/ show-karma/dao-on-chain-voting",
     "remove-local": "node_modules/.bin/graph remove --node http://localhost:8020/ show-karma/dao-on-chain-voting",
     "deploy-local": "node_modules/.bin/graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 show-karma/dao-on-chain-voting",
-
     "deploy:mainnet": "node_modules/.bin/graph codegen && node_modules/.bin/graph build && node_modules/.bin/graph deploy --studio dao-on-chain-voting"
   },
   "dependencies": {
