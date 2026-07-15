@@ -251,6 +251,78 @@ export class Proposal extends Entity {
       this.set("endDate", Value.fromBigInt(<BigInt>value));
     }
   }
+
+  get endBlock(): BigInt | null {
+    let value = this.get("endBlock");
+    if (!value || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toBigInt();
+    }
+  }
+
+  set endBlock(value: BigInt | null) {
+    if (!value) {
+      this.unset("endBlock");
+    } else {
+      this.set("endBlock", Value.fromBigInt(<BigInt>value));
+    }
+  }
+}
+
+export class OpenProposals extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save OpenProposals entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type OpenProposals must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`,
+      );
+      store.set("OpenProposals", id.toString(), this);
+    }
+  }
+
+  static loadInBlock(id: string): OpenProposals | null {
+    return changetype<OpenProposals | null>(
+      store.get_in_block("OpenProposals", id),
+    );
+  }
+
+  static load(id: string): OpenProposals | null {
+    return changetype<OpenProposals | null>(store.get("OpenProposals", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toString();
+    }
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get proposalIds(): Array<BigInt> {
+    let value = this.get("proposalIds");
+    if (!value || value.kind == ValueKind.NULL) {
+      throw new Error("Cannot return null for a required field.");
+    } else {
+      return value.toBigIntArray();
+    }
+  }
+
+  set proposalIds(value: Array<BigInt>) {
+    this.set("proposalIds", Value.fromBigIntArray(value));
+  }
 }
 
 export class Vote extends Entity {
