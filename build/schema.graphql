@@ -29,6 +29,15 @@ type Proposal @entity {
   timestamp: BigInt!
   startDate: BigInt!
   endDate: BigInt
+  endBlock: BigInt
+}
+
+# Internal bookkeeping: proposals that have not reached a terminal state yet,
+# so mappings can resolve Defeated/Expired (states the Governor never emits
+# events for) by calling state() once the voting period is over.
+type OpenProposals @entity {
+  id: ID! # daoName
+  proposalIds: [BigInt!]!
 }
 
 type Vote @entity {
